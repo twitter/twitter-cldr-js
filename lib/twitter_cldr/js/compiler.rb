@@ -28,7 +28,10 @@ module TwitterCldr
           bundle = TwitterCldr::Js::Renderers::Bundle.new
           bundle[:locale] = locale
           bundle[:contents] = contents
-          result = CoffeeScript.compile(bundle.render, :bare => true)
+          result = CoffeeScript.compile(bundle.render, :bare => false)
+
+          # required alias definition that adds twitter_cldr to Twitter's static build process
+          result.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
           result = Uglifier.compile(result) if options[:minify]
 
           yield result, TwitterCldr.twitter_locale(locale)
@@ -42,6 +45,7 @@ module TwitterCldr
           :plural_rules => TwitterCldr::Js::Renderers::PluralRules::PluralRulesRenderer,
           :timespan => TwitterCldr::Js::Renderers::Calendars::TimespanRenderer,
           :datetime => TwitterCldr::Js::Renderers::Calendars::DateTimeRenderer,
+          :additional_date_format_selector => TwitterCldr::Js::Renderers::Calendars::AdditionalDateFormatSelectorRenderer,
           :numbers => TwitterCldr::Js::Renderers::Numbers::NumbersRenderer,
           :currencies => TwitterCldr::Js::Renderers::Shared::CurrenciesRenderer,
           :lists => TwitterCldr::Js::Renderers::Shared::ListRenderer,

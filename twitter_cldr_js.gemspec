@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'json'
   s.add_dependency 'twitter_cldr', '~> 2.4.0'
-  s.add_dependency 'railties', '~> 3.1'
+  s.add_dependency 'railties', '>= 3.1', '< 5.0'
 
   s.add_development_dependency 'rake', '~> 0.9.2.2'
   s.add_development_dependency 'mustache', '~> 0.99.4'

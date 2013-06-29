@@ -17,7 +17,10 @@ Currently, twitter-cldr-js supports the following:
 Add twitter-cldr-js to your Gemfile:
 
 ```ruby
+gem 'twitter_cldr_js', :require => 'twitter_cldr/js'
 ```
+
+If you're not using bundler, run `gem install twitter_cldr_js` and then require `twitter_cldr/js` somewhere in your project.  Note that twitter-cldr-js isn't really designed to run outside of Rails.  If you need the JavaScript functionality it provides but aren't using Rails, consider copying the compiled JavaScript files (lib/assets/javascripts/twitter_cldr/*.js) into your project by hand instead of using this gem directly.
 
 ## Usage with Rails
 

@@ -12,6 +12,13 @@ Currently, twitter-cldr-js supports the following:
 5. Plural rules
 6. Bidirectional reordering
 
+## Installation
+
+Add twitter-cldr-js to your Gemfile:
+
+```ruby
+```
+
 ## Usage with Rails
 
 twitter-cldr-js provides a single `.js` file per locale.  You can include a locale-specific version (eg. Spanish) in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:

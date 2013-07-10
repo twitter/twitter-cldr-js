@@ -33,7 +33,7 @@ twitter-cldr-js provides a single `.js` file per locale.  You can include a loca
 This will make the Spanish version of twitter-cldr-js available to the JavaScript in your app.  If your app supports multiple languages however, this single-locale approach won't be much use.  Instead, require the right file with `javascript_include_tag` for example in a view or a layout:
 
 ```ruby
-<%= javascript_include_tag "twitter_cldr/#{TwitterCldr.convert_locale(I18n.locale)}.js" %>
+<%= javascript_include_tag "twitter_cldr/#{I18n.locale}.js" %>
 ```
 
 ### Dates and Times

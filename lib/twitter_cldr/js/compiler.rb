@@ -9,6 +9,8 @@ require 'coffee-script'
 
 module TwitterCldr
   module Js
+    CompiledFile = Struct.new(:source, :source_map)
+
     class Compiler
       attr_reader :locales
 
@@ -16,6 +18,7 @@ module TwitterCldr
         @locales = options[:locales] || TwitterCldr.supported_locales
         @features = options[:features] || renderers.keys
         @prerender = options[:prerender].nil? ? true : options[:prerender]
+        @source_map = options[:source_map]
       end
 
       def compile_each(options = {})
@@ -32,13 +35,24 @@ module TwitterCldr
           bundle = TwitterCldr::Js::Renderers::Bundle.new
           bundle[:locale] = locale
           bundle[:contents] = contents
-          result = CoffeeScript.compile(bundle.render, :bare => false)
+          bundle[:source_map] = @source_map
+
+          result = CoffeeScript.compile(bundle.render, {
+            :bare => false,
+            :sourceMap => @source_map
+          })
+
+          file = if @source_map
+            CompiledFile.new(result["js"], result["sourceMap"])
+          else
+            CompiledFile.new(result)
+          end
 
           # required alias definition that adds twitter_cldr to Twitter's static build process
-          result.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
-          result = Uglifier.compile(result) if options[:minify]
+          file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
+          file.source = Uglifier.compile(file.source) if options[:minify]
 
-          yield result, TwitterCldr.twitter_locale(locale)
+          yield file, TwitterCldr.twitter_locale(locale)
         end
       end
 
@@ -54,7 +68,8 @@ module TwitterCldr
           :currencies => TwitterCldr::Js::Renderers::Shared::CurrenciesRenderer,
           :lists => TwitterCldr::Js::Renderers::Shared::ListRenderer,
           :bidi => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
-          :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer
+          :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
+          :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser
         }
       end
     end

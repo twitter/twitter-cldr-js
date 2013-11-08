@@ -31,11 +31,10 @@ end
 
 desc 'Run JavaScript specs'
 task "spec:js" do
-  ENV["LOCALES"] = "en"
+  ENV["LOCALES"] = "en,ar"
   Rake::Task["twitter_cldr:js:update"].invoke
 
   puts "\nJasmine Specs"
-  failures = 0
 
   if `which jasmine-node`.strip.empty?
     puts "ERROR: You need to install jasmine-node to run JavaScript tests:"
@@ -44,12 +43,12 @@ task "spec:js" do
   else
     puts `jasmine-node #{File.dirname(__FILE__)} --junitreport`
     doc_files = Dir.glob(File.join(File.dirname(__FILE__), "reports/**"))
+    failures = 0
 
     doc_files.each do |doc_file|
       doc = REXML::Document.new(File.read(doc_file))
-      failures += doc.elements.to_a("testsuites/testsuite").inject(0) do |sum, element|
-        sum += element.attributes["failures"].to_i
-        sum
+      failures = doc.elements.to_a("testsuites/testsuite").inject(0) do |sum, element|
+        sum + element.attributes["failures"].to_i
       end
     end
 

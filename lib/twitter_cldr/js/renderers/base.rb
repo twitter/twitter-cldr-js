@@ -8,6 +8,8 @@ module TwitterCldr
     module Renderers
       class Base < Mustache
 
+        attr_reader :locale
+
         def initialize(options = {})
           @locale = options[:locale]
         end

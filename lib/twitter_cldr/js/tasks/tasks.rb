@@ -30,8 +30,13 @@ module TwitterCldr
           locales = get_locales
           $stdout.write(options[:begin_msg])
 
-          prerender  = ENV["PRERENDER"] ? ENV["PRERENDER"] == "true" : nil
-          compiler   = TwitterCldr::Js::Compiler.new(:locales => locales, :prerender => prerender)
+          compiler_options = {
+            :locales => locales,
+            :prerender => ENV["PRERENDER"] ? ENV["PRERENDER"] == "true" : nil,
+            :source_map => ENV["SOURCE_MAP"] ? ENV["SOURCE_MAP"] == "true" : false
+          }
+
+          compiler   = TwitterCldr::Js::Compiler.new(compiler_options)
           output_dir = File.expand_path(options[:output_dir] || get_output_dir)
 
           build_duration = time_operation do
@@ -40,7 +45,14 @@ module TwitterCldr
                 out_file = File.join(output_dir, file_pattern % locale)
                 FileUtils.mkdir_p(File.dirname(out_file))
                 File.open(out_file, "w+") do |f|
-                  f.write(bundle)
+                  f.write(bundle.source)
+                end
+
+                if bundle.source_map
+                  ext = File.extname(out_file)
+                  File.open("#{out_file.chomp(ext)}.map", "w+") do |f|
+                    f.write(bundle.source_map)
+                  end
                 end
               end
             end

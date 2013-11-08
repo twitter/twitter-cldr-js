@@ -4,9 +4,6 @@
 var TwitterCldr = require('../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Utilities", function() {
-  beforeEach(function() {
-  });
-
   describe("#is_even", function() {
     it("should return true if the given number is even", function() {
       for(var i = 0; i <= 1000; i += 2) {

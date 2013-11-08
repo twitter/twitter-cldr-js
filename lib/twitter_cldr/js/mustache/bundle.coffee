@@ -10,6 +10,12 @@
 // Description: Provides date, time, number, and list formatting functionality for various Twitter-supported locales in Javascript.
 ###
 
+{{#source_map}}
+###
+//@ sourceMappingURL={{locale}}.map
+###
+{{/source_map}}
+
 # required alias definition that adds twitter_cldr to Twitter's static build process
 ###<<module_def>>###
 

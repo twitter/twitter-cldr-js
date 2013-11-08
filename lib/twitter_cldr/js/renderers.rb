@@ -30,6 +30,10 @@ module TwitterCldr
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
       end
+
+      module Parsers
+        autoload :NumberParser,                         'twitter_cldr/js/renderers/parsers/number_parser'
+      end
     end
   end
 end

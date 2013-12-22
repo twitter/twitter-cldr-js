@@ -6,7 +6,7 @@ class TwitterCldr.AdditionalDateFormatSelector
     @pattern_hash = pattern_hash
 
   find_closest: (goal_pattern) ->
-    if !goal_pattern? || goal_pattern.trim().length == 0
+    if !goal_pattern? || goal_pattern.replace(/^\s+|\s+$/g, "").length == 0
       null
     else
       ranks = this.rank(goal_pattern)

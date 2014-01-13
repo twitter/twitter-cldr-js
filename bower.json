@@ -1,0 +1,26 @@
+{
+  "name": "twitter-cldr-js",
+  "version": "2.2.1",
+  "homepage": "https://github.com/twitter/twitter-cldr-js",
+  "authors": [
+    "Cameron C. Dutro"
+  ],
+  "description": "CLDR bindings for Javascript",
+  "main": "lib/assets/javascripts",
+  "keywords": [
+    "cldr"
+  ],
+  "license": "Apache 2.0",
+  "private": true,
+  "root": "lib/assets/javascripts",
+  "ignore": [
+    "**/.*",
+    "spec",
+    "Gemfile",
+    "*.gemspec",
+    "lib/twitter_cldr",
+    "History.txt",
+    "NOTICE",
+    "git-diff"
+  ]
+}

@@ -1,6 +1,7 @@
 === 2.2.3
 
 * Fixing bad generated javascript.
+* Replacing call to trim() with regex to support IE8.
 
 === 2.2.2
 

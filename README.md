@@ -217,8 +217,8 @@ To mitigate this problem, Unicode supports special invisible characters that for
 
 ```javascript
 var bidi_str = TwitterCldr.Bidi.from_string("hello نزوة world", {"direction": "RTL"});
-bidi.reorder_visually();
-bidi.toString();
+bidi_str.reorder_visually();
+bidi_str.toString();
 ```
 
 **Disclaimer**: Google Translate tells me the Arabic in the example above means "fancy", but my confidence is not very high, especially since all the letters are unattached. Apologies to any native speakers :)

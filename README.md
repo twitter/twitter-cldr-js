@@ -220,6 +220,8 @@ var bidi_str = TwitterCldr.Bidi.from_string("hello نزوة world", {"direction"
 bidi_str.reorder_visually();
 bidi_str.toString();
 ```
+**Disclaimer**: Google Translate tells me the Arabic in the example above means "fancy", but my confidence is not very high, especially since all the letters are unattached. Apologies to any native speakers :)
+
 
 ### Phone Codes
 
@@ -245,7 +247,6 @@ Get a list of supported territories by using the `territories` method:
 TwitterCldr.PhoneCodes.territories()  // [:zw, :an, :tr, :by, :mh, ...]
 ```
 
-**Disclaimer**: Google Translate tells me the Arabic in the example above means "fancy", but my confidence is not very high, especially since all the letters are unattached. Apologies to any native speakers :)
 
 ### Generating the JavaScript
 

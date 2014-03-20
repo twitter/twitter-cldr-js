@@ -5,7 +5,7 @@ class TwitterCldr.PhoneCodes
   @phone_codes = `{{{phone_codes}}}`
 
   @territories: ->
-    @codes ||= (data for _, data of @phone_codes)
+    @codes ||= (data for data, _ of @phone_codes)
 
   @code_for_territory: (territory) ->
     result = null

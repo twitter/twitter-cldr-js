@@ -226,16 +226,16 @@ bidi_str.toString();
 Look up phone codes by territory:
 
 ```javascript
-# United States
+// United States
 TwitterCldr.PhoneCodes.code_for_territory("us")  // "1"
 
-# Perú
+// Perú
 TwitterCldr.PhoneCodes.code_for_territory("pe")  // "51"
 
-# Egypt
+// Egypt
 TwitterCldr.PhoneCodes.code_for_territory("eg")  // "20"
 
-# Denmark
+// Denmark
 TwitterCldr.PhoneCodes.code_for_territory("dk")  // "45"
 ```
 

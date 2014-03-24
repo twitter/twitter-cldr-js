@@ -220,8 +220,33 @@ var bidi_str = TwitterCldr.Bidi.from_string("hello نزوة world", {"direction"
 bidi_str.reorder_visually();
 bidi_str.toString();
 ```
-
 **Disclaimer**: Google Translate tells me the Arabic in the example above means "fancy", but my confidence is not very high, especially since all the letters are unattached. Apologies to any native speakers :)
+
+
+### Phone Codes
+
+Look up phone codes by territory:
+
+```javascript
+// United States
+TwitterCldr.PhoneCodes.code_for_territory("us")  // "1"
+
+// Perú
+TwitterCldr.PhoneCodes.code_for_territory("pe")  // "51"
+
+// Egypt
+TwitterCldr.PhoneCodes.code_for_territory("eg")  // "20"
+
+// Denmark
+TwitterCldr.PhoneCodes.code_for_territory("dk")  // "45"
+```
+
+Get a list of supported territories by using the `territories` method:
+
+```javascript
+TwitterCldr.PhoneCodes.territories()  // [:zw, :an, :tr, :by, :mh, ...]
+```
+
 
 ### Generating the JavaScript
 

@@ -29,6 +29,7 @@ module TwitterCldr
         autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
+        autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
       end
 
       module Parsers

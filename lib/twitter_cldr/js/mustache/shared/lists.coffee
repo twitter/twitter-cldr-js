@@ -23,7 +23,7 @@ class TwitterCldr.ListFormatter
     result
 
   compose: (format, elements) ->
-    elements = (element for element in elements when element isnt null)
+    elements = (element for element in elements when element?)
 
     if elements.length > 1
       result = format.replace(/\{(\d+)\}/g, ->

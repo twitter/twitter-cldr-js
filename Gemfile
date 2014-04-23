@@ -11,7 +11,7 @@ group :test do
   end
 end
 
-group :development do
+group :development, :test do
   gem 'pry'
   gem 'pry-nav'
 end

@@ -70,6 +70,14 @@ describe("ListFormatter", function() {
         it("should format correctly if no corresponding integer index exists", function() {
           expect(formatter.format(["larry", "curly", "moe"])).toEqual("larry< curly> moe");
         });
+
+        it("should format an empty list correctly", function() {
+          expect(formatter.format([])).toEqual("");
+        });
+
+        it("should format a list with a single element correctly", function() {
+          expect(formatter.format(["larry"])).toEqual("larry")
+        });
       });
     });
 

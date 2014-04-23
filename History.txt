@@ -1,3 +1,8 @@
+=== 2.2.4
+
+* Upgrading to twitter-cldr-rb 2.4.3 to fix abbreviated timespan issue in en-GB.
+* Fixing list formatter issue causing incorrect results when lists contain fewer than 2 elements.
+
 === 2.2.3
 
 * Fixing bad generated javascript.

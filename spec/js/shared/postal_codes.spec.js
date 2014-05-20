@@ -26,8 +26,20 @@ describe("PostalCodes", function() {
     it("returns 'true' for the territory 'us' and code '94103'", function() {
       expect(TwitterCldr.PostalCodes.is_valid("us", "94103")).toBe(true);
     });
-    it("returns 'true' for the territory 'us' and code '9410'", function() {
+    it("returns 'true' for the territory 'gb' and code 'BS98 1TL'", function() {
+      expect(TwitterCldr.PostalCodes.is_valid("gb", "BS98 1TL")).toBe(true);
+    });
+    it("returns 'true' for the territory 'se' and code '280 12'", function() {
+      expect(TwitterCldr.PostalCodes.is_valid("se", "280 12")).toBe(true);
+    });
+    it("returns 'false' for the territory 'us' and code '9410'", function() {
       expect(TwitterCldr.PostalCodes.is_valid("us", "9410")).toBe(false);
+    });
+    it("returns 'false' for the territory 'us' and code 'BS98 1TL'", function() {
+      expect(TwitterCldr.PostalCodes.is_valid("us", "BS98 1TL")).toBe(false);
+    });
+    it("returns 'false' for the territory 'gb' and code '280 12'", function() {
+      expect(TwitterCldr.PostalCodes.is_valid("gb", "280 12")).toBe(false);
     });
   });
 

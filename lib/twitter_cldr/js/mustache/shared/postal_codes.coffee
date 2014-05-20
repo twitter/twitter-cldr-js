@@ -13,9 +13,10 @@ class TwitterCldr.PostalCodes
       if territory_code == territory
         result = regex
         break
+    if result? then result = new RegExp(result) 
     result
 
   @is_valid: (territory, postal_code) ->
-    regex = new RegExp(PostalCodes.regex_for_territory(territory))
+    regex = PostalCodes.regex_for_territory(territory)
     regex.test (postal_code)
 

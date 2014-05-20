@@ -15,7 +15,7 @@ describe("PostalCodes", function() {
 
   describe("#territory", function() {
     it("returns '\\d{6}' for the territory 'in'", function() {
-      expect(TwitterCldr.PostalCodes.regex_for_territory("in")).toEqual("\\d{6}");
+      expect(TwitterCldr.PostalCodes.regex_for_territory("in")).toEqual(new RegExp("\\d{6}"));
     });
     it("returns null for invalid territories like 'xx' (say)", function() {
       expect(TwitterCldr.PostalCodes.regex_for_territory("xx")).toBe(null);

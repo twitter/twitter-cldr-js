@@ -227,21 +227,21 @@ bidi_str.toString();
 The CLDR contains postal code validation regexes for a number of countries.
 
 ```javascript
-# United States
-TwitterCldr.PostalCodes.is_valid(:us, "94103")     // true
-TwitterCldr.PostalCodes.is_valid(:us, "9410")      // false
+// United States
+TwitterCldr.PostalCodes.is_valid("us", "94103")     // true
+TwitterCldr.PostalCodes.is_valid("us", "9410")      // false
 
-# England (Great Britain)
-TwitterCldr.PostalCodes.is_valid(:gb, "BS98 1TL")  // true
+// England (Great Britain)
+TwitterCldr.PostalCodes.is_valid("gb", "BS98 1TL")  // true
 
-# Sweden
-TwitterCldr.PostalCodes.is_valid(:se, "280 12")    // true
+// Sweden
+TwitterCldr.PostalCodes.is_valid("se", "280 12")    // true
 
-# Canada
-TwitterCldr.PostalCodes.is_valid(:ca, "V3H 1Z7")   // true
+// Canada
+TwitterCldr.PostalCodes.is_valid("ca", "V3H 1Z7")   // true
 ```
 
-Get a list of supported territories by using the `#territories` method:
+Get a list of supported territories by using the `territories` method:
 
 ```javascript
 TwitterCldr.PostalCodes.territories  // ["ad", "am", "ar", "as", "at", ... ]

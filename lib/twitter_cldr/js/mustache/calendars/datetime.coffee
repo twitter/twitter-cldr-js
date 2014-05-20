@@ -246,7 +246,7 @@ class TwitterCldr.DateTimeFormatter
   timezone: (time, pattern, length) ->
     offset = time.getTimezoneOffset()
 
-    hours = ("00" + (Math.abs(offset) / 60).toString()).slice(-2)
+    hours = ("00" + (Math.floor(Math.abs(offset) / 60)).toString()).slice(-2)
     minutes = ("00" + (Math.abs(offset) % 60).toString()).slice(-2)
     sign = if offset > 0 then "-" else "+" # timezone sign is opposite to offset sign
 

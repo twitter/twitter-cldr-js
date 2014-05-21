@@ -17,6 +17,6 @@ class TwitterCldr.PostalCodes
     result
 
   @is_valid: (territory, postal_code) ->
-    regex = PostalCodes.regex_for_territory(territory)
+    regex = @regex_for_territory(territory)
     regex.test (postal_code)
 

@@ -30,7 +30,8 @@ module TwitterCldr
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
         autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
-        autoload :PostalCodesRenderer,                   'twitter_cldr/js/renderers/shared/postal_codes_renderer'
+        autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
+        autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
       end
 
       module Parsers

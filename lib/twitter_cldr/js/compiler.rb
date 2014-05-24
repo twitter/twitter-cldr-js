@@ -70,6 +70,7 @@ module TwitterCldr
           :bidi => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
           :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
           :phone_codes => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
+          :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
           :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser
         }
       end

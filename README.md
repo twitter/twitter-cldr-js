@@ -222,6 +222,36 @@ bidi_str.toString();
 ```
 **Disclaimer**: Google Translate tells me the Arabic in the example above means "fancy", but my confidence is not very high, especially since all the letters are unattached. Apologies to any native speakers :)
 
+### Postal Codes
+
+The CLDR contains postal code validation regexes for a number of countries.
+
+```javascript
+// United States
+TwitterCldr.PostalCodes.is_valid("us", "94103");     // true
+TwitterCldr.PostalCodes.is_valid("us", "9410");      // false
+
+// England (Great Britain)
+TwitterCldr.PostalCodes.is_valid("gb", "BS98 1TL");  // true
+
+// Sweden
+TwitterCldr.PostalCodes.is_valid("se", "280 12");    // true
+
+// Canada
+TwitterCldr.PostalCodes.is_valid("ca", "V3H 1Z7");   // true
+```
+
+Get a list of supported territories by using the `territories` method:
+
+```javascript
+TwitterCldr.PostalCodes.territories();  // ["ad", "am", "ar", "as", "at", ... ]
+```
+
+Just want the regex?  No problem:
+
+```javascript
+TwitterCldr.PostalCodes.regex_for_territory("us");  // /\d{5}([ \-]\d{4})?/
+```
 
 ### Phone Codes
 
@@ -229,22 +259,22 @@ Look up phone codes by territory:
 
 ```javascript
 // United States
-TwitterCldr.PhoneCodes.code_for_territory("us")  // "1"
+TwitterCldr.PhoneCodes.code_for_territory("us");  // "1"
 
 // Perú
-TwitterCldr.PhoneCodes.code_for_territory("pe")  // "51"
+TwitterCldr.PhoneCodes.code_for_territory("pe");  // "51"
 
 // Egypt
-TwitterCldr.PhoneCodes.code_for_territory("eg")  // "20"
+TwitterCldr.PhoneCodes.code_for_territory("eg");  // "20"
 
 // Denmark
-TwitterCldr.PhoneCodes.code_for_territory("dk")  // "45"
+TwitterCldr.PhoneCodes.code_for_territory("dk"); // "45"
 ```
 
 Get a list of supported territories by using the `territories` method:
 
 ```javascript
-TwitterCldr.PhoneCodes.territories()  // [:zw, :an, :tr, :by, :mh, ...]
+TwitterCldr.PhoneCodes.territories();  // ["zw", "an", "tr", "by", "mh", ...]
 ```
 
 

@@ -3,10 +3,11 @@
 
 class TwitterCldr.Languages
   language_data = `{{{language_data}}}`
+  rtl_data = `{{{rtl_data}}}`
   
   data_for_locale = (locale) ->
     result = language_data[locale]
-    result
+    if result? then result else null
   
   code_for_language = (language, locale) ->
     result = null
@@ -21,7 +22,6 @@ class TwitterCldr.Languages
   @all_for: (locale) ->
     data_for_locale(locale)
 
-
   @from_code_for_locale: (code, locale) ->
     result = null
     locale_data = @all_for(locale)
@@ -35,3 +35,7 @@ class TwitterCldr.Languages
     language_code = code_for_language(language, source_locale)
     dest_locale_data = data_for_locale (dest_locale)
     if language_code? then dest_locale_data[language_code] else null
+
+  @is_rtl: (locale) ->
+    result = rtl_data[locale]
+    if result? then result else null

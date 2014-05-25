@@ -16,6 +16,12 @@ module TwitterCldr
               ret
             end.to_json
           end
+          def rtl_data
+            TwitterCldr.supported_locales.inject({}) do |ret, locale|
+              ret[locale] = TwitterCldr.get_locale_resource(locale, :layout)[locale][:layout][:orientation][:character_order] == "right-to-left"
+              ret
+            end.to_json
+          end
         end
       end
     end

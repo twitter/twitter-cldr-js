@@ -29,6 +29,15 @@ describe("Languages", function() {
     });
   });
 
+  describe("#specific_languages_for_default_locale", function() {
+    it("should return the language in the correct locale for the given locale code (i.e. es in English should be Spanish)", function() {
+      expect(TwitterCldr.Languages.from_code("es")).toEqual("Spanish");
+      expect(TwitterCldr.Languages.from_code("ru")).toEqual("Russian");
+      expect(TwitterCldr.Languages.from_code("uk")).toEqual("Ukrainian");
+      expect(TwitterCldr.Languages.from_code("ar")).toEqual("Arabic");
+    });
+  });
+
   describe("#is_rtl", function() {
     it("should return true for certain locales", function() {
       expect(TwitterCldr.Languages.is_rtl("ar")).toBe(true);

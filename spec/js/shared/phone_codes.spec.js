@@ -5,7 +5,7 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("PhoneCodes", function() {
   describe("#all", function() {
-    it("checks if some locales are supported in other locales", function() {
+    it("checks if some territory codes are supported", function() {
       expect(TwitterCldr.PhoneCodes.territories()).toContain("jp");
     });
     it("checks if invalid territory codes are not supported", function() {

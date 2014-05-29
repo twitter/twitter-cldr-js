@@ -11,6 +11,12 @@ describe("Languages", function() {
       expect(TwitterCldr.Languages.all_for("es").gl).not.toBe(null);
       expect(TwitterCldr.Languages.all_for("gl").ur).not.toBe(null);
     });
+    it("checks if some locales are supported in the current locale", function() {
+      expect(TwitterCldr.Languages.all().ja).not.toBe(null);
+      expect(TwitterCldr.Languages.all().es).not.toBe(null);
+      expect(TwitterCldr.Languages.all().gl).not.toBe(null);
+      expect(TwitterCldr.Languages.all().ur).not.toBe(null);
+    });
     it("should return null for an invalid locale", function() {
       expect(TwitterCldr.Languages.all_for("xx")).toBe(null);
     });

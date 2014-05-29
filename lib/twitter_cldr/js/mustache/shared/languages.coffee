@@ -21,13 +21,13 @@ class TwitterCldr.Languages
     result
 
   @all: ->
-    data_for_locale(TwitterCldr.locale)
+    data_for_locale("{{current_locale}}")
 
   @all_for: (locale) ->
     data_for_locale(locale)
 
   @from_code: (code) ->
-    @from_code_for_locale(code, TwitterCldr.locale)
+    @from_code_for_locale(code, "{{current_locale}}")
 
   @from_code_for_locale: (code, locale) ->
     result = null

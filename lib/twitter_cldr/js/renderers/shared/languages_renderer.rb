@@ -22,6 +22,9 @@ module TwitterCldr
               ret
             end.to_json
           end
+          def current_locale
+            self[:locale]
+          end
         end
       end
     end

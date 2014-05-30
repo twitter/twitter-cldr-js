@@ -4,10 +4,17 @@
 class TwitterCldr.PostalCodes
   
   postal_codes = `{{{postal_codes}}}`
+  regex_cache = {}
 
   find_regex = (territory) ->
+    result = regex_cache[territory]
+    return result if result? 
+
+    
     for territory_code, regex of postal_codes
-      return regex if territory_code == territory
+      if territory_code == territory
+        regex_cache[territory] = regex
+        return regex 
   
   @territories: ->
     @codes ||= (data for data, _ of postal_codes)

@@ -8,9 +8,5 @@ class TwitterCldr.PhoneCodes
     @codes ||= (data for data, _ of @phone_codes)
 
   @code_for_territory: (territory) ->
-    result = null
-    for territory_code, phone_code of @phone_codes
-      if territory_code == territory
-        result = phone_code
-        break
-    result
+    result = @phone_codes[territory]
+    if result? then result else null

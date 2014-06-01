@@ -22,7 +22,7 @@ describe("Languages", function() {
     });
   });
 
-  describe("#specific_languages_for_locales", function() {
+  describe("#from_code_for_locale", function() {
     it("should return the language in the correct locale for the given locale code (i.e. es in English should be Spanish)", function() {
       expect(TwitterCldr.Languages.from_code_for_locale("es", "en")).toEqual("Spanish");
       expect(TwitterCldr.Languages.from_code_for_locale("ru", "es")).toEqual("ruso");
@@ -35,7 +35,7 @@ describe("Languages", function() {
     });
   });
 
-  describe("#specific_languages_for_default_locale", function() {
+  describe("#from_code (using default locale)", function() {
     it("should return the language in the correct locale for the given locale code (i.e. es in English should be Spanish)", function() {
       expect(TwitterCldr.Languages.from_code("es")).toEqual("Spanish");
       expect(TwitterCldr.Languages.from_code("ru")).toEqual("Russian");

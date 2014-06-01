@@ -16,11 +16,6 @@ class TwitterCldr.PostalCodes
       return regex
 
     return null
-    
-    # for territory_code, regex of postal_codes
-    #   if territory_code == territory
-    #     regex_cache[territory] = regex
-    #     return regex 
   
   @territories: ->
     @codes ||= (data for data, _ of postal_codes)

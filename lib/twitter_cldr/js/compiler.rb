@@ -71,6 +71,7 @@ module TwitterCldr
           :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
           :phone_codes => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
           :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
+          :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
           :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser
         }
       end

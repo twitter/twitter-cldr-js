@@ -31,10 +31,7 @@ class TwitterCldr.Languages
 
   @from_code_for_locale: (code, locale) ->
     locale_data = @all_for(locale)
-    return null if !locale_data?
-
-    result = locale_data[code]
-    if result? then result else null
+    locale_data[code] if locale_data?
 
   @translate_language: (language, source_locale, dest_locale) ->
     language_code = code_for_language(language, source_locale)

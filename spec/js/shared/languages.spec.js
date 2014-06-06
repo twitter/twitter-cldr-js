@@ -30,8 +30,8 @@ describe("Languages", function() {
       expect(TwitterCldr.Languages.from_code_for_locale("uk", "en")).toEqual("Ukrainian");
     });
     it("returns null for invalid locales", function() {
-      expect(TwitterCldr.Languages.from_code_for_locale("uk", "xx")).toBe(null);
-      expect(TwitterCldr.Languages.from_code_for_locale("xx", "uk")).toBe(null);
+      expect(TwitterCldr.Languages.from_code_for_locale("uk", "xx")).not.toBeDefined();
+      expect(TwitterCldr.Languages.from_code_for_locale("xx", "uk")).not.toBeDefined();
     });
   });
 

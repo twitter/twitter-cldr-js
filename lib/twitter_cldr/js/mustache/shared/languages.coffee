@@ -30,13 +30,8 @@ class TwitterCldr.Languages
     @from_code_for_locale(code, "{{current_locale}}")
 
   @from_code_for_locale: (code, locale) ->
-    result = null
     locale_data = @all_for(locale)
-    for locale_code, language_name of locale_data
-      if locale_code == code
-        result = language_name
-        break
-    result
+    locale_data[code] if locale_data?
 
   @translate_language: (language, source_locale, dest_locale) ->
     language_code = code_for_language(language, source_locale)

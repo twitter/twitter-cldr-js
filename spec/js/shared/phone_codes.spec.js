@@ -13,7 +13,7 @@ describe("PhoneCodes", function() {
     });
   });
 
-  describe("#rule_for", function() {
+  describe("#code_for_territory", function() {
     it("returns '20' for the territory 'eg'", function() {
       expect(TwitterCldr.PhoneCodes.code_for_territory("eg")).toEqual("20");
     });

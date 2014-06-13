@@ -1,0 +1,24 @@
+# Copyright 2012 Twitter, Inc
+# http://www.apache.org/licenses/LICENSE-2.0
+
+class TwitterCldr.UnicodeString extends TwitterCldr.Component
+	constructor : (@codepoints) ->
+		super
+
+	@to_set : ->
+		# If the number of codepoints is greater than 1, treat them as a
+    # group (eg. multichar string). This is definitely a hack in that
+    # it means there has to be special logic in RangeSet that deals
+    # with data types that aren't true integer ranges. I can't think
+    # of any other way to support multichar strings :(
+
+    if codepoints.length > 1
+    	new TwitterCldr.Utils.RangeSet(codepoints) #todo check this
+    else
+    	new TwitterCldr.Utils.RangeSet([codepoints.first])
+
+  @to_regex_str : ->
+  	cps = codepoints instanceof Array ? codepoints : [codepoints]
+  	array_to_regex (cps)
+
+  	

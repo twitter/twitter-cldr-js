@@ -85,3 +85,15 @@ class TwitterCldr.Utilities
 
   @is_odd: (num) ->
     num % 2 == 1
+
+  @only_unique : (arr) ->
+    arr.reduce ((u, elem) ->
+      u.push elem  if u.indexOf(elem) < 0
+      u
+    ), []
+
+
+
+
+
+

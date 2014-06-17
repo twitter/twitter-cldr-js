@@ -6,6 +6,9 @@ class TwitterCldr.SegmentationParser
 		@begin_token ||= new TwitterCldr.Token "special_char", "\\A"
 		@regex_parser ||= new TwitterCldr.UnicodeRegexParser
 
+	class RuleMatchData
+		constructor : (@text, @boundary_offset) ->
+
 	class Rule
 		constructor : ->
 
@@ -23,18 +26,14 @@ class TwitterCldr.SegmentationParser
 
 				if @right?
 					right_match = str.slice(match_pos).match(right)
-					
-					result = {}					
+										
 					
 					if right_match?
-						result[string] = left_match[0] + right_match [0]
-						result[id] = match_pos
+						new RuleMatchData ((left_match[0] + right_match [0]), match_pos)
 
 					else
-						result[string] = str
-						result[id] = str.length
+						new RuleMatchData (str, str.length)
 
-					result
 			
 			return null
 
@@ -46,7 +45,7 @@ class TwitterCldr.SegmentationParser
 
 		@match : (str) ->
 			match = str.match(regex)
-			{ string : match[0], id : str.indexOf(match[0]) + match[0].length } if match?
+			new RuleMatchData (match[0], str.indexOf(match[0]) + match[0].length) if match?
 				
 
 	@do_parse: (options = {}) ->

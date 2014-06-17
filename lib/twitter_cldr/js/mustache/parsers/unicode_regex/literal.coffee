@@ -7,7 +7,7 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 		super
 
 	@ordinalize : (char) ->
-		char.charCodeAt(0)
+		TwitterCldr.Utilities.char_code_at (char, 0)
 
 	@special_characters = {
 		s : [32]  # space
@@ -15,7 +15,7 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 		r : [13]  # carriage return
 		n : [10]  # newline
 		f : [12]  # form feed
-		d : "0123456789".split("").map (c) ->
+		d : [0..9].map (c) ->
 				@ordinalize(c)
 		w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map (c) ->
 				@ordinalize(c)

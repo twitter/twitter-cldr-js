@@ -5,7 +5,7 @@ class TwitterCldr.Component
   @to_utf8 : (codepoints) ->
     if !(codepoints instanceof Array)
       codepoints = [codepoints]
-      
+
     codepoints.map ( (c) -> 
       s = c.toString(16)
       while s.length < 4 
@@ -26,9 +26,7 @@ class TwitterCldr.Component
     )
 
 
-        def array_to_regex(arr)
-          arr.map { |elem| "(?:#{to_utf8(elem)})" }.join
-        end
+        
 
         def set_to_regex(set)
           strs = set.to_a(true).uniq.map do |obj|

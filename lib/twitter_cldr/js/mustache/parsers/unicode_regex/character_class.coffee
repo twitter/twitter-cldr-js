@@ -3,6 +3,9 @@
 
 class TwitterCldr.CharacterClass extends TwitterCldr.Component
   constructor : (@root) ->
+    @type = "character_class"
+    @grouping_pairs = TwitterCldr.CharacterClass.grouping_pairs
+    super
 
   @grouping_pairs = {
     "close_bracket" : "open_bracket"
@@ -14,47 +17,44 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
   class UnaryOperator 
     constructor : (@operator, @child) ->
 
-  @type = "character_class"
-
   @opening_types : ->
-    keys = []    
-    for key in @grouping_pairs
+    keys = []   
+    for key, value of @grouping_pairs
       keys.push key
 
     keys
 
   @closing_types : ->
     values = []    
-    for key in @grouping_pairs
-      values.push @grouping_pairs[key]
+    for key, value of @grouping_pairs
+      values.push value
 
     values
 
-  @opening_type_for : (type) ->
+  opening_type_for : (type) ->
     if @grouping_pairs[type]? then @grouping_pairs[type] else null
 
-  @to_regexp_str : ->
+  to_regexp_str : ->
     set_to_regex (to_set())
 
-  @to_set : ->
+  to_set : ->
     evaluate(@root)
 
   evaluate : (node) ->
-    switch node
-      when UnaryOperator, BinaryOperator
-        switch node.operator
-          when "negate"
-            TwitterCldr.UnicodeRegex.valid_regexp_chars.subtract( evaluate (node.child) )
-          when "union", "pipe"
-            evaluate (node.left).union (evaluate (node.right))
-          when "dash"
-            evaluate (node.left).difference (evaluate (node.right))
-          when "ampersand"
-            evaluate (node.left).intersection (evaluate (node.right))  
+    if node instanceof TwitterCldr.CharacterClass.UnaryOperator or node instanceof TwitterCldr.CharacterClass.BinaryOperator    
+      switch node.operator
+        when "negate"
+          TwitterCldr.UnicodeRegex.valid_regexp_chars.subtract( evaluate (node.child) )
+        when "union", "pipe"
+          evaluate (node.left).union (evaluate (node.right))
+        when "dash"
+          evaluate (node.left).difference (evaluate (node.right))
+        when "ampersand"
+          evaluate (node.left).intersection (evaluate (node.right))  
           
+    else
+      if node?
+        node.to_set
       else
-        if node?
-          node.to_set
-        else
-          new TwitterCldr.RangeSet []
+        new TwitterCldr.RangeSet []
     

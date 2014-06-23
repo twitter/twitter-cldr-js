@@ -12,10 +12,10 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
       @property_value = text
       @property = null
 
-  @to_regexp_str : ->
+  to_regexp_str : ->
     @set_to_regex(@to_set())
 
-  @to_set : ->
+  to_set : ->
     codepoints().subtract(TwitterCldr.UnicodeRegex.invalid_regexp_chars)
 
   codepoints : ->

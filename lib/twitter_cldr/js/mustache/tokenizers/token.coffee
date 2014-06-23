@@ -3,7 +3,8 @@
 
 class TwitterCldr.Token
 
-  constructor : (@value, @type) ->
+  constructor : (@value, @type) -> #TODO - Options is not wokring. Add that. 
+  #TODO fix all the plaecs this is messed up in.
   
   @to_hash : ->
     { value => @value, type => @type }

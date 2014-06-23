@@ -4,27 +4,28 @@
 class TwitterCldr.Literal extends TwitterCldr.Component
 	
 	constructor : (@text) ->
+		@special_characters = {
+			s : [32]  # space
+			t : [9]   # tab
+			r : [13]  # carriage return
+			n : [10]  # newline
+			f : [12]  # form feed
+			d : [0..9].map (c) ->
+					@ordinalize(c)
+			w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map (c) ->
+					@ordinalize(c)
+		}
 		super
 
-	@ordinalize : (char) ->
+	ordinalize : (char) ->
 		TwitterCldr.Utilities.char_code_at (char, 0)
 
-	@special_characters = {
-		s : [32]  # space
-		t : [9]   # tab
-		r : [13]  # carriage return
-		n : [10]  # newline
-		f : [12]  # form feed
-		d : [0..9].map (c) ->
-				@ordinalize(c)
-		w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map (c) ->
-				@ordinalize(c)
-	}
+	
 
-	@to_regex_str : ->
+	to_regex_str : ->
 		@text
 
-	@to_set : ->
+	to_set : ->
 		if text.match(/^\\/) 
 			special_char = text.slice(1)
 

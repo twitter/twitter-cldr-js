@@ -2,13 +2,15 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.TokenRecognizer
-	constructor : (@token_type, @regex, @content = nil, @cleaner) ->
+	constructor : (@token_type, @regex, @content = nil, @cleaner) -> #TODO figure out if this works. Cleaner and all. (that do thing)
 
 	@recognizes : (text) ->
 		@regex.test text
 
 	@clean : (val) ->
 		@cleaner(val)
+
+
 
 class TwitterCldr.Tokenizer
 	constructor : (@recognizers, @custom_splitter = nil, @remove_empty_entries = true) ->

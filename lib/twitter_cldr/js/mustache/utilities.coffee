@@ -92,8 +92,7 @@ class TwitterCldr.Utilities
       u
     ), []
 
+  @regex_escape = (s) ->
+    s.replace /[-\/\\^$*+?.()|[\]{}]/g, "\\$&"
 
-
-
-
-
+  

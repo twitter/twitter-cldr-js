@@ -14,14 +14,15 @@ class TwitterCldr.SegmentationParser
 
 	class BreakRule extends Rule
 		constructor : (@left, @right) ->
+			@boundary_symbol = "break"		
 			super
 
-		@boundary_symbol = "break"		
+		
 
-		@match : (str) ->
+		match : (str) ->
 			left_match = str.match(left)
 
-			if @left? && left_match?
+			if @left? and left_match?
 				match_pos = str.indexOf(left_match[0]) + left_match[0].length
 
 				if @right?
@@ -29,26 +30,27 @@ class TwitterCldr.SegmentationParser
 										
 					
 					if right_match?
-						new RuleMatchData ((left_match[0] + right_match [0]), match_pos)
+						new RuleMatchData (left_match[0] + right_match [0]), match_pos)
 
 					else
-						new RuleMatchData (str, str.length)
+						new RuleMatchData str, str.length
 
 			
 			return null
 
 	class NoBreakRule extends Rule
 		constructor : (@regex) ->
+			@boundary_symbol = "no_break"
 			super
 
-		@boundary_symbol = no_break
+		
 
-		@match : (str) ->
+		match : (str) ->
 			match = str.match(regex)
-			new RuleMatchData (match[0], str.indexOf(match[0]) + match[0].length) if match?
+			 if match? new RuleMatchData match[0], str.indexOf(match[0]) + match[0].length else null # TODO check this. There should be a position counter thing
 				
 
-	@do_parse: (options = {}) ->
+	do_parse: (options = {}) ->
 		regex_token_lists = []
 		current_regex_tokens = []
 		boundary_symbol = null
@@ -76,8 +78,8 @@ class TwitterCldr.SegmentationParser
 		
 		result
 
-	@add_anchors : (token_list) ->
+	add_anchors : (token_list) ->
 		token_list.splice (0, 0, @begin_token)
 
-	@parse_regex : (tokens, options = {}) ->
+	parse_regex : (tokens, options = {}) ->
 		if tokens? and tokens.length != 0 then new TwitterCldr.UnicodeRegex @regex_parser.parse(tokens), options else null

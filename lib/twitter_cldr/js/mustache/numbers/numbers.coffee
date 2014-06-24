@@ -19,15 +19,21 @@ class TwitterCldr.NumberFormatter
     for key, val of options
       opts[key] = if options[key]? then options[key] else opts[key]
 
-    [prefix, suffix, integer_format, fraction_format] = this.partition_tokens(this.get_tokens(number, opts))
-    number = this.transform_number(number)
-    [intg, fraction] = this.parse_number(number, opts)
-    result = integer_format.apply(parseFloat(intg), opts)
-    result += fraction_format.apply(fraction, opts) if fraction
-    sign = if number < 0 && prefix != "-" then @symbols.minus_sign || @default_symbols.minus_sign else ""
-    "#{prefix}#{result}#{suffix}"
+    tokens = this.get_tokens(number, opts)
 
-  transform_number: (number) ->
+    if tokens.join('') == '0'
+      # can't format the number for current locale
+      number.toString()
+    else
+      [prefix, suffix, integer_format, fraction_format] = this.partition_tokens(tokens)
+      number = this.truncate_number(number, integer_format)
+      [intg, fraction] = this.parse_number(number, opts)
+      result = integer_format.apply(parseFloat(intg), opts)
+      result += fraction_format.apply(fraction, opts) if fraction
+      sign = if number < 0 && prefix != "-" then @symbols.minus_sign || @default_symbols.minus_sign else ""
+      "#{prefix}#{result}#{suffix}"
+
+  truncate_number: (number, integer_format) ->
     number  # noop for base class
 
   partition_tokens: (tokens) ->
@@ -135,11 +141,10 @@ class TwitterCldr.AbbreviatedNumberFormatter extends TwitterCldr.NumberFormatter
     tokens = tokens[format] if format?
     tokens
 
-  transform_number: (number) ->
-    if (number < @NUMBER_MAX) && (number >= @NUMBER_MIN)
-      power = Math.floor((number.toString().length - 1) / 3) * 3
-      factor = Math.pow(10, power)
-      number / factor
+  truncate_number: (number, integer_format) ->
+    if @NUMBER_MIN <= number and number < @NUMBER_MAX
+      factor = Math.max(0, Math.floor(number).toString().length - integer_format.format.length)
+      number / Math.pow(10, factor)
     else
       number
 

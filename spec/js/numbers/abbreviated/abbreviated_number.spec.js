@@ -6,30 +6,24 @@ var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/en.js
 describe("AbbreviatedNumberFormatter", function() {
   beforeEach(function() {
     formatter = new TwitterCldr.AbbreviatedNumberFormatter();
+    number = 1234;
   });
 
   describe("#transform_number", function() {
-    it("chops off the number to the necessary number of sig figs", function() {
-      expect(formatter.transform_number(Math.pow(10, 3))).toEqual(1);
-      expect(formatter.transform_number(Math.pow(10, 4))).toEqual(10);
-      expect(formatter.transform_number(Math.pow(10, 5))).toEqual(100);
-      expect(formatter.transform_number(Math.pow(10, 6))).toEqual(1);
-      expect(formatter.transform_number(Math.pow(10, 7))).toEqual(10);
-      expect(formatter.transform_number(Math.pow(10, 8))).toEqual(100);
-      expect(formatter.transform_number(Math.pow(10, 9))).toEqual(1);
-      expect(formatter.transform_number(Math.pow(10, 10))).toEqual(10);
-      expect(formatter.transform_number(Math.pow(10, 11))).toEqual(100);
-      expect(formatter.transform_number(Math.pow(10, 12))).toEqual(1);
-      expect(formatter.transform_number(Math.pow(10, 13))).toEqual(10);
-      expect(formatter.transform_number(Math.pow(10, 14))).toEqual(100);
+    it("truncates the number based on the integer format string", function() {
+      expect(formatter.truncate_number(number, { format: "0" })).toEqual(1.234);
+      expect(formatter.truncate_number(number, { format: "00" })).toEqual(12.34);
+      expect(formatter.truncate_number(number, { format: "000" })).toEqual(123.4);
+      expect(formatter.truncate_number(number, { format: "0000" })).toEqual(1234);
+      expect(formatter.truncate_number(number, { format: "00000" })).toEqual(1234);
     });
 
     it("returns the original number if greater than 10^15", function() {
-      expect(formatter.transform_number(Math.pow(10, 15))).toEqual(Math.pow(10, 15));
+      expect(formatter.truncate_number(Math.pow(10, 15), "000")).toEqual(Math.pow(10, 15));
     });
 
     it("returns the original number if less than 10^3", function() {
-      expect(formatter.transform_number(999)).toEqual(999);
+      expect(formatter.truncate_number(999, "000")).toEqual(999);
     });
   });
 

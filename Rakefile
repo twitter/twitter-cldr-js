@@ -31,7 +31,7 @@ end
 
 desc 'Run JavaScript specs'
 task "spec:js" do
-  ENV["LOCALES"] = "en,ar"
+  ENV["LOCALES"] = "en,ar,ko"
   Rake::Task["twitter_cldr:js:update"].invoke
 
   puts "\nJasmine Specs"

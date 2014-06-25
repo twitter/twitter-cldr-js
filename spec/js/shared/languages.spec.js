@@ -5,45 +5,22 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Languages", function() {
   describe("#all", function() {
-    it("checks if some locales are supported in other locales", function() {
-      expect(TwitterCldr.Languages.all_for("ar").ja).not.toBe(null);
-      expect(TwitterCldr.Languages.all_for("ja").es).not.toBe(null);
-      expect(TwitterCldr.Languages.all_for("es").gl).not.toBe(null);
-      expect(TwitterCldr.Languages.all_for("gl").ur).not.toBe(null);
-    });
     it("checks if some locales are supported in the current locale", function() {
-      expect(TwitterCldr.Languages.all().ja).not.toBe(null);
-      expect(TwitterCldr.Languages.all().es).not.toBe(null);
-      expect(TwitterCldr.Languages.all().gl).not.toBe(null);
-      expect(TwitterCldr.Languages.all().ur).not.toBe(null);
-    });
-    it("should return null for an invalid locale", function() {
-      expect(TwitterCldr.Languages.all_for("xx")).toBe(null);
+      expect(TwitterCldr.Languages.all.ja).not.toBe(null);
+      expect(TwitterCldr.Languages.all.es).not.toBe(null);
+      expect(TwitterCldr.Languages.all.gl).not.toBe(null);
+      expect(TwitterCldr.Languages.all.ur).not.toBe(null);
     });
   });
-
-  describe("#from_code_for_locale", function() {
-    it("should return the language in the correct locale for the given locale code (i.e. es in English should be Spanish)", function() {
-      expect(TwitterCldr.Languages.from_code_for_locale("es", "en")).toEqual("Spanish");
-      expect(TwitterCldr.Languages.from_code_for_locale("ru", "es")).toEqual("ruso");
-      expect(TwitterCldr.Languages.from_code_for_locale("zh-Hant", "es")).toEqual("chino tradicional");
-      expect(TwitterCldr.Languages.from_code_for_locale("uk", "en")).toEqual("Ukrainian");
-    });
-    it("returns null for invalid locales", function() {
-      expect(TwitterCldr.Languages.from_code_for_locale("uk", "xx")).not.toBeDefined();
-      expect(TwitterCldr.Languages.from_code_for_locale("xx", "uk")).not.toBeDefined();
-    });
-  });
-
-  describe("#from_code (using default locale)", function() {
-    it("should return the language in the correct locale for the given locale code (i.e. es in English should be Spanish)", function() {
-      expect(TwitterCldr.Languages.from_code("es")).toEqual("Spanish");
+  describe("#from_code", function() {
+    it("returns the language name in current locale based on it's code", function() {
       expect(TwitterCldr.Languages.from_code("ru")).toEqual("Russian");
-      expect(TwitterCldr.Languages.from_code("uk")).toEqual("Ukrainian");
-      expect(TwitterCldr.Languages.from_code("ar")).toEqual("Arabic");
+      expect(TwitterCldr.Languages.from_code("ja")).toEqual("Japanese");
     });
-  });
-
+    it("returns null for an invalid language code", function() {
+      expect(TwitterCldr.Languages.from_code("xx")).toBe(null);
+    });
+  })
   describe("#is_rtl", function() {
     it("should return true for certain locales", function() {
       expect(TwitterCldr.Languages.is_rtl("ar")).toBe(true);

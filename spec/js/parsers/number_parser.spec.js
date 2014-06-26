@@ -207,5 +207,9 @@ describe("NumberParser", function() {
         parser.try_parse({});
       }).toThrow(new Error("Object #<Object> has no method 'split'"));
     });
+
+    it("parses zero correctly", function() {
+      expect(parser.try_parse('0')).toEqual(0);
+    });
   });
 });

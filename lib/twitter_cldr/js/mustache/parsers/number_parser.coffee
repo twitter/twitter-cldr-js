@@ -43,7 +43,7 @@ class TwitterCldr.NumberParser
     if callback
       callback(result)
     else
-      result || default_value
+      if result == null then default_value else result
 
   is_valid: (number_text, options = {}) ->
     try

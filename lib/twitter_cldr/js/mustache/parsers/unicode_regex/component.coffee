@@ -26,24 +26,13 @@ class TwitterCldr.Component
     )
 
 
-        
-
-        def set_to_regex(set)
-          strs = set.to_a(true).uniq.map do |obj|
-            case obj
-              when Range
-                range_to_regex(obj)
-              when Array
-                array_to_regex(obj)
-              else
-                to_utf8(obj)
-            end
-          end
-
-          "(?:#{strs.join("|")})"
-        end
-
-      end
-    end
-  end
-end
+  @set_to_regex : (set) -> # TODO - Figure this out.
+    strs = TwitterCldr.Utilities(only_unique(set.to_array(true)).map ( (obj) ->
+      if obj instanceof Range #TODO - Check which range this is. Range Set or Ruby Range
+        range_to_regex (obj)
+      else if obj instanceof Array
+        array_to_regex (obj)
+      else
+        to_utf8 (obj)
+    )
+    "(?:" + strs.join("|") + ")"

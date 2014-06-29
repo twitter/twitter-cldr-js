@@ -15,9 +15,17 @@ class TwitterCldr.TokenRecognizer
 class TwitterCldr.Tokenizer
 	constructor : (@recognizers, @custom_splitter = nil, @remove_empty_entries = true) ->
 
-	@union : (tokenizers) ->
-		recognizers = 
-		
+	@union : (tokenizers, block) ->
+		recognizers = []
+    for tokenizer in tokenizers
+      recog_ret = []
+      for recognizer in tokenizer.recognizers
+        if block? and block(recognizer) || !block?
+          recog_ret.push recognizer
+      recognizer.concat(recog_ret)
+
+    splitter = 
+
 
 
 

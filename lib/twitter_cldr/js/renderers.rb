@@ -37,6 +37,11 @@ module TwitterCldr
       module Parsers
         autoload :NumberParser,                         'twitter_cldr/js/renderers/parsers/number_parser'
       end
+
+      module Utils
+        autoload :RangeRenderer,                         'twitter_cldr/js/renderers/utils/range'
+        autoload :RangeSetRenderer,                         'twitter_cldr/js/renderers/utils/range_set'
+      end
     end
   end
 end

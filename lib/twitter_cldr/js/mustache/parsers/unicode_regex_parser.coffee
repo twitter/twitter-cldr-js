@@ -28,7 +28,7 @@ class TwitterCldr.UnicodeRegexParser
 		new TwitterCldr.Token ({"type": type, "value" : value})
 
 	# Identifies regex ranges and makes implicit operators explicit
-	preprocess : (tokens) -> #TODO - Incomplete so far
+	preprocess : (tokens) -> 
 		result = []
 		i = 0
 
@@ -44,7 +44,24 @@ class TwitterCldr.UnicodeRegexParser
 						is_valid_character_class_token(tokens[i + 2]) and
 						tokens[i + 1].type == "dash"
 			if is_range
-				initial = (if (typeof(tokens[i][tokens[i].type]) == typeof(Function)))
+				initial = @[tokens[i].type](tokens[i])
+				final = @[tokens[i+2].type](tokens[i+2])
+				result.push make_character_range(initial, final)
+				i += 3
+			else 
+				if is_negated_token(tokens[i])
+					result.concat [
+						make_token("open_bracket")
+						make_token("negate")
+						tokens[i]
+						make_token("close_bracket")
+					]
+				else
+					result.push tokens[i]
+
+			i += 1
+
+		result
 
 
 
@@ -78,7 +95,7 @@ class TwitterCldr.UnicodeRegexParser
 	is_binary_operator : (token) ->
 		token? and token.type in @binary_operators
 
-	do_parse : (options) -> #TODO - incomplete  send thingy
+	do_parse : (options) -> 
 		elements = []
 		while current_token()
 			switch current_token().type
@@ -87,7 +104,7 @@ class TwitterCldr.UnicodeRegexParser
 				when "union"
 					next_token("union")
 				else
-					elements.push #TODO send thingy
+					elements.push (@[current_token().type](current_token()))
 					next_token(current_token.type)
 		elements
 
@@ -112,7 +129,7 @@ class TwitterCldr.UnicodeRegexParser
 	special_char : (token) ->
 		new TwitterCldr.Literal (token.value)
 
-	#TODO - Veryfiy this
+	#TODO - Verify this
 	negate : (token) ->
 		special_char token
 
@@ -122,10 +139,6 @@ class TwitterCldr.UnicodeRegexParser
 	ampersand : (token) ->
 		special_char token
 
-	#TODO - Figure out this alias bit.
-	# alias :negate :special_char
-	# alias :pipe :special_char
-	# alias :ampersand :special_char
 
 	# current_token is already a CharacterRange object
 	character_range : (token) ->
@@ -160,7 +173,8 @@ class TwitterCldr.UnicodeRegexParser
 				operator_stack.push (current_token())
 
 			else 
-				operand_stack.push () #TODO send thingy
+				operand_stack.push (@[current_token().type](current_token()))
+				send(current_token.type, current_token)
 			
 			next_token(current_token().type)
 			

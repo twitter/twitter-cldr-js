@@ -3,10 +3,18 @@
 
 class TwitterCldr.SegmentationTokenizer
 	constructor : ->
-		@tokenizer ||= 
+    recognizers = [
+      new TokenRecognizer("break", new RegExp "/\u00f7/", ((val) -> 
+        TwitterCldr.Utilities.trim_string(val))) # ÷ character
+      new TokenRecognizer("break", new RegExp "/\u00d7/", ((val) -> 
+        TwitterCldr.Utilities.trim_string(val))) # × character
+    ]
+    ur_tokenizer = new UnicodeRegexTokenizer
+    ur_tokenizer.insert_before "string", recognizers
+    @tokenizer = ur_tokenizer
 		
 
-	@tokenize : (pattern) ->
+	tokenize : (pattern) ->
 		result = []
 		tokens = @tokenizer.tokenize pattern
 		for token in tokens
@@ -14,27 +22,3 @@ class TwitterCldr.SegmentationTokenizer
 				result.push token
 
 		result
-
-
-
-      def tokenizer
-        @tokenizer ||= begin
-          recognizers = [
-            TokenRecognizer.new(:break, /\303\267/u) do |val|     # ÷ character
-              val.strip
-            end,
-
-            TokenRecognizer.new(:no_break, /\303\227/u) do |val|  # × character
-              val.strip
-            end
-          ]
-
-          ur_tokenizer = UnicodeRegexTokenizer.new
-          ur_tokenizer.insert_before(:string, *recognizers)
-          ur_tokenizer
-        end
-      end
-
-    end
-  end
-end

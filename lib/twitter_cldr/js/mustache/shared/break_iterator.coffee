@@ -12,13 +12,13 @@ class TwitterCldr.BreakIterator
 		@tailoring_resource_cache = {}
 
 
-	each_sentence : (str) ->
+	each_sentence : (str, block) ->
 		@each_boundary (str, "sentence")
 
-	each_word : (str) ->
+	each_word : (str, block) ->
 		throw "Word segmentation is not currently supported."
 	
-	each_line : (str) ->
+	each_line : (str, block) ->
 		throw "Line segmentation is not currently supported."	
 
 	boundary_name_for: (str) ->
@@ -26,33 +26,33 @@ class TwitterCldr.BreakIterator
 			match.toUpperCase()
 
 def each_boundary(str, boundary_type) #TODO do this block thingy
-        if block_given?
-          rules = compile_rules_for(locale, boundary_type)
-          match = nil
-          last_offset = 0
-          current_position = 0
-          search_str = str.dup
+				if block_given?
+					rules = compile_rules_for(locale, boundary_type)
+					match = nil
+					last_offset = 0
+					current_position = 0
+					search_str = str.dup
 
-          until search_str.size == 0
-            rule = rules.find { |rule| match = rule.match(search_str) }
+					until search_str.size == 0
+						rule = rules.find { |rule| match = rule.match(search_str) }
 
-            if rule.boundary_symbol == :break
-              break_offset = current_position + match.boundary_offset
-              yield str[last_offset...break_offset]
-              last_offset = break_offset
-            end
+						if rule.boundary_symbol == :break
+							break_offset = current_position + match.boundary_offset
+							yield str[last_offset...break_offset]
+							last_offset = break_offset
+						end
 
-            search_str = search_str[match.boundary_offset..-1]
-            current_position += match.boundary_offset
-          end
+						search_str = search_str[match.boundary_offset..-1]
+						current_position += match.boundary_offset
+					end
 
-          if last_offset < (str.size - 1)
-            yield str[last_offset..-1]
-          end
-        else
-          to_enum(__method__, str, boundary_type)
-        end
-      end
+					if last_offset < (str.size - 1)
+						yield str[last_offset..-1]
+					end
+				else
+					to_enum(__method__, str, boundary_type)
+				end
+			end
 
 
 	compile_exception_rule_for : (locale, boundary_type, boundary_name) ->
@@ -62,19 +62,19 @@ def each_boundary(str, boundary_type) #TODO do this block thingy
 			result = null
 			exceptions = exceptions_for (locale, boundary_name)
 			regex_contents = exceptions.map((exception) ->
-			  TwitterCldr.Utilities.regex_escape exception
+				TwitterCldr.Utilities.regex_escape exception
 			)
 			@exceptions_cache [cache_key] ||=  @segmentation_parser.parse (
 				@segmentation_tokenizer.tokenize("(?:+"+regex_contents+" x")
 			)
 
 	# Grabs rules from segment_root, applies custom tailorings (our own, NOT from CLDR),
-  # and optionally integrates ULI exceptions.
+	# and optionally integrates ULI exceptions.
 	compile_rules_for : (locale, boundary_type) ->
 		boundary_name = boundary_name_for(boundary_type)
-    boundary_data = resource_for(boundary_name)
-    symbol_table = symbol_table_for(boundary_data)
-    root_rules = rules_for(boundary_data, symbol_table)
+		boundary_data = resource_for(boundary_name)
+		symbol_table = symbol_table_for(boundary_data)
+		root_rules = rules_for(boundary_data, symbol_table)
 		tailoring_boundary_data = tailoring_resource_for(locale, boundary_name)
 		tailoring_rules = rules_for(tailoring_boundary_data, symbol_table)
 		rules = merge_rules(root_rules, tailoring_rules)
@@ -111,24 +111,24 @@ def each_boundary(str, boundary_type) #TODO do this block thingy
 		table
 
 
-  resolve_symbols : (tokens, symbol_table) ->
-  	result = []
-  	
-  	for i in [0...tokens.length]
-  		token = tokens[i]
-  		if token.type == "variable"
-  			result = result.concat @symbol_table.fetch(token.value)
-  		else 
-  			result.push(token)
+	resolve_symbols : (tokens, symbol_table) ->
+		result = []
+		
+		for i in [0...tokens.length]
+			token = tokens[i]
+			if token.type == "variable"
+				result = result.concat @symbol_table.fetch(token.value)
+			else 
+				result.push(token)
 
-  	result
+		result
 
 	rules_for : (boundary_name, symbol_table) ->
 		boundary_data.rules.map ((rule) ->
 			r = @segmentation_parser.parse (
 				segmentation_tokenizer.tokenize (rule.value), {"symbol_table" : symbol_table}
 				)
-			    
+					
 			r.string = rule.value
 			r.id = rule.id
 			r
@@ -142,47 +142,47 @@ def each_boundary(str, boundary_type) #TODO do this block thingy
 
 
 
-      
+			
 
-      
+			
 
-      def resource_for(boundary_name)
-        self.class.root_resource[:segments][boundary_name.to_sym]
-      end
+			def resource_for(boundary_name)
+				self.class.root_resource[:segments][boundary_name.to_sym]
+			end
 
-      def tailoring_resource_for(locale, boundary_name)
-        cache_key = TwitterCldr::Utils.compute_cache_key(locale, boundary_name)
-        self.class.tailoring_resource_cache[cache_key] ||= begin
-          res = TwitterCldr.get_resource("shared", "segments", "tailorings", locale)
-          res[locale][:segments][boundary_name.to_sym]
-        end
-      end
+			def tailoring_resource_for(locale, boundary_name)
+				cache_key = TwitterCldr::Utils.compute_cache_key(locale, boundary_name)
+				self.class.tailoring_resource_cache[cache_key] ||= begin
+					res = TwitterCldr.get_resource("shared", "segments", "tailorings", locale)
+					res[locale][:segments][boundary_name.to_sym]
+				end
+			end
 
-      def self.tailoring_resource_cache
-        @tailoring_resource_cache ||= {}
-      end
+			def self.tailoring_resource_cache
+				@tailoring_resource_cache ||= {}
+			end
 
-      def self.root_resource
-        @root_resource ||= TwitterCldr.get_resource("shared", "segments", "segments_root")
-      end
+			def self.root_resource
+				@root_resource ||= TwitterCldr.get_resource("shared", "segments", "segments_root")
+			end
 
-      # The boundary_name param is not currently used since the ULI JSON resource that
-      # exceptions are generated from does not distinguish between boundary types. The
-      # XML version does, however, so the JSON will hopefully catch up at some point and
-      # we can make use of this second parameter. For the time being, compile_exception_rule_for
-      # (which calls this function) assumes a "sentence" boundary type.
-      def exceptions_for(locale, boundary_name)
-        self.class.exceptions_resource_cache[locale] ||= begin
-          TwitterCldr.get_resource("uli", "segments", locale)[locale][:exceptions]
-        rescue ArgumentError
-          []
-        end
-      end
+			# The boundary_name param is not currently used since the ULI JSON resource that
+			# exceptions are generated from does not distinguish between boundary types. The
+			# XML version does, however, so the JSON will hopefully catch up at some point and
+			# we can make use of this second parameter. For the time being, compile_exception_rule_for
+			# (which calls this function) assumes a "sentence" boundary type.
+			def exceptions_for(locale, boundary_name)
+				self.class.exceptions_resource_cache[locale] ||= begin
+					TwitterCldr.get_resource("uli", "segments", locale)[locale][:exceptions]
+				rescue ArgumentError
+					[]
+				end
+			end
 
-      def self.exceptions_resource_cache
-        @exceptions_resource_cache ||= {}
-      end
+			def self.exceptions_resource_cache
+				@exceptions_resource_cache ||= {}
+			end
 
-    end
-  end
+		end
+	end
 end

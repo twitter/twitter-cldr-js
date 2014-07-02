@@ -13,9 +13,9 @@ class TwitterCldr.UnicodeString extends TwitterCldr.Component
     # of any other way to support multichar strings :(
 
     if @codepoints.length > 1
-    	new TwitterCldr.Utils.RangeSet(@codepoints) #todo check this
+    	new TwitterCldr.RangeSet(@codepoints) #todo check this
     else
-    	new TwitterCldr.Utils.RangeSet([@codepoints.first])
+    	new TwitterCldr.RangeSet([@codepoints.first])
 
   @to_regex_str : ->
   	cps = @codepoints instanceof Array ? @codepoints : [@codepoints]

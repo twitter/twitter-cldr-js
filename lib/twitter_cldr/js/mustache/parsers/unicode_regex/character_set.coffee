@@ -26,7 +26,7 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
         ranges = TwitterCldr.CodePoint[method](property_value)
 
         if ranges?
-          new TwitterCldr.Utils.RangeSet(ranges)
+          new TwitterCldr.RangeSet(ranges)
 
         else
           throw "Couldn't find property " + property + " containing property value " + property_value
@@ -34,4 +34,4 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
       else
         throw "Couldn't find property " + property
     else
-      new TwitterCldr.Utils.RangeSet (TwitterCldr.CodePoint.code_points_for_property_value(property_value))
+      new TwitterCldr.RangeSet (TwitterCldr.CodePoint.code_points_for_property_value(property_value))

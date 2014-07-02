@@ -33,13 +33,13 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 				set_for_special_char (special_char)
 
 			else
-				TwitterCldr.Utils.RangeSet.from_array ([@ordinalize(special_char)])	
+				new TwitterCldr.RangeSet.from_array ([@ordinalize(special_char)])	
 		
 		else
-			TwitterCldr.Utils.RangeSet.from_array ([@ordinalize(text)])
+			new TwitterCldr.RangeSet.from_array ([@ordinalize(text)])
 
 	set_for_special_char : (char) -> 
-		chars = TwitterCldr.Utils.RangeSet.from_array(@special_characters[char.toLowerCase()])
+		chars = new TwitterCldr.RangeSet.from_array(@special_characters[char.toLowerCase()])
 		if char.toUpperCase() == char
 			UnicodeRegex.valid_regexp_chars.subtract(chars)
 		else

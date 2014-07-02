@@ -76,7 +76,7 @@ class TwitterCldr.RangeSet
 		result		
 
 	to_set : ->
-		new TwitterCldr.Set (@to_full_array)
+		new TwitterCldr.Set (@to_full_array) #TODO - verify this
 
 	includes : (obj) ->
 		# TODO - Make at least 5 test cases here. (4 + 1 for false)

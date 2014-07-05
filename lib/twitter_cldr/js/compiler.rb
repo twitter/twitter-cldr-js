@@ -73,6 +73,11 @@ module TwitterCldr
           :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
           :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
           :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser,
+          :component => TwitterCldr::Js::Renderers::Parsers::ComponentRenderer,
+          :literal => TwitterCldr::Js::Renderers::Parsers::LiteralRenderer,
+          :symbol_table => TwitterCldr::Js::Renderers::Parsers::SymbolTableRenderer,
+          :token => TwitterCldr::Js::Renderers::Tokenizers::TokenRenderer,
+          :composite_token => TwitterCldr::Js::Renderers::Tokenizers::CompositeTokenRenderer,
           :range => TwitterCldr::Js::Renderers::Utils::RangeRenderer,
           :range_set => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer
         }

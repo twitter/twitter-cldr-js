@@ -10,37 +10,36 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 			r : [13]  # carriage return
 			n : [10]  # newline
 			f : [12]  # form feed
-			d : [0..9].map (c) ->
-					@ordinalize(c)
-			w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map (c) ->
-					@ordinalize(c)
+			d : [0..9].map ((c) ->
+					@ordinalize(c.toString())), @
+			w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map ((c) ->
+					@ordinalize(c)), @
 		}
 		super
 
 	ordinalize : (char) ->
-		TwitterCldr.Utilities.char_code_at (char, 0)
+		TwitterCldr.Utilities.char_code_at char, 0
 
 	
-
 	to_regex_str : ->
 		@text
 
 	to_set : ->
-		if text.match(/^\\/) 
-			special_char = text.slice(1)
+		if @text.match(/^\\/) 
+			special_char = @text.slice(1)
 
 			if @special_characters[special_char]?
-				set_for_special_char (special_char)
+				@set_for_special_char (special_char)
 
 			else
-				new TwitterCldr.RangeSet.from_array ([@ordinalize(special_char)])	
+				TwitterCldr.RangeSet.from_array ([@ordinalize(special_char)])	
 		
 		else
-			new TwitterCldr.RangeSet.from_array ([@ordinalize(text)])
+			TwitterCldr.RangeSet.from_array ([@ordinalize(@text)])
 
 	set_for_special_char : (char) -> 
-		chars = new TwitterCldr.RangeSet.from_array(@special_characters[char.toLowerCase()])
+		chars = TwitterCldr.RangeSet.from_array(@special_characters[char.toLowerCase()])
 		if char.toUpperCase() == char
-			UnicodeRegex.valid_regexp_chars.subtract(chars)
+			TwitterCldr.UnicodeRegex.valid_regexp_chars.subtract(chars)
 		else
 			chars			

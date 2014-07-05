@@ -23,38 +23,16 @@ class TwitterCldr.UnicodeRegex
 
   @parser ||= new TwitterCldr.UnicodeRegexParser ()
 
-  constructor : (@elements, modifiers = null)
-    @modifiers = null
+  constructor : (@elements, @modifiers = null)
+    @modifiers = null # TODO - Verify is this is needed.
 
-  
+  to_regexp_str : ->
+    @regexp_str ||= @elements.map((element) ->
+      element.to_regexp_str()
+    ).join("")
 
-      extend Forwardable
-      def_delegator :to_regexp, :match
-      def_delegator :to_regexp, :=~
+  to_regexp : ->
+    new Regexp (@to_regexp_str(), @modifiers)
 
-      attr_reader :elements, :modifiers
-
-      def initialize(elements, modifiers = nil)
-        @elements = elements
-        @modifiers = nil
-      end
-
-      def to_regexp
-        if RUBY_VERSION <= "1.8.7"
-          begin
-            Oniguruma::ORegexp.new(to_regexp_str, modifiers)
-          rescue NameError
-            raise "Unicode regular expressions require the Oniguruma gem when using Ruby 1.8. Please install, require, and retry."
-          end
-        else
-          @regexp ||= Regexp.new(to_regexp_str, modifiers)
-        end
-      end
-
-      def to_regexp_str
-        @regexp_str ||= elements.map(&:to_regexp_str).join
-      end
-
-    end
-  end
-end
+  match : (str) ->
+    str.match (@to_regexp)

@@ -36,11 +36,19 @@ module TwitterCldr
 
       module Parsers
         autoload :NumberParser,                         'twitter_cldr/js/renderers/parsers/number_parser'
+        autoload :SymbolTableRenderer,                  'twitter_cldr/js/renderers/parsers/symbol_table'
+        autoload :ComponentRenderer,                    'twitter_cldr/js/renderers/parsers/unicode_regex/component'
+        autoload :LiteralRenderer,                      'twitter_cldr/js/renderers/parsers/unicode_regex/literal'
+      end
+
+      module Tokenizers
+        autoload :TokenRenderer,                        'twitter_cldr/js/renderers/tokenizers/token'
+        autoload :CompositeTokenRenderer,               'twitter_cldr/js/renderers/tokenizers/composite_token'
       end
 
       module Utils
-        autoload :RangeRenderer,                         'twitter_cldr/js/renderers/utils/range'
-        autoload :RangeSetRenderer,                         'twitter_cldr/js/renderers/utils/range_set'
+        autoload :RangeRenderer,                        'twitter_cldr/js/renderers/utils/range'
+        autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/utils/range_set'
       end
     end
   end

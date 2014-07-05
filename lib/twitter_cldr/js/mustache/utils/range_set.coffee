@@ -14,8 +14,8 @@ class TwitterCldr.RangeSet
 				@ranges.push (new TwitterCldr.Range range, range)
 		@flatten()
 
-	@from_array : (array) ->
-		@rangify(array)
+	@from_array : (array, compress = false) ->
+		new TwitterCldr.RangeSet @rangify(array, compress)
 
 	# Turns an array of integers into ranges. The "compress" option indicates
 	# wether or not to turn isolated elements into zero-length ranges or leave

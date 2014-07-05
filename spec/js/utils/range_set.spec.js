@@ -2,46 +2,46 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+beforeEach(function() {
+  var areRangesEqual = function (range1, range2) {
+    if (range1 instanceof TwitterCldr.Range && range2 instanceof TwitterCldr.Range) 
+      return (range1.first == range2.first && range1.last ==  range2.last);
+    else if (!(range1 instanceof TwitterCldr.Range) && !(range2 instanceof TwitterCldr.Range))
+      return range1 == range2;
+    else 
+      return false;
+  };
+  var toEqualRange = function (expected) {
+    return areRangesEqual (this.actual, expected);
+  };
+  var areRangeArraysEqual = function (arr1, arr2) {
+    if (arr1.length !== arr2.length)
+      return false;
+    for (var i = 0; i < arr1.length; i++) {
+      if (!areRangesEqual(arr1[i], arr2[i]))
+        return false;
+    };
+    return true;
+  };
+  var toEqualRangeArray = function (expected) {
+    if (!(this.actual instanceof Array) || !(expected instanceof Array))
+      return false;
+    return areRangeArraysEqual(this.actual, expected);
+  };
+  var toEqualRangeSet = function(expected) {
+    if (!(this.actual instanceof TwitterCldr.RangeSet) || !(expected instanceof TwitterCldr.RangeSet))
+      return false;
+    return areRangeArraysEqual (this.actual.ranges, expected.ranges);
+    
+  };
+  this.addMatchers({
+    toEqualRange : toEqualRange,
+    toEqualRangeSet : toEqualRangeSet,
+    toEqualRangeArray : toEqualRangeArray
+  });
+});
 
 describe("RangeSet", function() {
-  beforeEach(function() {
-    var areRangesEqual = function (range1, range2) {
-      if (range1 instanceof TwitterCldr.Range && range2 instanceof TwitterCldr.Range) 
-        return (range1.first == range2.first && range1.last ==  range2.last);
-      else if (!(range1 instanceof TwitterCldr.Range) && !(range2 instanceof TwitterCldr.Range))
-        return range1 == range2;
-      else 
-        return false;
-    };
-    var toEqualRange = function (expected) {
-      return areRangesEqual (this.actual, expected);
-    };
-    var areRangeArraysEqual = function (arr1, arr2) {
-      if (arr1.length !== arr2.length)
-        return false;
-      for (var i = 0; i < arr1.length; i++) {
-        if (!areRangesEqual(arr1[i], arr2[i]))
-          return false;
-      };
-      return true;
-    };
-    var toEqualRangeArray = function (expected) {
-      if (!(this.actual instanceof Array) || !(expected instanceof Array))
-        return false;
-      return areRangeArraysEqual(this.actual, expected);
-    };
-    var toEqualRangeSet = function(expected) {
-      if (!(this.actual instanceof TwitterCldr.RangeSet) || !(expected instanceof TwitterCldr.RangeSet))
-        return false;
-      return areRangeArraysEqual (this.actual.ranges, expected.ranges);
-      
-    };
-    this.addMatchers({
-      toEqualRange : toEqualRange,
-      toEqualRangeSet : toEqualRangeSet,
-      toEqualRangeArray : toEqualRangeArray
-    });
-  });
   describe("#rangify", function() {
     it("should identify runs in an array of integers and return an array of ranges", function() {
       expect(TwitterCldr.RangeSet.rangify([1, 2, 3, 6, 7, 8, 11, 14, 17, 18, 19])).toEqualRangeArray(

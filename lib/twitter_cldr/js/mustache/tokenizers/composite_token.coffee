@@ -5,7 +5,7 @@ class TwitterCldr.CompositeToken
 	constructor : (@tokens) ->
 		@type = "composite"
 
-	@to_string : ->
-		@tokens.map((x) ->
-      x.toString()
+	to_string : ->
+		@tokens.map((token) ->
+      token.to_string()
     ).join ""

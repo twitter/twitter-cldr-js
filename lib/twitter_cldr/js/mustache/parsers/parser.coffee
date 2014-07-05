@@ -6,12 +6,12 @@ class TwitterCldr.Parser
   constructor : (@tokens) ->
     @token_index = 0
 
-  @parse : (tokens, options = {}) ->
+  parse : (tokens, options = {}) ->
     @tokens = tokens
     reset()
     @do_parse(options)
 
-  @reset : ->
+  reset : ->
     @token_index = 0
 
   next_token : (type) ->

@@ -27,7 +27,7 @@ class TwitterCldr.Component
 
 
   set_to_regex : (set) -> # TODO - Figure this out.
-    strs = TwitterCldr.Utilities(only_unique(set.to_array(true)).map ( (obj) ->
+    strs = TwitterCldr.Utilities(only_unique(set.to_array(true))).map ( (obj) ->
       if obj instanceof TwitterCldr.Range #TODO - Check which range this is. Range Set or Ruby Range
         range_to_regex (obj)
       else if obj instanceof Array
@@ -35,4 +35,5 @@ class TwitterCldr.Component
       else
         to_utf8 (obj)
     )
-    "(?:" + strs.join("|") + ")"
+    
+    ("(?:" + strs.join("|") + ")")

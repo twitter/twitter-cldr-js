@@ -3,11 +3,10 @@
 
 class TwitterCldr.UnicodeRegex
   @compile : (str, modifiers = "", symbol_table = null) ->
-    new TwitterCldr.UnicodeRegex (
-      @parser.parse(
+    new TwitterCldr.UnicodeRegex @parser.parse(
         @tokenizer.tokenize(str), {"symbol_table" : symbol_table}
       ), modifiers
-    )
+    
 
   # All unicode characters
   @all_unicode ||= new TwitterCldr.RangeSet([new TwitterCldr.Range 0, 0x10FFFF])
@@ -19,7 +18,7 @@ class TwitterCldr.UnicodeRegex
   
   @valid_regexp_chars ||= @all_unicode.subtract(@invalid_regexp_chars)
   
-  @tokenizer ||= new TwitterCldr.UnicodeRegexTokenizer()
+  @tokenizer ||= new TwitterCldr.UnicodeRegexTokenizer ()
 
   @parser ||= new TwitterCldr.UnicodeRegexParser ()
 

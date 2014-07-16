@@ -7,9 +7,8 @@ module TwitterCldr
   module Js
     module Renderers
       module Utils
-
-        class RangeRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/utils/range.coffee"))
+        class CodePointsRenderer < TwitterCldr::Js::Renderers::Base
+          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/utils/code_points.coffee"))
         end
 
       end

@@ -90,7 +90,7 @@ def each_boundary(str, boundary_type) #TODO do this block thingy
 		result = []
 		TwitterCldr.Utilities.arraycopy ruleset1, 0, result, 0, ruleset1.length
 		
-		for i in [0...ruleset2.length]
+		for i in [0...ruleset2.length] # TODO - Change the for i in to how it is in Utils.
 			for j in [0...result.length]
 				if ruleset2[i].id == result[j].id
 					result[j] = ruleset2[i]

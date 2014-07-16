@@ -12,13 +12,13 @@ class TwitterCldr.UnicodeString extends TwitterCldr.Component
     # with data types that aren't true integer ranges. I can't think
     # of any other way to support multichar strings :(
 
-    if @codepoints.length > 1
-    	new TwitterCldr.RangeSet(@codepoints) #todo check this
+    if @codepoints.length > 1 # TODO - Verify this.
+      new TwitterCldr.RangeSet([new TwitterCldr.Range @codepoints, @codepoints])
     else
-    	new TwitterCldr.RangeSet([@codepoints.first])
+      new TwitterCldr.RangeSet([new TwitterCldr.Range @codepoints[0], @codepoints[0]])
 
   @to_regex_str : ->
-  	cps = @codepoints instanceof Array ? @codepoints : [@codepoints]
+  	cps = (if @codepoints instanceof Array then @codepoints else [@codepoints])
   	array_to_regex (cps)
 
   	

@@ -7,17 +7,17 @@ class TwitterCldr.CodePoints
 		TwitterCldr.Utilities.pack_array([code_point])
 
 	@from_char : (char) ->
-		TwitterCldr.Utilities.unpack_string(char[0])
+		TwitterCldr.Utilities.unpack_string(char[0])[0]
 
 	@from_chars : (chars) ->
 		chars.map ( (char) ->
 			@from_char(char)
-		)
+		), @
 
 	@to_chars : (code_points) ->
 		code_points.map ( (code_point) ->
 			@to_char(code_point)
-		)
+		), @
 
 	@from_string : (str) ->
 		TwitterCldr.Utilities.unpack_string(str)

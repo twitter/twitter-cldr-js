@@ -19,7 +19,7 @@ describe("Literal", function() {
     });
     it("should convert negated special regex switches to their range equivalents", function() {
       literal = new TwitterCldr.Literal ("\\D"); // NOT digit
-      expect(literal.to_set().to_array()).toEqual([97]);
+      expect(literal.to_set().to_array(true)).toEqual([97]);
     });
   });
 });

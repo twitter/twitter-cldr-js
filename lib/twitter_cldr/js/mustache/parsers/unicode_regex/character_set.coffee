@@ -16,11 +16,11 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
     @set_to_regex(@to_set())
 
   to_set : ->
-    codepoints().subtract(TwitterCldr.UnicodeRegex.invalid_regexp_chars)
+    @codepoints().subtract(TwitterCldr.UnicodeRegex.invalid_regexp_chars)
 
   codepoints : ->
     if @property?
-      method = "code_points_for_" + property
+      method = "code_points_for_" + @property
 
       if (typeof(TwitterCldr.CodePoint[method]) == typeof(Function))
         ranges = TwitterCldr.CodePoint[method](property_value)

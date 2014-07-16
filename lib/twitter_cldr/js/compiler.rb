@@ -69,17 +69,22 @@ module TwitterCldr
           :lists => TwitterCldr::Js::Renderers::Shared::ListRenderer,
           :bidi => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
           :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
+          :code_point => TwitterCldr::Js::Renderers::Shared::CodePointRenderer,
           :phone_codes => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
           :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
           :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
           :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser,
           :component => TwitterCldr::Js::Renderers::Parsers::ComponentRenderer,
           :literal => TwitterCldr::Js::Renderers::Parsers::LiteralRenderer,
+          :unicode_string => TwitterCldr::Js::Renderers::Parsers::UnicodeStringRenderer,
+          :character_range => TwitterCldr::Js::Renderers::Parsers::CharacterRangeRenderer,
+          :character_set => TwitterCldr::Js::Renderers::Parsers::CharacterSetRenderer,
           :symbol_table => TwitterCldr::Js::Renderers::Parsers::SymbolTableRenderer,
           :token => TwitterCldr::Js::Renderers::Tokenizers::TokenRenderer,
           :composite_token => TwitterCldr::Js::Renderers::Tokenizers::CompositeTokenRenderer,
           :range => TwitterCldr::Js::Renderers::Utils::RangeRenderer,
-          :range_set => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer
+          :range_set => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer,
+          :code_points => TwitterCldr::Js::Renderers::Utils::CodePointsRenderer
         }
       end
     end

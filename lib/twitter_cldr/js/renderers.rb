@@ -28,6 +28,7 @@ module TwitterCldr
         autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/shared/currencies_renderer'
         autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
+        autoload :CodePointRenderer,                     'twitter_cldr/js/renderers/shared/code_point_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
         autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
         autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
@@ -39,6 +40,9 @@ module TwitterCldr
         autoload :SymbolTableRenderer,                  'twitter_cldr/js/renderers/parsers/symbol_table'
         autoload :ComponentRenderer,                    'twitter_cldr/js/renderers/parsers/unicode_regex/component'
         autoload :LiteralRenderer,                      'twitter_cldr/js/renderers/parsers/unicode_regex/literal'
+        autoload :UnicodeStringRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/unicode_string'
+        autoload :CharacterRangeRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/character_range'
+        autoload :CharacterSetRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/character_set'        
       end
 
       module Tokenizers
@@ -49,6 +53,7 @@ module TwitterCldr
       module Utils
         autoload :RangeRenderer,                        'twitter_cldr/js/renderers/utils/range'
         autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/utils/range_set'
+        autoload :CodePointsRenderer,                     'twitter_cldr/js/renderers/utils/code_points'
       end
     end
   end

@@ -3,11 +3,30 @@
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 beforeEach(function() {
+  var arrayEqual = function(a, b) {
+    if (a.length !== b.length)
+      return false;
+    for (var i = 0; i < a.length; i++) {
+       if (a[i] !== b[i])
+        return false;
+    }; 
+    return true;
+  };
+  var equals = function (a,b) {
+    if (a instanceof Array && b instanceof Array)
+      return arrayEqual(a,b);
+    if (a instanceof Array && !(b instanceof Array))
+      return false;
+    if (!(a instanceof Array) && b instanceof Array)
+      return false;
+    else 
+      return (a === b);
+  };
   var areRangesEqual = function (range1, range2) {
     if (range1 instanceof TwitterCldr.Range && range2 instanceof TwitterCldr.Range) 
-      return (range1.first == range2.first && range1.last ==  range2.last);
+      return (equals(range1.first, range2.first) && equals(range1.last, range2.last));
     else if (!(range1 instanceof TwitterCldr.Range) && !(range2 instanceof TwitterCldr.Range))
-      return range1 == range2;
+      return equals(range1, range2);
     else 
       return false;
   };
@@ -66,11 +85,12 @@ describe("RangeSet", function() {
     it("should return a copy of the ranges in the set", function() {      
       set = new TwitterCldr.RangeSet([new TwitterCldr.Range (1, 10)]);
       expect(set.to_array()).not.toBe(set.ranges);
+      r = new TwitterCldr.Range([1,2,3], [1,2,3]);
+      expect(r).toEqualRange(r); //new TwitterCldr.Range([1,2,3], [1,2,3]));
+      expect([1,2,3]).toEqual([1,2,3]);
     });
     it("should return compressed ranges when asked", function() {
       set = new TwitterCldr.RangeSet([new TwitterCldr.Range(1,10), new TwitterCldr.Range(12, 12)])
-      // console.log(set.to_array(true));
-      // expect(set.to_array()[0]).toEqualRange(new TwitterCldr.Range(1,10));
       expect(set.to_array(true)).toEqualRangeArray([new TwitterCldr.Range(1, 10), 12]);
     });
   });

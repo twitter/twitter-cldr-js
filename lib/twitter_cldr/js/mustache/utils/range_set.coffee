@@ -68,11 +68,8 @@ class TwitterCldr.RangeSet
 		result = []
 		
 		for range in @ranges
-			if range instanceof TwitterCldr.Range
-				result = result.concat range.to_array()
-			else
-				result = result.concat range
-		# TODO - Check all the concats.
+			result = result.concat range.to_array()
+
 		result		
 
 	to_set : ->
@@ -82,18 +79,10 @@ class TwitterCldr.RangeSet
 		# TODO - Make at least 5 test cases here. (4 + 1 for false)
 		if obj instanceof TwitterCldr.Range
 			for range in @ranges
-				# range may either be a TwitterCldr.Range or a number TODO - Verify this.
-				if range instanceof TwitterCldr.Range #obj is a Range, range is a Range
-					return true if range.first <= obj.first && range.last >= obj.last
-				else if obj.size == 1 # obj is a Range of size 1, range is numeric
-					return true if range is obj.first
+				return true if range.first <= obj.first && range.last >= obj.last
 		else
 			for range in @ranges
-				if range instanceof TwitterCldr.Range #obj is a numeric, range is a Range
 					return true if range.includes obj
-				else
-					return true if range is obj # obj is a numeric, range is numeric
-
 		false
 
 	is_empty : ->
@@ -137,25 +126,20 @@ class TwitterCldr.RangeSet
 	difference : (range_set) ->
 		@union(range_set).subtract(@intersection(range_set))
 
-	first : (range) ->
-		if range instanceof TwitterCldr.Range then range.first else range
-
-	last : (range) ->
-		if range instanceof TwitterCldr.Range then range.last else range
-
 	flatten : ->
 		if @ranges.length <= 1
 			return	
 
 		sorted_ranges = @ranges.sort ((a,b) ->
-			a_representative = (if a instanceof TwitterCldr.Range then a.first else a)
-			b_representative = (if b instanceof TwitterCldr.Range then b.first else b)
 			# TODO - Remove all instances of this this. It should all be ranges.
-			if a_representative > b_representative
+			if ((!a.is_numeric()) and (!b.is_numeric()))
 				return 1
-			else if a_representative < b_representative
+			if a.first > b.first
+				return 1
+			else if a.first < b.first
 				return -1
-			else return 0	
+			else 
+				return 0	
 		)
 
 		new_ranges = [sorted_ranges[0]]
@@ -172,12 +156,16 @@ class TwitterCldr.RangeSet
 
 	# returns true if range1 and range2 are within 1 of each other
 	are_adjacent : (range1, range2) ->
-		(range1.last is range2.first - 1) || (range2.first is range1.last + 1)
+		range1.is_numeric() and range2.is_numeric() and
+		((range1.last is range2.first - 1) or (range2.first is range1.last + 1))
 
 	does_overlap : (range1, range2) -> 
-		((range1.last >= range2.first and range1.last <= range2.last) or
-		(range1.first >= range2.first and range1.first <= range2.last) or
-		(range1.first <= range2.first and range1.last >= range2.last))
+		range1.is_numeric() and range2.is_numeric() and 
+		(
+			(range1.last >= range2.first and range1.last <= range2.last) or
+			(range1.first >= range2.first and range1.first <= range2.last) or
+			(range1.first <= range2.first and range1.last >= range2.last)
+		)
 
 	find_intersection : (range1, range2) ->
 		# range2 entirely contains range1
@@ -189,8 +177,6 @@ class TwitterCldr.RangeSet
 			new TwitterCldr.Range range1.first, range2.last
 		else if range1.first <= range2.first and range1.last >= range2.last
 			new TwitterCldr.Range(TwitterCldr.Utilities.max([range1.first, range2.first]),TwitterCldr.Utilities.min([range1.last, range2.last]))
-
-
 
 	# subtracts range1 from range2 (range2 - range1)
 	find_subtraction : (range1, range2) ->

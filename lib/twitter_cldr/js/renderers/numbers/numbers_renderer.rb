@@ -38,6 +38,10 @@ module TwitterCldr
           def symbols
             TwitterCldr::Tokenizers::NumberTokenizer.new(:locale => @locale).symbols.to_json
           end
+
+          def currencies_data
+            TwitterCldr.get_resource(:shared, :currency_digits_and_rounding).to_json
+          end
         end
       end
     end

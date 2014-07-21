@@ -13,7 +13,7 @@ module TwitterCldr
           def blocks
             block_data = TwitterCldr.get_resource(:unicode_data, :blocks)
             block_data.inject({}) do |ret, (k, v)| 
-              ret[k] = { :first => v.first, :second => v.last } 
+              ret[k] = { :first => v.first, :last => v.last } 
               ret
             end.to_json
           end
@@ -21,17 +21,17 @@ module TwitterCldr
           def composition_exclusions
             composition_exclusions_data = TwitterCldr.get_resource(:unicode_data, :composition_exclusions)
             composition_exclusions_data.inject([]) do |ret, range| 
-              ret[k] = { :first => v.first, :second => v.last } 
+              ret << { :first => range.first, :last => range.last } 
               ret
             end.to_json
           end
 
-          def hangul_types
+          def hangul_blocks
             hangul_types_data = TwitterCldr.get_resource(:unicode_data, :hangul_blocks)
             hangul_types_data.inject({}) do |ret, (k, v)| 
               ret[k] = []
               v.each { |range| 
-                ret[k] << { :first => range[0].first, :last => range[0].last }  
+                ret[k] << { :first => range.first, :last => range.last }  
               }
               ret
             end.to_json
@@ -60,7 +60,7 @@ module TwitterCldr
               index_data[key] = data.inject({}) do |ret, (k, v)|  
                 ret[k] = []
                 v.each { |range|
-                  ret[k] << { :first => range[0].first, :last => range[0].last }  
+                  ret[k] << { :first => range.first, :last => range.last }  
                 }
                 ret
               end
@@ -75,7 +75,7 @@ module TwitterCldr
               property_data[key] = data.inject({}) do |ret, (k, v)|  
                 ret[k] = []
                 v.each { |range|
-                  ret[k] << { :first => range[0].first, :last => range[0].last }  
+                  ret[k] << { :first => range.first, :last => range.last }  
                 }
                 ret
               end
@@ -87,7 +87,7 @@ module TwitterCldr
             block_data = {}
             blocks = TwitterCldr.get_resource(:unicode_data, :blocks)
             blocks.each do |key, _|
-              data = TwitterCldr.get_resource(:unicode_data, blocks, key)
+              data = TwitterCldr.get_resource(:unicode_data, :blocks, key)
               block_data[key] = data.inject({}) do |ret, (k, v)|  
                 ret[k] = v
                 ret

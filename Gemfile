@@ -2,6 +2,8 @@ source "http://rubygems.org"
 
 gemspec
 
+gem 'twitter_cldr', :path => '../twitter-cldr-rb'
+
 group :test do
   gem 'rspec', '~> 2.11.0'
   gem 'rr',    '~> 1.0.4'

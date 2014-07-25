@@ -11,20 +11,24 @@ module TwitterCldr
           self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/calendars/datetime.coffee"))
 
           def tokens
-            { :date_time => TwitterCldr::Tokenizers::DateTimeTokenizer,
-              :time => TwitterCldr::Tokenizers::TimeTokenizer,
-              :date => TwitterCldr::Tokenizers::DateTokenizer }.inject({}) do |tokens, (name, const)|
-              tokenizer = const.new(:locale => @locale)
-              tokens[name] = const::VALID_TYPES.inject({}) do |ret, type|
+            {
+              :date_time => TwitterCldr::DataReaders::DateTimeDataReader,
+              :time      => TwitterCldr::DataReaders::TimeDataReader,
+              :date      => TwitterCldr::DataReaders::DateDataReader
+            }.inject({}) do |tokens, (name, const)|
+              tokens[name] = ([:default] + const.types).inject({}) do |ret, type|
                 ret[type] = if type == :additional
                   pattern_list = TwitterCldr.get_locale_resource(@locale, :calendars)[@locale][:calendars]
-                  pattern_list = pattern_list[tokenizer.calendar_type][:additional_formats].keys
+                  # TODO: support calendar types other than default (gregorian)
+                  pattern_list = pattern_list[TwitterCldr::DEFAULT_CALENDAR_TYPE][:additional_formats].keys
                   pattern_list.inject({}) do |additionals, pattern|
-                    additionals[pattern] = tokenizer.tokens(:type => type, :format => pattern.to_s).map(&:to_hash)
+                    data_reader = const.new(@locale, :type => type, :additional_format => pattern.to_s)
+                    additionals[pattern] = data_reader.tokenizer.tokenize(data_reader.pattern).map(&:to_hash)
                     additionals
                   end
                 else
-                  tokenizer.tokens(:type => type).map(&:to_hash)
+                  data_reader = const.new(@locale, :type => type)
+                  data_reader.tokenizer.tokenize(data_reader.pattern).map(&:to_hash)
                 end
                 ret
               end

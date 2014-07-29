@@ -2,6 +2,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.Calendar
+  REDIRECT_PREFIX = "calendars.gregorian."
+
   @calendar: `{{{calendar}}}`
 
   @months: (options = {}) ->
@@ -22,4 +24,11 @@ class TwitterCldr.Calendar
     else
       "format"
 
-    root[format][names_form]
+    data = root[format][names_form]
+
+    # handle redirects, e.g., { "days": { "stand-alone": { "wide": "calendars.gregorian.days.format.wide" } } }
+    if typeof data is "string" and data.indexOf(REDIRECT_PREFIX) == 0
+      [key, format, names_form] = data.slice(REDIRECT_PREFIX.length).split(".")
+      @calendar[key]?[format]?[names_form] || throw "invalid redirect #{data}"
+    else
+      data

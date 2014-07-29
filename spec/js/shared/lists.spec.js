@@ -81,6 +81,26 @@ describe("ListFormatter", function() {
       });
     });
 
+    describe("with standard English resource", function() {
+      describe("#format", function() {
+        it("should format correctly using the integer index if it exists", function() {
+          expect(formatter.format(["larry", "curly"])).toEqual("larry and curly");
+        });
+
+        it("should format correctly if no corresponding integer index exists", function() {
+          expect(formatter.format(["larry", "curly", "moe"])).toEqual("larry, curly, and moe");
+        });
+
+        it("should format an empty list correctly", function() {
+          expect(formatter.format([])).toEqual("");
+        });
+
+        it("should format a list with a single element correctly", function() {
+          expect(formatter.format(["larry"])).toEqual("larry")
+        });
+      });
+    });
+
     describe("with a resource that doesn't contain a start or end", function() {
       beforeEach(function() {
         formatter.formats = { "middle": "{0}; {1}" };

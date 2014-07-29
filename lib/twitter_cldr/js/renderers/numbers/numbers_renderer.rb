@@ -3,8 +3,6 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-include TwitterCldr::Tokenizers
-
 module TwitterCldr
   module Js
     module Renderers
@@ -13,22 +11,31 @@ module TwitterCldr
           self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/numbers/numbers.coffee"))
 
           def tokens
-            tokenizer = TwitterCldr::Tokenizers::NumberTokenizer.new(:locale => @locale)
-            tokenizer.valid_types.inject({}) do |ret, type|
+            DataReaders::NumberDataReader.types.inject({}) do |ret, type|
               ret[type] = {}
               [:positive, :negative].each do |sign|
                 ret[type][sign] = case type
                   when :short_decimal, :long_decimal
-                    (NumberTokenizer::ABBREVIATED_MIN_POWER..NumberTokenizer::ABBREVIATED_MAX_POWER).inject({}) do |formats, i|
-                      formats[10 ** i] = tokenizer.tokens(
-                        :sign => sign,
-                        :type => type,
-                        :format => 10 ** i
-                      )
+                    (DataReaders::NumberDataReader::ABBREVIATED_MIN_POWER..DataReaders::NumberDataReader::ABBREVIATED_MAX_POWER).inject({}) do |formats, i|
+                      exponent = 10 ** i
+                      data_reader = DataReaders::NumberDataReader.new(@locale, :type => type, :format => exponent)
+                      pattern = data_reader.pattern(exponent)
+                      if pattern.is_a?(String)
+                        tokens = data_reader.tokenizer.tokenize(pattern).map(&:value)
+                        # abbreviation doesn't work for negative numbers in the Ruby version, so we have to fix it here
+                        formats[exponent] = sign == :positive ? tokens : ["-"] + tokens[1..-1]
+                      elsif pattern == 0
+                        # there's no specific formatting pattern for these options, skipping them
+                      else
+                        puts "Invalid number pattern for locale=#{locale}, type=#{type}, sign=#{sign}, i=#{i}: #{pattern.inspect}"
+                      end
                       formats
                     end
                   else
-                    tokenizer.tokens(:sign => sign, :type => type)
+                    data_reader = DataReaders::NumberDataReader.new(@locale, :type => type)
+                    number = sign == :positive ? 1 : -1
+                    pattern = data_reader.pattern(number)
+                    data_reader.tokenizer.tokenize(pattern).map(&:value)
                 end
               end
               ret
@@ -36,7 +43,7 @@ module TwitterCldr
           end
 
           def symbols
-            TwitterCldr::Tokenizers::NumberTokenizer.new(:locale => @locale).symbols.to_json
+            DataReaders::NumberDataReader.new(@locale).symbols.to_json
           end
 
           def currencies_data

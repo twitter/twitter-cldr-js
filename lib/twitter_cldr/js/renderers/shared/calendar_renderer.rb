@@ -11,7 +11,7 @@ module TwitterCldr
           self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/calendar.coffee"))
 
           def calendar
-            TwitterCldr::Tokenizers::DateTimeTokenizer.new(:locale => @locale).calendar.to_json
+            TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data.to_json
           end
         end
       end

@@ -21,10 +21,7 @@ class TwitterCldr.NumberFormatter
 
     tokens = this.get_tokens(number, opts)
 
-    if tokens.join('') == '0'
-      # can't format the number for current locale
-      number.toString()
-    else
+    if tokens?
       [prefix, suffix, integer_format, fraction_format] = this.partition_tokens(tokens)
       number = this.truncate_number(number, integer_format)
       [intg, fraction] = this.parse_number(number, opts)
@@ -32,6 +29,9 @@ class TwitterCldr.NumberFormatter
       result += fraction_format.apply(fraction, opts) if fraction
       sign = if number < 0 && prefix != "-" then @symbols.minus_sign || @default_symbols.minus_sign else ""
       "#{prefix}#{result}#{suffix}"
+    else
+      # there's no specific formatting pattern for this number in current locale
+      number.toString()
 
   truncate_number: (number, integer_format) ->
     number  # noop for base class
@@ -140,6 +140,7 @@ class TwitterCldr.AbbreviatedNumberFormatter extends TwitterCldr.NumberFormatter
     "1#{zeroes}"
 
   get_tokens: (number, options = {}) ->
+    # TODO: should this work for negative numbers?
     type = if (number < @NUMBER_MAX) && (number >= @NUMBER_MIN) then this.get_type() else "decimal"
     format = if type == this.get_type() then this.get_key(number) else null
     tokens = @all_tokens[type]

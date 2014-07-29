@@ -5,7 +5,7 @@ class TwitterCldr.TimespanFormatter
   constructor: ->
     @approximate_multiplier = 0.75
     @default_type = "default"
-    @tokens = `{{{tokens}}}`
+    @patterns = `{{{patterns}}}`
     @time_in_seconds = {
       "second": 1,
       "minute": 60,
@@ -26,8 +26,7 @@ class TwitterCldr.TimespanFormatter
     number = this.calculate_time(Math.abs(seconds), options["unit"])
     options["rule"] = TwitterCldr.PluralRules.rule_for(number)
 
-    strings = (token.value for token in @tokens[options["direction"]][options["unit"]][options["type"]][options["rule"]])
-    strings.join("").replace(/\{[0-9]\}/, number.toString())
+    @patterns[options["direction"]][options["unit"]][options["type"]][options["rule"]].replace(/\{[0-9]\}/, number.toString())
 
   calculate_unit: (seconds, unit_options = {}) ->
     options = {}

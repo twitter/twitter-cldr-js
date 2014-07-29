@@ -396,23 +396,23 @@ describe("DateTimeFormatter", function() {
 
   describe("#era", function() {
     it("test: pattern G", function() {
-      expect(formatter.era(new Date(2012, 1, 1), 'G', 1)).toEqual("AD");
-      expect(formatter.era(new Date(-1, 1, 1), 'G', 1)).toEqual("BC");
+      expect(formatter.era(new Date(2012, 1, 1), 'G', 1)).toEqual("CE");
+      expect(formatter.era(new Date(-1, 1, 1), 'G', 1)).toEqual("BCE");
     });
 
     it("test: pattern GG", function() {
-      expect(formatter.era(new Date(2012, 1, 1), 'GG', 2)).toEqual("AD");
-      expect(formatter.era(new Date(-1, 1, 1), 'GG', 2)).toEqual("BC");
+      expect(formatter.era(new Date(2012, 1, 1), 'GG', 2)).toEqual("CE");
+      expect(formatter.era(new Date(-1, 1, 1), 'GG', 2)).toEqual("BCE");
     });
 
     it("test: pattern GGG", function() {
-      expect(formatter.era(new Date(2012, 1, 1), 'GGG', 3)).toEqual("AD");
-      expect(formatter.era(new Date(-1, 1, 1), 'GGG', 3)).toEqual("BC");
+      expect(formatter.era(new Date(2012, 1, 1), 'GGG', 3)).toEqual("CE");
+      expect(formatter.era(new Date(-1, 1, 1), 'GGG', 3)).toEqual("BCE");
     });
 
     it("test: pattern GGGG", function() {
-      expect(formatter.era(new Date(2012, 1, 1), 'GGGG', 4)).toEqual("Anno Domini");
-      expect(formatter.era(new Date(-1, 1, 1), 'GGGG', 4)).toEqual("Before Christ");
+      expect(formatter.era(new Date(2012, 1, 1), 'GGGG', 4)).toEqual("Common Era");
+      expect(formatter.era(new Date(-1, 1, 1), 'GGGG', 4)).toEqual("Before Common Era");
     });
 
     it("should fall back if the calendar doesn't contain the appropriate era data", function() {

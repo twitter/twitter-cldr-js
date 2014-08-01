@@ -99,7 +99,7 @@ class TwitterCldr.Utilities
 
   # This function was adapted from the Mozilla JS reference:
   # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
-  @trim_string : (s) ->
+  @trim_string : (s) -> # TODO - Add tests
     s.replace(/^\s+|\s+$/g, '')
 
   # This function was adapted from the CoffeeScript Cookbook Reference:

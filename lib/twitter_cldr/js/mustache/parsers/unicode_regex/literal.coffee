@@ -19,7 +19,6 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 
 	ordinalize : (char) ->
 		TwitterCldr.Utilities.char_code_at char, 0
-
 	
 	to_regex_str : ->
 		@text
@@ -28,7 +27,7 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 		if @text.match(/^\\/) 
 			special_char = @text.slice(1)
 
-			if @special_characters[special_char]?
+			if @special_characters[special_char.toLowerCase()]?
 				@set_for_special_char (special_char)
 
 			else
@@ -40,6 +39,6 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 	set_for_special_char : (char) -> 
 		chars = TwitterCldr.RangeSet.from_array(@special_characters[char.toLowerCase()])
 		if char.toUpperCase() == char
-			TwitterCldr.UnicodeRegex.valid_regexp_chars.subtract(chars)
+			TwitterCldr.UnicodeRegex.get_valid_regexp_chars().subtract(chars)
 		else
 			chars			

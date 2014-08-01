@@ -3,30 +3,30 @@
 
 class TwitterCldr.Parser
 
-  constructor : (@tokens) ->
-    @token_index = 0
+	constructor : (@tokens) ->
+		@token_index = 0
 
-  parse : (tokens, options = {}) ->
-    @tokens = tokens
-    reset()
-    @do_parse(options)
+	parse : (tokens, options = {}) ->
+		@tokens = tokens
+		@reset()
+		@do_parse(options)
 
-  reset : ->
-    @token_index = 0
+	reset : ->
+		@token_index = 0
 
-  next_token : (type) ->
-    throw "Unexpected token" unless current_token().type == type
+	next_token : (type) ->
+		throw "Unexpected token" unless @current_token().type == type
 
-    @token_index += 1
+		@token_index += 1
 
-    while current_token()? and is_empty(current_token())
-      @token_index += 1
+		while @current_token()? and @is_empty(@current_token())
+			@token_index += 1
 
-    current_token()
+		@current_token()
 
-  is_empty : (token) ->
-    token.type == "plaintext" and token.value == ""
+	is_empty : (token) ->
+		token.type == "plaintext" and token.value == ""
 
-  current_token : ->
-    @tokens[@token_index]
-    
+	current_token : ->
+		@tokens[@token_index]
+

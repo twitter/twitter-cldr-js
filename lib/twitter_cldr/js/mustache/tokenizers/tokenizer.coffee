@@ -4,17 +4,17 @@
 class TwitterCldr.TokenRecognizer
 	constructor : (@token_type, @regex, @cleaner, @content = null) -> #TODO figure out if this works. Cleaner and all. (that do thing)
 
-	@recognizes : (text) ->
+	recognizes : (text) ->
 		@regex.test text
 
-	@clean : (val) ->
-		@cleaner(val)
+	clean : (val) ->
+		if @cleaner then @cleaner(val) else val
 
 
 
 class TwitterCldr.Tokenizer
 	constructor : (@recognizers, @custom_splitter = null, @remove_empty_entries = true) ->
-		@splitter = (@custom_splitter || new Regexp ("(" + @recognizers.map((recognizer) ->
+		@splitter = (@custom_splitter || new RegExp("(" + @recognizers.map((recognizer) ->
 			recognizer.regex.source
 		).join("|") + ")"))
 
@@ -48,31 +48,40 @@ class TwitterCldr.Tokenizer
 
 		idx = 0
 		for i in [0...@recognizers.length]
+			recognizer = @recognizers[i]
 			if recognizer.token_type is token_type
 				idx = i
 		for recognizer in new_recognizers
-			@recognizers.splice idx, 0, recognizer
+			@recognizers.splice(idx, 0, recognizer)
 			idx += 1
 		@clear_splitter()
 		null
 
-	@tokenize : (text) ->
-		pieces = text.split(@splitter)
+	tokenize : (text) ->
+		pieces = text.match(new RegExp(@get_splitter().source, "g"))
 		result = []
 		for piece in pieces
-			recognizer = recognizer for recognizer in @recognizers when recognizer.recognizes(piece)
+			recognizer = null
+			for r in @recognizers
+				if r.recognizes(piece)
+					recognizer = r
+					break
 			
 			if recognizer.token_type is "composite"
 				content = piece.match(recognizer.content)[0] # TODO - this was [1] in Ruby. Verify.
-				result.push new CompositeToken(@tokenize(content))
+				result.push new TwitterCldr.CompositeToken(@tokenize(content))
 
 			else
 				cleaned_text = recognizer.clean(piece)
 				if ((@remove_empty_entries and cleaned_text.length > 0) or !@remove_empty_entries)
-					result.push new Token ({"value" : cleaned_text, "type" : recognizer.token_text})
+					result.push new TwitterCldr.Token({"value" : cleaned_text, "type" : recognizer.token_type})
 
 		result
 
 	clear_splitter : ->
 		@splitter = null
 
+	get_splitter : -> 
+		@splitter = (@custom_splitter || new RegExp("(" + @recognizers.map((recognizer) ->
+			recognizer.regex.source
+		).join("|") + ")"))

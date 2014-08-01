@@ -28,11 +28,12 @@ module TwitterCldr
         autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/shared/currencies_renderer'
         autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
-        autoload :CodePointRenderer,                     'twitter_cldr/js/renderers/shared/code_point_renderer'
+        autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/shared/code_point_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
         autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
         autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
         autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
+        autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/shared/unicode_regex_renderer'
       end
 
       module Parsers
@@ -41,19 +42,25 @@ module TwitterCldr
         autoload :ComponentRenderer,                    'twitter_cldr/js/renderers/parsers/unicode_regex/component'
         autoload :LiteralRenderer,                      'twitter_cldr/js/renderers/parsers/unicode_regex/literal'
         autoload :UnicodeStringRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/unicode_string'
-        autoload :CharacterRangeRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/character_range'
-        autoload :CharacterSetRenderer,                'twitter_cldr/js/renderers/parsers/unicode_regex/character_set'        
+        autoload :CharacterClassRenderer,               'twitter_cldr/js/renderers/parsers/unicode_regex/character_class'
+        autoload :CharacterRangeRenderer,               'twitter_cldr/js/renderers/parsers/unicode_regex/character_range'
+        autoload :CharacterSetRenderer,                 'twitter_cldr/js/renderers/parsers/unicode_regex/character_set'
+        autoload :ParserRenderer,                       'twitter_cldr/js/renderers/parsers/parser'
+        autoload :UnicodeRegexParserRenderer,           'twitter_cldr/js/renderers/parsers/unicode_regex_parser'
       end
 
       module Tokenizers
         autoload :TokenRenderer,                        'twitter_cldr/js/renderers/tokenizers/token'
         autoload :CompositeTokenRenderer,               'twitter_cldr/js/renderers/tokenizers/composite_token'
+        autoload :TokenizerRenderer,                    'twitter_cldr/js/renderers/tokenizers/tokenizer'
+        autoload :SegmentationTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/segmentation_tokenizer'
+        autoload :UnicodeRegexTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/unicode_regex/unicode_regex_tokenizer'
       end
 
       module Utils
         autoload :RangeRenderer,                        'twitter_cldr/js/renderers/utils/range'
         autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/utils/range_set'
-        autoload :CodePointsRenderer,                     'twitter_cldr/js/renderers/utils/code_points'
+        autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/utils/code_points'
       end
     end
   end

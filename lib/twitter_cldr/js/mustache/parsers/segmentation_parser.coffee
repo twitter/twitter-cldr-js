@@ -1,7 +1,7 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-class TwitterCldr.SegmentationParser
+class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 	constructor : ->
 		@begin_token ||= new TwitterCldr.Token "special_char", "\\A"
 		@regex_parser ||= new TwitterCldr.UnicodeRegexParser
@@ -16,8 +16,6 @@ class TwitterCldr.SegmentationParser
 		constructor : (@left, @right) ->
 			@boundary_symbol = "break"		
 			super
-
-		
 
 		match : (str) ->
 			left_match = str.match(left)

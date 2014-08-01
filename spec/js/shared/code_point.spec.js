@@ -195,11 +195,11 @@ describe("CodePoint", function() {
   describe("get_range_start", function() {
     it("returns the data for a non-explicit range", function() {
       block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A, First>"] }
-      TwitterCldr.CodePoint.get_range_start(0xABC, block_data).toEqual([0xABC, "<CJK Ideograph Extension A>"]);  
+      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toEqual([0xABC, "<CJK Ideograph Extension A>"]);  
     });
     it("returns nil if the block data doesn't contain a non-explicit range", function() {
       block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A>"] }
-      TwitterCldr.CodePoint.get_range_start(0xABC, block_data).toBe(null);
+      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toBe(null);
     }); 
   });
 });

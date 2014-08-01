@@ -200,11 +200,13 @@ class TwitterCldr.CodePoint
 	# http://unicode.org/reports/tr44/#Code_Point_Ranges
 	@get_range_start : (code_point, block_data) ->
 		keys = []
-		for k, v of @block_data
+		for k, v of block_data
 			keys.push k
-		start_data = @block_data[TwitterCldr.Utilities.min(keys)]
+		start_data = block_data[TwitterCldr.Utilities.min(keys)]
 		if start_data[1]? and /<.*, First>/.test start_data[1]
 			start_data = TwitterCldr.Utilities.clone (start_data)
 			start_data[0] = code_point
 			start_data[1] = start_data[1].replace(', First', '')
 			start_data
+		else
+			null

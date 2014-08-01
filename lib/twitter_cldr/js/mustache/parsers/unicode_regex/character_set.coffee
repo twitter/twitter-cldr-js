@@ -16,7 +16,7 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
     @set_to_regex(@to_set())
 
   to_set : ->
-    @codepoints().subtract(TwitterCldr.UnicodeRegex.invalid_regexp_chars)
+    @codepoints().subtract(TwitterCldr.UnicodeRegex.get_invalid_regexp_chars())
 
   codepoints : ->
     if @property?

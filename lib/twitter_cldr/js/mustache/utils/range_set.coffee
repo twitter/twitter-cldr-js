@@ -89,7 +89,7 @@ class TwitterCldr.RangeSet
 		@ranges.length == 0
 			
 	union : (range_set) ->
-		new TwitterCldr.RangeSet range_set.ranges.concat(@ranges)
+		new TwitterCldr.RangeSet @ranges.concat(range_set.ranges)
 
 	intersection : (range_set) ->
 		new_ranges = []

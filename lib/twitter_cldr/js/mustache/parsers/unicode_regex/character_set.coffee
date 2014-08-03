@@ -20,18 +20,14 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
 
   codepoints : ->
     if @property?
-      method = "code_points_for_" + @property
+      method = "code_points_for_" + @property      
+      ranges = TwitterCldr.CodePoint.code_points_for_property(@property, @property_value)
 
-      if (typeof(TwitterCldr.CodePoint[method]) == typeof(Function))
-        ranges = TwitterCldr.CodePoint[method](property_value)
-
-        if ranges?
-          new TwitterCldr.RangeSet(ranges)
-
-        else
-          throw "Couldn't find property " + property + " containing property value " + property_value
+      if ranges?
+        new TwitterCldr.RangeSet(ranges)
 
       else
-        throw "Couldn't find property " + property
+        throw "Couldn't find property " + @property + " containing property value " + @property_value
+
     else
-      new TwitterCldr.RangeSet (TwitterCldr.CodePoint.code_points_for_property_value(property_value))
+      new TwitterCldr.RangeSet (TwitterCldr.CodePoint.code_points_for_property_value(@property_value))

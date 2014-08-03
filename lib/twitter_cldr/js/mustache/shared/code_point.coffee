@@ -77,7 +77,11 @@ class TwitterCldr.CodePoint
 		@get_index(index_name)[value]
 	
 	@code_points_for_property : (property_name, value)	->
-		@get_property_data(property_name)[value]
+		property_data = @get_property_data(property_name)
+		if property_data?
+			property_data[value]
+		else
+	        throw "Couldn't find property " + property_name
 
 	
 	# Search for code points wherein at least one property value contains prop_value.
@@ -92,10 +96,10 @@ class TwitterCldr.CodePoint
 			return @index_key_cache[prop_value]
 
 		result = []
-		for index_key, index_names of @index_keys()
-			if index_keys.to_string().indexOf(prop_value.to_string())
+		for index_key, index_names of @index_keys
+			if index_key.indexOf(prop_value) > -1
 				for index_name in index_names
-					result.concat(@get_index(index_name)[index_key])
+					result = result.concat(@get_index(index_name)[index_key])
 
 		@index_key_cache[prop_value] = result
 
@@ -110,8 +114,8 @@ class TwitterCldr.CodePoint
 			return @hangul_type_cache[code_point]
 		if code_point
 			for type in ["lparts", "vparts", "tparts", "compositions"]
-				for range_hash in @hangul_blocks[type]
-					range = new TwitterCldr.Range(range_hash.first, range_hash.last)
+				for range in @hangul_blocks[type]
+					range = new TwitterCldr.Range(range[0], range[1])
 					return @hangul_type_cache[code_point] = type if range.includes(code_point)
 			@hangul_type_cache[code_point] = null
 		else
@@ -122,7 +126,7 @@ class TwitterCldr.CodePoint
 			return @composition_exclusion_cache[code_point]
 
 		for exclusion in @composition_exclusions
-			range = new TwitterCldr.Range(exclusion.first, exclusion.last)
+			range = new TwitterCldr.Range(exclusion[0], exclusion[1])
 			if range.includes(code_point)
 				return @composition_exclusion_cache[code_point] = true
 
@@ -141,7 +145,7 @@ class TwitterCldr.CodePoint
 		for k, v of index_data
 			index_data_formatted[k] = []
 			for range in index_data[k]
-				index_data_formatted[k].push(new TwitterCldr.Range(range.first, range.last))
+				index_data_formatted[k].push(new TwitterCldr.Range(range[0], range[1]))
 
 		@index_cache[index_name] = index_data_formatted
 
@@ -154,7 +158,7 @@ class TwitterCldr.CodePoint
 		for k, v of property_data
 			property_data_formatted[k] = []
 			for range in property_data[k]
-				property_data_formatted[k].push(new TwitterCldr.Range(range.first, range.last))
+				property_data_formatted[k].push(new TwitterCldr.Range(range[0], range[1]))
 
 		@property_data_cache[property_name] = property_data_formatted
 
@@ -178,7 +182,7 @@ class TwitterCldr.CodePoint
 		if @block_cache[code_point]?
 			return @block_cache[code_point]
 		for k, range of @blocks
-			range = new TwitterCldr.Range(range.first, range.last)
+			range = new TwitterCldr.Range(range[0], range[1])
 			if range.includes(code_point)
 				return @block_cache[code_point] = k
 		return null
@@ -187,7 +191,7 @@ class TwitterCldr.CodePoint
 		if !block_name?
 			return null
 		block_data = @blocks[block_name]
-		if block_data? then new TwitterCldr.Range(block_data.first, block_data.last) else null
+		if block_data? then new TwitterCldr.Range(block_data[0], block_data[1]) else null
 
 
 	@blocks = `{{{blocks}}}`

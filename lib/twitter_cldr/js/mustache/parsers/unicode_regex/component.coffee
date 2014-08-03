@@ -6,34 +6,33 @@ class TwitterCldr.Component
     if !(codepoints instanceof Array)
       codepoints = [codepoints]
 
-    codepoints.map ( (c) -> 
-      s = c.toString(16)
-      while s.length < 4 
-        s = "0" + s 
-
-      return "\\u{" + s + "}"; 
-    )
+    codepoints.map(((c) -> 
+          s = c.toString(16) #TODO  - Verify if this needs to be hex or octal
+          while s.length < 4 
+            s = "0" + s 
+    
+          return "\\u" + s; 
+        ), @)
 
   range_to_regex : (range) ->
     if range.first instanceof Array
-      array_to_regex(range)
+      @array_to_regex(range)
     else
       "["+@to_utf8(range.first)+"-"+@to_utf8(range.last)+"]" # todo - check this.
 
   array_to_regex : (arr) ->
-    arr.map ( (c) ->
-      return "(?:" + to_utf8(elem) + ")"
-    )
-
+    (arr.map(((c) ->
+                  return "(?:" + @to_utf8(c) + ")"
+                ), @)).join("")
 
   set_to_regex : (set) -> # TODO - Figure this out.
-    strs = TwitterCldr.Utilities(only_unique(set.to_array(true))).map ( (obj) ->
-      if obj instanceof TwitterCldr.Range #TODO - Check which range this is. Range Set or Ruby Range
-        range_to_regex (obj)
-      else if obj instanceof Array
-        array_to_regex (obj)
-      else
-        to_utf8 (obj)
-    )
+    strs = TwitterCldr.Utilities.only_unique(set.to_array(true)).map(((obj) ->
+          if obj instanceof TwitterCldr.Range #TODO - Check which range this is. Range Set or Ruby Range
+            @range_to_regex (obj)
+          else if obj instanceof Array
+            @array_to_regex (obj)
+          else
+            @to_utf8 (obj)
+        ), @)
     
     ("(?:" + strs.join("|") + ")")

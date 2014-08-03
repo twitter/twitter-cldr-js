@@ -20,7 +20,7 @@ class TwitterCldr.UnicodeRegex
     @invalid_regexp_chars ||= new TwitterCldr.RangeSet ([(new TwitterCldr.Range(2, 7)), (new TwitterCldr.Range(55296, 57343))])
   
   @get_valid_regexp_chars : ->
-    @valid_regexp_chars ||= @all_unicode.subtract(@get_invalid_regexp_chars)
+    @valid_regexp_chars ||= @get_all_unicode().subtract(@get_invalid_regexp_chars())
   
   @get_tokenizer : ->
     @tokenizer ||= new TwitterCldr.UnicodeRegexTokenizer()

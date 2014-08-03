@@ -36,7 +36,7 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
     if @grouping_pairs[type]? then @grouping_pairs[type] else null
 
   to_regexp_str : ->
-    @set_to_regex(to_set())
+    @set_to_regex(@to_set())
 
   to_set : ->
     @evaluate(@root)
@@ -45,7 +45,7 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
     if node instanceof TwitterCldr.UnaryOperator or node instanceof TwitterCldr.BinaryOperator    
       switch node.operator
         when "negate"
-          TwitterCldr.UnicodeRegex.valid_regexp_chars.subtract(@evaluate(node.child))
+          TwitterCldr.UnicodeRegex.get_valid_regexp_chars().subtract(@evaluate(node.child))
         when "union", "pipe"
           @evaluate(node.left).union(@evaluate(node.right))
         when "dash"
@@ -55,7 +55,7 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
           
     else
       if node?
-        node.to_set
+        node.to_set()
       else
         new TwitterCldr.RangeSet([])
     

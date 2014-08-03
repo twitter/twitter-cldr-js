@@ -10,10 +10,12 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 			r : [13]  # carriage return
 			n : [10]  # newline
 			f : [12]  # form feed
-			d : [0..9].map ((c) ->
-					@ordinalize(c.toString())), @
-			w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map ((c) ->
-					@ordinalize(c)), @
+			d : [0..9].map(((c) ->
+				@ordinalize(c.toString())
+				), @)
+			w : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".split("").map(((c) ->
+				@ordinalize(c)
+				), @)
 		}
 		super
 

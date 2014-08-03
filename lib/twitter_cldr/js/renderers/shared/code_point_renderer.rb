@@ -12,8 +12,8 @@ module TwitterCldr
 
           def blocks
             block_data = TwitterCldr.get_resource(:unicode_data, :blocks)
-            block_data.inject({}) do |ret, (k, v)| 
-              ret[k] = { :first => v.first, :last => v.last } 
+            block_data.inject({}) do |ret, (k, range)| 
+              ret[k] = [range.first, range.last] #{ :first => v.first, :last => v.last } 
               ret
             end.to_json
           end
@@ -21,7 +21,7 @@ module TwitterCldr
           def composition_exclusions
             composition_exclusions_data = TwitterCldr.get_resource(:unicode_data, :composition_exclusions)
             composition_exclusions_data.inject([]) do |ret, range| 
-              ret << { :first => range.first, :last => range.last } 
+              ret << [range.first, range.last] #{ :first => range.first, :last => range.last } 
               ret
             end.to_json
           end
@@ -31,7 +31,7 @@ module TwitterCldr
             hangul_types_data.inject({}) do |ret, (k, v)| 
               ret[k] = []
               v.each { |range| 
-                ret[k] << { :first => range.first, :last => range.last }  
+                ret[k] << [range.first, range.last] # { :first => range.first, :last => range.last }  
               }
               ret
             end.to_json
@@ -60,7 +60,7 @@ module TwitterCldr
               index_data[key] = data.inject({}) do |ret, (k, v)|  
                 ret[k] = []
                 v.each { |range|
-                  ret[k] << { :first => range.first, :last => range.last }  
+                  ret[k] << [range.first, range.last] # { :first => range.first, :last => range.last }  
                 }
                 ret
               end
@@ -75,7 +75,7 @@ module TwitterCldr
               property_data[key] = data.inject({}) do |ret, (k, v)|  
                 ret[k] = []
                 v.each { |range|
-                  ret[k] << { :first => range.first, :last => range.last }  
+                  ret[k] << [range.first, range.last] # { :first => range.first, :last => range.last }  
                 }
                 ret
               end

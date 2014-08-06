@@ -4,8 +4,9 @@
 class TwitterCldr.Bidi
   MAX_DEPTH = 62
 
+  @bidi_classes = `{{{bidi_classes}}}`
+
   constructor: (options = {}) ->
-    @bidi_classes = `{{{bidi_classes}}}`
     @string_arr = options.string_arr || options.types
     @types = options.types || []
     @levels = []

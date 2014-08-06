@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Shared
         class LanguagesRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/languages.coffee"))
+          set_template "mustache/shared/languages.coffee"
 
           def language_data
             TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages].to_json

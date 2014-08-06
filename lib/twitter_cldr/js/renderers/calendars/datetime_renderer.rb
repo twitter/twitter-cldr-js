@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Calendars
         class DateTimeRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/calendars/datetime.coffee"))
+          set_template "mustache/calendars/datetime.coffee"
 
           def tokens
             {

@@ -17,8 +17,8 @@ class TwitterCldr.UnicodeString extends TwitterCldr.Component
 		else
 			new TwitterCldr.RangeSet([new TwitterCldr.Range @codepoints[0], @codepoints[0]])
 
-	@to_regex_str : ->
+	to_regexp_str : ->
 		cps = (if @codepoints instanceof Array then @codepoints else [@codepoints])
-		array_to_regex (cps)
+		@array_to_regex(cps)
 
 		

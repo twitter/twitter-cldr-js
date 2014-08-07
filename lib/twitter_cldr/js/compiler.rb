@@ -83,6 +83,7 @@ module TwitterCldr
           :character_set => TwitterCldr::Js::Renderers::Parsers::CharacterSetRenderer,
           :symbol_table => TwitterCldr::Js::Renderers::Parsers::SymbolTableRenderer,
           :parser => TwitterCldr::Js::Renderers::Parsers::ParserRenderer,
+          :segmentation_parser => TwitterCldr::Js::Renderers::Parsers::SegmentationParserRenderer,
           :unicode_regex_parser => TwitterCldr::Js::Renderers::Parsers::UnicodeRegexParserRenderer,
           :token => TwitterCldr::Js::Renderers::Tokenizers::TokenRenderer,
           :composite_token => TwitterCldr::Js::Renderers::Tokenizers::CompositeTokenRenderer,

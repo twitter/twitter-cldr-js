@@ -2,13 +2,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.UnicodeRegex
-  constructor : (@elements, @modifiers = null) ->
-    @modifiers = null # TODO - Verify is this is needed.
+  constructor : (@elements, @modifiers = "") ->
+    # @modifiers = null # TODO - Verify is this is needed.
 
   @compile : (str, modifiers = "", symbol_table = null) ->
-    new TwitterCldr.UnicodeRegex @parser.parse(
-        @tokenizer.tokenize(str), {"symbol_table" : symbol_table}
-      ), modifiers
+    new TwitterCldr.UnicodeRegex(@get_parser().parse(
+        @get_tokenizer().tokenize(str), {"symbol_table" : symbol_table}
+      ), modifiers)
     
   @get_all_unicode : ->
     @all_unicode ||= new TwitterCldr.RangeSet([new TwitterCldr.Range(0, 0x10FFFF)])
@@ -17,16 +17,16 @@ class TwitterCldr.UnicodeRegex
   # These don't play nicely with Ruby's regular expression engine, and I think we
   # can safely disregard them.
   @get_invalid_regexp_chars : ->
-    @invalid_regexp_chars ||= new TwitterCldr.RangeSet ([(new TwitterCldr.Range(2, 7)), (new TwitterCldr.Range(55296, 57343))])
+    @invalid_regexp_chars ||= new TwitterCldr.RangeSet([(new TwitterCldr.Range(2, 7)), (new TwitterCldr.Range(55296, 57343))])
   
   @get_valid_regexp_chars : ->
     @valid_regexp_chars ||= @get_all_unicode().subtract(@get_invalid_regexp_chars())
   
   @get_tokenizer : ->
-    @tokenizer ||= new TwitterCldr.UnicodeRegexTokenizer()
+    @tokenizer = new TwitterCldr.UnicodeRegexTokenizer()
 
   @get_parser : ->
-    @parser ||= new TwitterCldr.UnicodeRegexParser()
+    @parser = new TwitterCldr.UnicodeRegexParser()
 
 
   # TODO - Figure this out
@@ -46,12 +46,12 @@ class TwitterCldr.UnicodeRegex
 
   
   to_regexp_str : ->
-    @regexp_str ||= @elements.map((element) ->
-      element.to_regexp_str()
-    ).join("")
+    @regexp_str ||= @elements.map(((element) ->
+          element.to_regexp_str()
+        ), @).join("")
 
   to_regexp : ->
-    new Regexp(@to_regexp_str(), @modifiers)
+    new RegExp(@to_regexp_str(), @modifiers)
 
   match : (str) ->
-    str.match(@to_regexp)
+    str.match(@to_regexp())

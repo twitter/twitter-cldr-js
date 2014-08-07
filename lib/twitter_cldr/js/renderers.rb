@@ -46,6 +46,7 @@ module TwitterCldr
         autoload :CharacterRangeRenderer,               'twitter_cldr/js/renderers/parsers/unicode_regex/character_range'
         autoload :CharacterSetRenderer,                 'twitter_cldr/js/renderers/parsers/unicode_regex/character_set'
         autoload :ParserRenderer,                       'twitter_cldr/js/renderers/parsers/parser'
+        autoload :SegmentationParserRenderer,           'twitter_cldr/js/renderers/parsers/segmentation_parser'
         autoload :UnicodeRegexParserRenderer,           'twitter_cldr/js/renderers/parsers/unicode_regex_parser'
       end
 

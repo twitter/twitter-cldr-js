@@ -22,7 +22,7 @@ class TwitterCldr.Literal extends TwitterCldr.Component
 	ordinalize : (char) ->
 		TwitterCldr.Utilities.char_code_at char, 0
 	
-	to_regex_str : ->
+	to_regexp_str : ->
 		@text
 
 	to_set : ->

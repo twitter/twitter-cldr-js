@@ -277,6 +277,22 @@ Get a list of supported territories by using the `territories` method:
 TwitterCldr.PhoneCodes.territories();  // ["zw", "an", "tr", "by", "mh", ...]
 ```
 
+### Territories Containment
+
+Determine if a territory/region contains another region or a country (as describe [here](http://www.unicode.org/cldr/charts/25/supplemental/territory_containment_un_m_49.html)):
+
+```javascript
+TwitterCldr.TerritoriesContainment.children('151') // ["BG", "BY", "CZ", "HU", "MD", "PL", ...]
+TwitterCldr.TerritoriesContainment.children('RU')  // []
+
+TwitterCldr.TerritoriesContainment.parents('013') // ["419", "003", "019"]
+TwitterCldr.TerritoriesContainment.parents('001') // []
+
+TwitterCldr.TerritoriesContainment.contains('151', 'RU') // true
+TwitterCldr.TerritoriesContainment.contains('419', 'BZ') // true
+TwitterCldr.TerritoriesContainment.contains('419', 'FR') // false
+```
+
 
 ### Generating the JavaScript
 

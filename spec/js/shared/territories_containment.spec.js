@@ -5,9 +5,9 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("TerritoriesContainment", function() {
   describe("contains", function() {
-//    it('returns true if the first territory (immediately) contains the second one', function() {
-//      expect(TwitterCldr.TerritoriesContainment.contains('151', 'RU')).toBe(true);
-//    });
+    it('returns true if the first territory (immediately) contains the second one', function() {
+      expect(TwitterCldr.TerritoriesContainment.contains('151', 'RU')).toBe(true);
+    });
 
     it('returns true if the first territory (non-immediately) contains the second one', function() {
       expect(TwitterCldr.TerritoriesContainment.contains('419', 'BZ')).toBe(true);
@@ -56,7 +56,7 @@ describe("TerritoriesContainment", function() {
       expect(TwitterCldr.TerritoriesContainment.parents('013').sort()).toEqual(['003', '019', '419']);
     });
 
-    it('returns nil when given a top-level territory', function() {
+    it('returns [] when given a top-level territory', function() {
       expect(TwitterCldr.TerritoriesContainment.parents('001')).toEqual([]);
     });
 

@@ -2,8 +2,8 @@ source "http://rubygems.org"
 
 gemspec
 
-# gem 'twitter_cldr', :github => 'twitter/twitter-cldr-rb', :branch => 'kl_regions'
-gem 'twitter_cldr', :path => '../twitter-cldr-rb'
+# TODO: remove and put into gemspec once new twitter-cldr-rb is released
+gem 'twitter_cldr', :github => 'twitter/twitter-cldr-rb', :branch => 'kl_regions'
 
 group :test do
   gem 'rspec', '~> 2.11.0'

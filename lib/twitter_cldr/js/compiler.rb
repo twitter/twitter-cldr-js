@@ -60,19 +60,20 @@ module TwitterCldr
 
       def renderers
         @renderers ||= {
-          :plural_rules => TwitterCldr::Js::Renderers::PluralRules::PluralRulesRenderer,
-          :timespan => TwitterCldr::Js::Renderers::Calendars::TimespanRenderer,
-          :datetime => TwitterCldr::Js::Renderers::Calendars::DateTimeRenderer,
+          :plural_rules                    => TwitterCldr::Js::Renderers::PluralRules::PluralRulesRenderer,
+          :timespan                        => TwitterCldr::Js::Renderers::Calendars::TimespanRenderer,
+          :datetime                        => TwitterCldr::Js::Renderers::Calendars::DateTimeRenderer,
           :additional_date_format_selector => TwitterCldr::Js::Renderers::Calendars::AdditionalDateFormatSelectorRenderer,
-          :numbers => TwitterCldr::Js::Renderers::Numbers::NumbersRenderer,
-          :currencies => TwitterCldr::Js::Renderers::Shared::CurrenciesRenderer,
-          :lists => TwitterCldr::Js::Renderers::Shared::ListRenderer,
-          :bidi => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
-          :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
-          :phone_codes => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
-          :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
-          :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
-          :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser
+          :numbers                         => TwitterCldr::Js::Renderers::Numbers::NumbersRenderer,
+          :currencies                      => TwitterCldr::Js::Renderers::Shared::CurrenciesRenderer,
+          :lists                           => TwitterCldr::Js::Renderers::Shared::ListRenderer,
+          :bidi                            => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
+          :calendar                        => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
+          :phone_codes                     => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
+          :postal_codes                    => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
+          :languages                       => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
+          :number_parser                   => TwitterCldr::Js::Renderers::Parsers::NumberParser,
+          :territories_containment         => TwitterCldr::Js::Renderers::Shared::TerritoriesContainmentRenderer,
         }
       end
     end

@@ -16,18 +16,18 @@ describe("SegmentationParser", function() {
   describe("#parse", function() {
     it("should parse a rule with a break", function() {
       var rule = parse(tokenize("[a-z] ÷ [0-9]"));
-      expect(rule.left.to_regexp_str()).toEqual("\\A(?:[\\u0061-\\u007a])");
-      expect(rule.right.to_regexp_str()).toEqual("\\A(?:[\\u0030-\\u0039])");
+      expect(rule.left.to_regexp_str()).toEqual("^(?:[\\u0061-\\u007a])");
+      expect(rule.right.to_regexp_str()).toEqual("^(?:[\\u0030-\\u0039])");
       expect(rule.boundary_symbol).toEqual("break");
     });
     it("should parse a rule with a non-break", function() {
       var rule = parse(tokenize("[a-z] × [0-9]"));
-      expect(rule.regex.to_regexp_str()).toEqual("\\A(?:[\\u0061-\\u007a])(?:[\\u0030-\\u0039])");
+      expect(rule.regex.to_regexp_str()).toEqual("^(?:[\\u0061-\\u007a])(?:[\\u0030-\\u0039])");
       expect(rule.boundary_symbol).toEqual("no_break");
     });
     it("should parse a rule containing a variable", function() {
       var rule = parse(tokenize("$FOO × bar"), {'symbol_table' : symbol_table});
-      expect(rule.regex.to_regexp_str()).toEqual("\\A(?:[\\u0061-\\u0063])(?:\\u0062)(?:\\u0061)(?:\\u0072)");
+      expect(rule.regex.to_regexp_str()).toEqual("^(?:[\\u0061-\\u0063])(?:\\u0062)(?:\\u0061)(?:\\u0072)");
       expect(rule.boundary_symbol).toEqual("no_break");
     });
   });

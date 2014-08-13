@@ -1,23 +1,16 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-class TwitterCldr.BinaryOperator 
-  constructor : (@operator, @left, @right) ->
-
-class TwitterCldr.UnaryOperator 
-  constructor : (@operator, @child) ->
-
-
 class TwitterCldr.CharacterClass extends TwitterCldr.Component
   constructor : (@root) ->
     @type = "character_class"
     @grouping_pairs = TwitterCldr.CharacterClass.grouping_pairs
     super
-
+  
   @grouping_pairs = {
     "close_bracket" : "open_bracket"
   }
-  
+
   @opening_types : ->
     keys = []   
     for key, value of @grouping_pairs
@@ -42,7 +35,7 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
     @evaluate(@root)
 
   evaluate : (node) ->
-    if node instanceof TwitterCldr.UnaryOperator or node instanceof TwitterCldr.BinaryOperator    
+    if node instanceof TwitterCldr.CharacterClass.UnaryOperator or node instanceof TwitterCldr.CharacterClass.BinaryOperator    
       switch node.operator
         when "negate"
           TwitterCldr.UnicodeRegex.get_valid_regexp_chars().subtract(@evaluate(node.child))
@@ -59,3 +52,8 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
       else
         new TwitterCldr.RangeSet([])
     
+  class @.BinaryOperator 
+    constructor : (@operator, @left, @right) ->
+
+  class @.UnaryOperator 
+    constructor : (@operator, @child) ->

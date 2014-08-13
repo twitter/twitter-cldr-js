@@ -6,13 +6,25 @@ class TwitterCldr.Component
     if !(codepoints instanceof Array)
       codepoints = [codepoints]
 
-    codepoints.map(((c) -> 
-          s = c.toString(16) #TODO  - Verify if this needs to be hex or octal
-          while s.length < 4 
-            s = "0" + s 
-    
-          return "\\u" + s; 
+      #TODO - FIX THIS
+    codepoints.map(((cp) -> 
+          # if (cp >= 0 and cp <= 0xD7FF or cp >= 0xE000 and cp <= 0xFFFF)
+          #   return @to_hex(cp)
+          # else if (cp >= 0x10000 and cp <= 0x10FFFF)
+          #   cp -= 0x10000
+          #   first = ((0xffc00 & cp) >> 10) + 0xD800
+          #   second = (0x3ff & cp) + 0xDC00
+          #   return @to_hex(first) + '+' + @to_hex(second)
+          @to_hex(cp)
         ), @)
+
+  to_hex : (codepoint) ->
+    s = codepoint.toString(16)
+    s = "0000".slice(0, 4 - s.length) + s
+    # while s.length < 4 
+    #   s = "0" + s 
+
+    return "\\u" + s; 
 
   range_to_regex : (range) ->
     if range.first instanceof Array
@@ -28,11 +40,11 @@ class TwitterCldr.Component
   set_to_regex : (set) -> # TODO - Figure this out.
     strs = TwitterCldr.Utilities.only_unique(set.to_array(true)).map(((obj) ->
           if obj instanceof TwitterCldr.Range #TODO - Check which range this is. Range Set or Ruby Range
-            @range_to_regex (obj)
+            @range_to_regex(obj)
           else if obj instanceof Array
-            @array_to_regex (obj)
+            @array_to_regex(obj)
           else
-            @to_utf8 (obj)
+            @to_utf8(obj)
         ), @)
     
     ("(?:" + strs.join("|") + ")")

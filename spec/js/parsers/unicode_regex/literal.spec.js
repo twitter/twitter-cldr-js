@@ -23,7 +23,7 @@ describe("Literal", function() {
         new TwitterCldr.Range(0, 1),
         new TwitterCldr.Range(8, 47),
         new TwitterCldr.Range(58, 55295),
-        new TwitterCldr.Range(57344, 1114111),
+        new TwitterCldr.Range(57344, 65535),//1114111),
       ]));
     });
   });

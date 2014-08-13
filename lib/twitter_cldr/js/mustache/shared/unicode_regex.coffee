@@ -11,7 +11,7 @@ class TwitterCldr.UnicodeRegex
       ), modifiers)
     
   @get_all_unicode : ->
-    @all_unicode ||= new TwitterCldr.RangeSet([new TwitterCldr.Range(0, 0x10FFFF)])
+    @all_unicode ||= new TwitterCldr.RangeSet([new TwitterCldr.Range(0, 0xFFFF)])
 
   # A few <control> characters (i.e. 2..7) and public/private surrogates (i.e. 55296..57343).
   # These don't play nicely with Ruby's regular expression engine, and I think we
@@ -21,6 +21,9 @@ class TwitterCldr.UnicodeRegex
   
   @get_valid_regexp_chars : ->
     @valid_regexp_chars ||= @get_all_unicode().subtract(@get_invalid_regexp_chars())
+
+  @get_unsupported_chars : ->
+    @unsupported_chars ||= new TwitterCldr.RangeSet([new TwitterCldr.Range(0x10000, 0x10FFFF)])
   
   @get_tokenizer : ->
     @tokenizer = new TwitterCldr.UnicodeRegexTokenizer()

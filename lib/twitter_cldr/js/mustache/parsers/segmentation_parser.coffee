@@ -3,7 +3,7 @@
 
 class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 	constructor : ->
-		@begin_token ||= new TwitterCldr.Token({type : "special_char", value: "\\A"})
+		@begin_token ||= new TwitterCldr.Token({type : "special_char", value: "^"})
 		@regex_parser ||= new TwitterCldr.UnicodeRegexParser
 
 	class @.RuleMatchData
@@ -27,10 +27,10 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 					right_match = @right.match(str.slice(str.length - match_pos, str.length))
 
 					if right_match?
-						return new TwitterCldr.SegmentationParser.RuleMatchData((left_match[0] + right_match [0]), match_pos)
+						return new TwitterCldr.SegmentationParser.RuleMatchData((left_match[0] + right_match[0]), match_pos)
 
-					else
-						return new TwitterCldr.SegmentationParser.RuleMatchData(str, str.length)
+				else
+					return new TwitterCldr.SegmentationParser.RuleMatchData(str, str.length)
 			return null
 
 	class @.NoBreakRule extends @.Rule
@@ -39,7 +39,7 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 			super
 
 		match : (str) ->
-			match = str.match(@regex)
+			match = @regex.match(str)
 			if match? 
 				new TwitterCldr.SegmentationParser.RuleMatchData(match[0], str.indexOf(match[0]) + match[0].length) 
 			else 

@@ -187,7 +187,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
 		array[array.length-1]
 
 	binary_operator_node : (operator, right, left) ->
-		new TwitterCldr.BinaryOperator(operator, left, right)
+		new TwitterCldr.CharacterClass.BinaryOperator(operator, left, right)
 
 	unary_operator_node : (operator, child) ->
-		new TwitterCldr.UnaryOperator(operator, child)
+		new TwitterCldr.CharacterClass.UnaryOperator(operator, child)

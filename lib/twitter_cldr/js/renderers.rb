@@ -34,6 +34,7 @@ module TwitterCldr
         autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
         autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
         autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/shared/unicode_regex_renderer'
+        autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/shared/break_iterator_renderer'
       end
 
       module Parsers

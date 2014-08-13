@@ -16,7 +16,7 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
     @set_to_regex(@to_set())
 
   to_set : ->
-    @codepoints().subtract(TwitterCldr.UnicodeRegex.get_invalid_regexp_chars())
+    @codepoints().subtract(TwitterCldr.UnicodeRegex.get_unsupported_chars()).subtract(TwitterCldr.UnicodeRegex.get_invalid_regexp_chars())
 
   codepoints : ->
     if @property?
@@ -30,4 +30,4 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
         throw "Couldn't find property " + @property + " containing property value " + @property_value
 
     else
-      new TwitterCldr.RangeSet (TwitterCldr.CodePoint.code_points_for_property_value(@property_value))
+      new TwitterCldr.RangeSet(TwitterCldr.CodePoint.code_points_for_property_value(@property_value))

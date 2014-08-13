@@ -74,6 +74,7 @@ module TwitterCldr
           :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
           :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
           :unicode_regex => TwitterCldr::Js::Renderers::Shared::UnicodeRegexRenderer,
+          :break_iterator => TwitterCldr::Js::Renderers::Shared::BreakIteratorRenderer,
           :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser,
           :component => TwitterCldr::Js::Renderers::Parsers::ComponentRenderer,
           :literal => TwitterCldr::Js::Renderers::Parsers::LiteralRenderer,

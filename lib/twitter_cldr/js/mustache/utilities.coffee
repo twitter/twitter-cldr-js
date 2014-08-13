@@ -125,3 +125,7 @@ class TwitterCldr.Utilities
       newInstance[key] = @clone obj[key]
 
     return newInstance
+
+  @compute_cache_key : (pieces) ->
+    if pieces? and pieces.length > 0
+      pieces.join("|")

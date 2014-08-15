@@ -4,7 +4,7 @@
 class TwitterCldr.BreakIterator
 	constructor : (locale = TwitterCldr.locale, options = {}) ->
 		@locale = locale
-		@use_uli_exceptions = (if options["use_uli_exceptions"] then options["use_uli_exceptions"] else true)
+		@use_uli_exceptions = (if options["use_uli_exceptions"]?lit then options["use_uli_exceptions"] else true)
 		@exceptions_cache = {}
 		@segmentation_tokenizer = new TwitterCldr.SegmentationTokenizer()
 		@segmentation_parser = new TwitterCldr.SegmentationParser()
@@ -59,27 +59,28 @@ class TwitterCldr.BreakIterator
 		while(search_str.length isnt 0)
 			rule = null
 			for r in rules
-				if r.match(str)? 
-					match = r.match(str)
+				match = r.match(search_str)
+				if match? 
 					rule = r
 					break
-
 			if rule.boundary_symbol is "break"
 				break_offset = current_position + match.boundary_offset
 				result.push(str.slice(last_offset, break_offset))
+				console.log result
 				if block?
 					block(result[result.length-1])
 				
 				last_offset = break_offset
 
-			search_str = search_str.slice(search_str.length - match.boundary_offset, search_str.length)
-			console.log(search_str)
+			search_str = search_str.slice(match.boundary_offset)
+			# console.log(search_str)
 			current_position += match.boundary_offset
 
 		if last_offset < str.length - 1
-			result.push(str.slice(str.length - last_offset, str.length))
+			result.push(str.slice(last_offset))
 			if block?
-				block(result[result.length-1])
+				block(str.slice(last_offset))
+
 
 		result
 
@@ -107,7 +108,7 @@ class TwitterCldr.BreakIterator
 		tailoring_rules = @rules_for(tailoring_boundary_data, symbol_table)
 		rules = @merge_rules(root_rules, tailoring_rules)
 
-		if @use_uli_exceptions
+		if @use_uli_exceptions is true
 			exception_rule = @compile_exception_rule_for(locale, boundary_type, boundary_name)
 			rules.unshift(exception_rule)
 
@@ -118,7 +119,7 @@ class TwitterCldr.BreakIterator
 		result = []
 		TwitterCldr.Utilities.arraycopy ruleset1, 0, result, 0, ruleset1.length
 		
-		for i in [0...ruleset2.length] by 1 # TODO - Change the for i in to how it is in Utils.
+		for i in [0...ruleset2.length] by 1
 			for j in [0...result.length] by 1
 				if ruleset2[i].id == result[j].id
 					result[j] = ruleset2[i]

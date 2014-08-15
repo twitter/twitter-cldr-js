@@ -52,7 +52,7 @@ describe("BreakIterator", function() {
     });
 
     describe("without ULI exceptions", function() {
-      var iterator = new TwitterCldr.BreakIterator ("en", {"use_uli_exceptions" : true});
+      var iterator = new TwitterCldr.BreakIterator ("en", {"use_uli_exceptions" : false});
       it("splits on certain abbreviations like Mr. and Mrs. (use ULI rules to avoid this behavior)", function() {
         var str = "I really like Mrs. Patterson. She's nice."
         expect(iterator.each_sentence(str)).toEqual([

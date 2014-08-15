@@ -24,7 +24,7 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 				match_pos = str.indexOf(left_match[0]) + left_match[0].length
 
 				if @right?
-					right_match = @right.match(str.slice(str.length - match_pos, str.length))
+					right_match = @right.match(str.slice(match_pos))
 
 					if right_match?
 						return new TwitterCldr.SegmentationParser.RuleMatchData((left_match[0] + right_match[0]), match_pos)

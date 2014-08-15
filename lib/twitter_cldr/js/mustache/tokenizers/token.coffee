@@ -3,13 +3,13 @@
 
 class TwitterCldr.Token
 
-	constructor : (options = {}) ->
-		for k, v of options
-			@[k] = v
-			#TODO fix all the plaecs this is messed up in.
-	
-	to_hash : ->
-		{ "value" : @value, "type" : @type }
+  constructor : (options = {}) ->
+    for k, v of options
+      @[k] = v
+      #TODO fix all the plaecs this is messed up in.
+  
+  to_hash : ->
+    { "value" : @value, "type" : @type }
 
-	to_string : ->
-		@value
+  to_string : ->
+    @value

@@ -2,10 +2,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.CompositeToken
-	constructor : (@tokens) ->
-		@type = "composite"
+  constructor : (@tokens) ->
+    @type = "composite"
 
-	to_string : ->
-		@tokens.map((token) ->
+  to_string : ->
+    @tokens.map((token) ->
       token.to_string()
     ).join ""

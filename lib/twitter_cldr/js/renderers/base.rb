@@ -14,6 +14,10 @@ module TwitterCldr
           @locale = options[:locale]
         end
 
+        def self.set_template(template_path)
+          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "..", template_path))
+        end
+
       end
     end
   end

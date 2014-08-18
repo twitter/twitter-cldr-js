@@ -24,14 +24,15 @@ module TwitterCldr
         autoload :PluralRulesRenderer,                  'twitter_cldr/js/renderers/plurals/rules/plural_rules_renderer'
       end                                                   
                                                             
-      module Shared                                         
-        autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/shared/currencies_renderer'
-        autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
+      module Shared
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
+        autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/shared/currencies_renderer'
+        autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
+        autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
         autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
         autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
-        autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
+        autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/shared/territories_containment_renderer'
       end
 
       module Parsers

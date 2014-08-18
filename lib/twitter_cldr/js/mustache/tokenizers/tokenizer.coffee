@@ -2,22 +2,19 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.TokenRecognizer
-  constructor : (@token_type, @regex, @cleaner, @content = null) -> #TODO figure out if this works. Cleaner and all. (that do thing)
+  constructor : (@token_type, @regex, @cleaner, @content = null) -> 
 
   recognizes : (text) ->
     @regex.test text
 
   clean : (val) ->
-    if @cleaner then @cleaner(val) else val
-
-
+    if @cleaner? then @cleaner(val) else val
 
 class TwitterCldr.Tokenizer
   constructor : (@recognizers, @custom_splitter = null, @remove_empty_entries = true) ->
     @splitter = (@custom_splitter || new RegExp("(" + @recognizers.map((recognizer) ->
       recognizer.regex.source
     ).join("|") + ")"))
-
 
   @union : (tokenizers, block) ->
     recognizers = []
@@ -29,12 +26,12 @@ class TwitterCldr.Tokenizer
       recognizer.concat(recog_ret)
 
     flag = true
-    for tokenizer in tokenizers # TODO - Verify this. Check if this is what it means. Or whether jsut that custom splitter exists.
+    for tokenizer in tokenizers
       if (custom_splitter? and !(@custom_splitter(tokenizer)))
         flag = false
     splitter = null
     if flag 
-      splitter = new Regexp (
+      splitter = new Regexp(
         tokenizers.map ((tokenizer) ->
           tokenizer.custom_splitter.source
         ).join("|")
@@ -68,7 +65,7 @@ class TwitterCldr.Tokenizer
           break
       
       if recognizer.token_type is "composite"
-        content = piece.match(recognizer.content)[0] # TODO - this was [1] in Ruby. Verify.
+        content = piece.match(recognizer.content)[0]
         result.push new TwitterCldr.CompositeToken(@tokenize(content))
 
       else

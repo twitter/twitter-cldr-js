@@ -2,17 +2,17 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/segmentation_data.js');
 
 describe("CodePoint", function() {
   var clear_cache = function () {
     TwitterCldr.CodePoint.composition_exclusion_cache = {};
-    // TwitterCldr.CodePoint.canonical_compositions = null;
     TwitterCldr.CodePoint.block_cache = {};
-    // TwitterCldr.CodePoint.blocks = null;
   };
 
   beforeEach(function () {
     clear_cache();
+    
   });
 
   afterEach(function() {

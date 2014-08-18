@@ -72,11 +72,7 @@ class TwitterCldr.RangeSet
 
     result    
 
-  to_set : ->
-    new TwitterCldr.Set (@to_full_array) #TODO - verify this
-
   includes : (obj) ->
-    # TODO - Make at least 5 test cases here. (4 + 1 for false)
     if obj instanceof TwitterCldr.Range
       for range in @ranges
         return true if range.first <= obj.first && range.last >= obj.last
@@ -131,7 +127,6 @@ class TwitterCldr.RangeSet
       return  
 
     sorted_ranges = @ranges.sort ((a,b) ->
-      # TODO - Remove all instances of this this. It should all be ranges.
       if ((!a.is_numeric()) and (!b.is_numeric()))
         return 1
       if a.first > b.first

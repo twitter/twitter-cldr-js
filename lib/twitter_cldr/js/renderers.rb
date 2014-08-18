@@ -8,6 +8,7 @@ module TwitterCldr
     module Renderers
       autoload :Base,                                   'twitter_cldr/js/renderers/base'
       autoload :Bundle,                                 'twitter_cldr/js/renderers/bundle'
+      autoload :DataBundle,                             'twitter_cldr/js/renderers/data_bundle'
                                                             
       module Calendars                                      
         autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/calendars/datetime_renderer'
@@ -35,6 +36,8 @@ module TwitterCldr
         autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
         autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/shared/unicode_regex_renderer'
         autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/shared/break_iterator_renderer'
+
+        autoload :CodePointDataRenderer,                 'twitter_cldr/js/renderers/shared/code_point_renderer'
       end
 
       module Parsers
@@ -65,5 +68,11 @@ module TwitterCldr
         autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/utils/code_points'
       end
     end
+    #Data Renderers
+    # module DataRenderers
+    #   module Shared
+    #     autoload :CodePointDataRenderer,                 'twitter_cldr/js/renderers/shared/code_point_renderer'
+    #   end
+    # end
   end
 end

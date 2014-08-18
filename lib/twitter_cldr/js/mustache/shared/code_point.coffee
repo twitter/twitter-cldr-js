@@ -107,7 +107,7 @@ class TwitterCldr.CodePoint
     if @canonical_compositions[(code_points.join("|"))]? then @find(@canonical_compositions[(code_points.join("|"))]) else null
 
 
-  @canonical_compositions = `{{{canonical_compositions}}}`
+  @canonical_compositions = {} # `{{{canonical_compositions}}}`
 
   @hangul_type : (code_point) ->
     if @hangul_type_cache[code_point]?
@@ -134,9 +134,9 @@ class TwitterCldr.CodePoint
 
   @index_key_cache = {}
 
-  @index_keys = `{{{index_keys}}}`
+  @index_keys = {} # `{{{index_keys}}}`
 
-  @indices = `{{{indices}}}`
+  @indices = {} # `{{{indices}}}`
 
   @get_index : (index_name) ->
     return @index_cache[index_name] if @index_cache[index_name]?
@@ -149,7 +149,7 @@ class TwitterCldr.CodePoint
 
     @index_cache[index_name] = index_data_formatted
 
-  @properties = `{{{properties}}}`
+  @properties = {} #`{{{properties}}}`
 
   @get_property_data : (property_name) ->
     return @property_data_cache[property_name] if @property_data_cache[property_name]?
@@ -172,9 +172,9 @@ class TwitterCldr.CodePoint
 
   @composition_exclusion_cache = {}
 
-  @hangul_blocks = `{{{hangul_blocks}}}`
+  @hangul_blocks = {} #`{{{hangul_blocks}}}`
 
-  @composition_exclusions = `{{{composition_exclusions}}}`
+  @composition_exclusions =  {} #`{{{composition_exclusions}}}`
 
   @block_cache = {}
 
@@ -194,9 +194,9 @@ class TwitterCldr.CodePoint
     if block_data? then new TwitterCldr.Range(block_data[0], block_data[1]) else null
 
 
-  @blocks = `{{{blocks}}}`
+  @blocks = {} # `{{{blocks}}}`
 
-  @block_data = `{{{block_data}}}`
+  @block_data = {} #`{{{block_data}}}`
 
 
   # Check if block constitutes a range. The code point beginning a range will have a name enclosed in <>, ending with 'First'

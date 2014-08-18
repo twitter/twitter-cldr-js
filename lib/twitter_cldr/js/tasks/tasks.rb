@@ -8,11 +8,11 @@ module TwitterCldr
     module Tasks
 
       class << self
-        def update
+        def update()
           build(
             :begin_msg  => "Updating build... ",
             :output_dir => File.expand_path(File.join(File.dirname(__FILE__), "../../../assets/javascripts/twitter_cldr")),
-            :files      => { "%s.js" => false }
+            :files      => { "%s.js" => false, :segmentation => false }
           )
         end
 
@@ -20,7 +20,7 @@ module TwitterCldr
           build(
             :begin_msg  => "Compiling build... ",
             :output_dir => get_output_dir,
-            :files      => { "min/%s.min.js" => true, "full/%s.js" => false }
+            :files      => { "min/%s.min.js" => true, "full/%s.js" => false, :segmentation => false }
           )
         end
 
@@ -41,17 +41,27 @@ module TwitterCldr
 
           build_duration = time_operation do
             options[:files].each_pair do |file_pattern, minify|
-              compiler.compile_each(:minify => minify) do |bundle, locale|
-                out_file = File.join(output_dir, file_pattern % locale)
-                FileUtils.mkdir_p(File.dirname(out_file))
-                File.open(out_file, "w+") do |f|
-                  f.write(bundle.source)
+              if file_pattern == :segmentation
+                compiler.compile_segmentation_data(:minify => minify) do |data_bundle|
+                  out_file = File.join(output_dir, "segmentation_data.js")
+                  FileUtils.mkdir_p(File.dirname(out_file))
+                  File.open(out_file, "w+") do |f|
+                    f.write(data_bundle.source)
+                  end
                 end
+              else  
+                compiler.compile_each(:minify => minify) do |bundle, locale|
+                  out_file = File.join(output_dir, file_pattern % locale)
+                  FileUtils.mkdir_p(File.dirname(out_file))
+                  File.open(out_file, "w+") do |f|
+                    f.write(bundle.source)
+                  end
 
-                if bundle.source_map
-                  ext = File.extname(out_file)
-                  File.open("#{out_file.chomp(ext)}.map", "w+") do |f|
-                    f.write(bundle.source_map)
+                  if bundle.source_map
+                    ext = File.extname(out_file)
+                    File.open("#{out_file.chomp(ext)}.map", "w+") do |f|
+                      f.write(bundle.source_map)
+                    end
                   end
                 end
               end

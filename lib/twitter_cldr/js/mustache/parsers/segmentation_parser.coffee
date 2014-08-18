@@ -43,7 +43,7 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
       if match? 
         new TwitterCldr.SegmentationParser.RuleMatchData(match[0], str.indexOf(match[0]) + match[0].length) 
       else 
-        null # TODO check this. There should be a position counter thing.
+        null
 
   do_parse: (options = {}) ->
     regex_token_lists = []

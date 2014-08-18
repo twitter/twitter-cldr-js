@@ -18,24 +18,17 @@ module TwitterCldr
           end
 
           def escape_resource(h)
-            # puts h
             if h.is_a?(Hash)
               h.each_pair do |k,v|
                 if v.is_a?(String) and k == :value and v[0] != "\\"
-                  # puts  "found, magicing"
-                  # puts h[k]
-                  # h[k] = escape_string(v)
                   v.replace escape_string(v)
-                  # puts h[k]
                 elsif v.is_a?(Array) or v.is_a?(Hash)
-                  # puts "hash"
                   escape_resource(v)
                 end
               end
             elsif h.is_a?(Array)
               h.each { |element|
                 if element.is_a?(Array) or element.is_a?(Hash)
-                  # puts "element"
                   escape_resource(element)
                 end
               }

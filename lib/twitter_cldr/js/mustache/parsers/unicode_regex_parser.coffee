@@ -4,6 +4,7 @@
 class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
 
   constructor : ->
+    # Types that are allowed to be used in character ranges.
     @character_class_token_types = [
       "variable", "character_set", "negated_character_set", "unicode_char",
       "multichar_string", "string", "escaped_character", "character_range"
@@ -22,11 +23,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
     ]  
 
   parse : (tokens, options = {}) ->
-    v = @preprocess(@substitute_variables(tokens, options["symbol_table"])) #TODO - merge with the next line. Remove v
-    super(v, options)
-
-  # Types that are allowed to be used in character ranges.
-  
+    super(@preprocess(@substitute_variables(tokens, options["symbol_table"])), options)
 
   make_token : (type, value) ->
     new TwitterCldr.Token ({"type": type, "value" : value})
@@ -131,7 +128,6 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
   special_char : (token) ->
     new TwitterCldr.Literal(token.value)
 
-  #TODO - Verify this
   negate : (token) ->
     @special_char(token)
 

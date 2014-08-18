@@ -12,7 +12,7 @@ class TwitterCldr.UnicodeString extends TwitterCldr.Component
     # with data types that aren't true integer ranges. I can't think
     # of any other way to support multichar strings :(
 
-    if @codepoints.length > 1 # TODO - Verify this.
+    if @codepoints.length > 1
       new TwitterCldr.RangeSet([new TwitterCldr.Range @codepoints, @codepoints])
     else
       new TwitterCldr.RangeSet([new TwitterCldr.Range @codepoints[0], @codepoints[0]])

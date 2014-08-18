@@ -66,14 +66,12 @@ class TwitterCldr.BreakIterator
       if rule.boundary_symbol is "break"
         break_offset = current_position + match.boundary_offset
         result.push(str.slice(last_offset, break_offset))
-        console.log result
         if block?
           block(result[result.length-1])
         
         last_offset = break_offset
 
       search_str = search_str.slice(match.boundary_offset)
-      # console.log(search_str)
       current_position += match.boundary_offset
 
     if last_offset < str.length - 1

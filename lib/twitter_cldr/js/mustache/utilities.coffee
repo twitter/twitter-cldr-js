@@ -86,7 +86,7 @@ class TwitterCldr.Utilities
   @is_odd: (num) ->
     num % 2 == 1
 
-  @only_unique : (arr) ->
+  @remove_duplicates : (arr) ->
     arr.reduce ((u, elem) ->
       u.push elem  if u.indexOf(elem) < 0
       u
@@ -99,7 +99,7 @@ class TwitterCldr.Utilities
 
   # This function was adapted from the Mozilla JS reference:
   # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
-  @trim_string : (s) -> # TODO - Add tests
+  @trim_string : (s) ->
     s.replace(/^\s+|\s+$/g, '')
 
   # This function was adapted from the CoffeeScript Cookbook Reference:
@@ -128,4 +128,5 @@ class TwitterCldr.Utilities
 
   @compute_cache_key : (pieces) ->
     if pieces? and pieces.length > 0
-      pieces.join("|")
+      return pieces.join("|")
+    return null

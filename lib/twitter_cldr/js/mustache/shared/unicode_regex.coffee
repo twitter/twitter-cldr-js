@@ -3,7 +3,6 @@
 
 class TwitterCldr.UnicodeRegex
   constructor : (@elements, @modifiers = "") ->
-    # @modifiers = null # TODO - Verify is this is needed.
 
   @compile : (str, modifiers = "", symbol_table = null) ->
     new TwitterCldr.UnicodeRegex(@get_parser().parse(
@@ -30,23 +29,6 @@ class TwitterCldr.UnicodeRegex
 
   @get_parser : ->
     @parser = new TwitterCldr.UnicodeRegexParser()
-
-
-  # TODO - Figure this out
-
-  # @all_unicode ||= new TwitterCldr.RangeSet([new TwitterCldr.Range(0, 0x10FFFF)])
-
-  # # A few <control> characters (i.e. 2..7) and public/private surrogates (i.e. 55296..57343).
-  # # These don't play nicely with Ruby's regular expression engine, and I think we
-  # # can safely disregard them.
-  # @invalid_regexp_chars ||= new TwitterCldr.RangeSet ([(new TwitterCldr.Range(2, 7)), (new TwitterCldr.Range(55296, 57343))])
-  
-  # @valid_regexp_chars ||= @all_unicode.subtract(@invalid_regexp_chars)
-  
-  # @tokenizer ||= new TwitterCldr.UnicodeRegexTokenizer()
-
-  # @parser ||= new TwitterCldr.UnicodeRegexParser()
-
   
   to_regexp_str : ->
     @regexp_str ||= @elements.map(((element) ->

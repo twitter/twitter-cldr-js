@@ -85,3 +85,48 @@ class TwitterCldr.Utilities
 
   @is_odd: (num) ->
     num % 2 == 1
+
+  @remove_duplicates : (arr) ->
+    arr.reduce ((u, elem) ->
+      u.push elem  if u.indexOf(elem) < 0
+      u
+    ), []
+
+  # This function was adapted from the Mozilla JS reference:
+  # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+  @regex_escape : (s) ->
+    s.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
+
+  # This function was adapted from the Mozilla JS reference:
+  # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+  @trim_string : (s) ->
+    s.replace(/^\s+|\s+$/g, '')
+
+  # This function was adapted from the CoffeeScript Cookbook Reference:
+  # http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
+  @clone : (obj) ->
+    if not obj? or typeof obj isnt 'object'
+      return obj
+
+    if obj instanceof Date
+      return new Date(obj.getTime()) 
+
+    if obj instanceof RegExp
+      flags = ''
+      flags += 'g' if obj.global?
+      flags += 'i' if obj.ignoreCase?
+      flags += 'm' if obj.multiline?
+      flags += 'y' if obj.sticky?
+      return new RegExp(obj.source, flags) 
+
+    newInstance = new obj.constructor()
+
+    for key of obj
+      newInstance[key] = @clone obj[key]
+
+    return newInstance
+
+  @compute_cache_key : (pieces) ->
+    if pieces? and pieces.length > 0
+      return pieces.join("|")
+    return null

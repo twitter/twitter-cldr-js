@@ -16,7 +16,8 @@ module TwitterCldr
 
       def initialize(options = {})
         @locales = options[:locales] || TwitterCldr.supported_locales
-        @features = options[:features] || renderers.keys
+        @features = options[:features] || implementation_renderers.keys
+        @data = options[:data] || data_renderers.keys
         @prerender = options[:prerender].nil? ? true : options[:prerender]
         @source_map = options[:source_map]
       end
@@ -28,7 +29,7 @@ module TwitterCldr
           contents = ""
 
           @features.each do |feature|
-            renderer_const = renderers[feature]
+            renderer_const = implementation_renderers[feature]
             contents << renderer_const.new(:locale => locale, :prerender => @prerender).render if renderer_const
           end
 
@@ -56,10 +57,39 @@ module TwitterCldr
         end
       end
 
+      def compile_segmentation_data(options = {})
+        options[:minify] = true unless options.include?(:minify)
+
+        contents = ""
+        renderer_const = @data_renderers[:code_point]
+        contents << renderer_const.new(:prerender => @prerender).render if renderer_const
+
+        bundle = TwitterCldr::Js::Renderers::DataBundle.new
+        bundle[:contents] = contents
+        bundle[:source_map] = @source_map
+
+        result = CoffeeScript.compile(bundle.render, {
+          :bare => false,
+          :sourceMap => @source_map
+        })
+
+        file = if @source_map
+          CompiledFile.new(result["js"], result["sourceMap"])
+        else
+          CompiledFile.new(result)
+        end
+
+        # required alias definition that adds twitter_cldr to Twitter's static build process
+        file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
+        file.source = Uglifier.compile(file.source) if options[:minify]
+
+        yield file
+      end
+
       private
 
-      def renderers
-        @renderers ||= {
+      def implementation_renderers
+        @implementation_renderers ||= {
           :plural_rules => TwitterCldr::Js::Renderers::PluralRules::PluralRulesRenderer,
           :timespan => TwitterCldr::Js::Renderers::Calendars::TimespanRenderer,
           :datetime => TwitterCldr::Js::Renderers::Calendars::DateTimeRenderer,
@@ -69,10 +99,37 @@ module TwitterCldr
           :lists => TwitterCldr::Js::Renderers::Shared::ListRenderer,
           :bidi => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
           :calendar => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
+          :code_point => TwitterCldr::Js::Renderers::Shared::CodePointRenderer,
           :phone_codes => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
           :postal_codes => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
           :languages => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
-          :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser
+          :unicode_regex => TwitterCldr::Js::Renderers::Shared::UnicodeRegexRenderer,
+          :break_iterator => TwitterCldr::Js::Renderers::Shared::BreakIteratorRenderer,
+          :number_parser => TwitterCldr::Js::Renderers::Parsers::NumberParser,
+          :component => TwitterCldr::Js::Renderers::Parsers::ComponentRenderer,
+          :literal => TwitterCldr::Js::Renderers::Parsers::LiteralRenderer,
+          :unicode_string => TwitterCldr::Js::Renderers::Parsers::UnicodeStringRenderer,
+          :character_class => TwitterCldr::Js::Renderers::Parsers::CharacterClassRenderer,
+          :character_range => TwitterCldr::Js::Renderers::Parsers::CharacterRangeRenderer,
+          :character_set => TwitterCldr::Js::Renderers::Parsers::CharacterSetRenderer,
+          :symbol_table => TwitterCldr::Js::Renderers::Parsers::SymbolTableRenderer,
+          :parser => TwitterCldr::Js::Renderers::Parsers::ParserRenderer,
+          :segmentation_parser => TwitterCldr::Js::Renderers::Parsers::SegmentationParserRenderer,
+          :unicode_regex_parser => TwitterCldr::Js::Renderers::Parsers::UnicodeRegexParserRenderer,
+          :token => TwitterCldr::Js::Renderers::Tokenizers::TokenRenderer,
+          :composite_token => TwitterCldr::Js::Renderers::Tokenizers::CompositeTokenRenderer,
+          :tokenizer => TwitterCldr::Js::Renderers::Tokenizers::TokenizerRenderer,
+          :segmentation_tokenizer => TwitterCldr::Js::Renderers::Tokenizers::SegmentationTokenizerRenderer,
+          :unicode_regex_tokenizer => TwitterCldr::Js::Renderers::Tokenizers::UnicodeRegexTokenizerRenderer,
+          :range => TwitterCldr::Js::Renderers::Utils::RangeRenderer,
+          :range_set => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer,
+          :code_points => TwitterCldr::Js::Renderers::Utils::CodePointsRenderer
+        }
+      end
+
+      def data_renderers
+        @data_renderers ||= {
+          :code_point => TwitterCldr::Js::Renderers::Shared::CodePointDataRenderer,
         }
       end
     end

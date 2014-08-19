@@ -2,7 +2,6 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-var data = require('../../../lib/assets/javascripts/twitter_cldr/segmentation_data.js');
 
 describe("CodePoint", function() {
   var clear_cache = function () {
@@ -55,7 +54,7 @@ describe("CodePoint", function() {
       });
     });
 
-    describe("When decomposition is empty", function() {
+    describe("when decomposition is empty", function() {
       var decomposition = "";
       var unicode_data = ['17D1', 'KHMER SIGN VIRIAM', 'Mn', '0', 'NSM', decomposition, "", "", "", 'N', "", "", "", "", ""];
       var code_point = new TwitterCldr.CodePoint(unicode_data);
@@ -168,8 +167,8 @@ describe("CodePoint", function() {
        expect(TwitterCldr.CodePoint.hangul_type(4460)).toBe("vparts");
        expect(TwitterCldr.CodePoint.hangul_type(4530)).toBe("tparts");
     });
-    it("returns compositions if no part can be found", function() {
-      expect(TwitterCldr.CodePoint.hangul_type(4400)).toBe("compositions");
+    it("returns null if no part can be found", function() {
+      expect(TwitterCldr.CodePoint.hangul_type(4400)).toBe(null);
     });
   });
   describe("#is_excluded_from_composition", function() {

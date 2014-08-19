@@ -11,28 +11,6 @@ class TwitterCldr.BreakIterator
     @tailoring_resource_data = `{{{tailoring_resource_data}}}`
     @exceptions_resource_data = `{{{exceptions_resource_data}}}`
     @root_resource = `{{{root_resource_data}}}`
-
-    @unescape_resource(@tailoring_resource_data)
-    @unescape_resource(@root_resource)
-
-  unescape_resource : (resource) ->
-    if resource instanceof Array
-      for element in resource
-        if element instanceof Array or element instanceof Object
-          @unescape_resource(element)
-
-    else if resource instanceof Object
-      for k, v of resource
-        if (typeof v is 'string' or v instanceof String) and k is "value"
-          resource[k] = @unescape_string(v)
-        else if v instanceof Array or v instanceof Object
-          @unescape_resource(v)
-    return         
-  
-  unescape_string : (str) ->
-    str.replace(/\\u([a-fA-F0-9]{4})/gi, (g, m1) ->
-      String.fromCharCode(parseInt(m1, 16) )
-    )
   
   each_sentence : (str, block) ->
     @each_boundary(str, "sentence", block)

@@ -21,3 +21,9 @@
 
 
 {{{contents}}}
+
+root = if exports?
+  exports
+else
+  this.TwitterCldr = {}
+  this.TwitterCldr

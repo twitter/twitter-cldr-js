@@ -9,9 +9,9 @@ module TwitterCldr
       module PluralRules
 
         class PluralRulesRenderer < TwitterCldr::Js::Renderers::Base
-          RESOURCES_DIR = File.expand_path(File.join(File.dirname(__FILE__), "../../../../../../resources/locales"))
+          set_template "mustache/plurals/rules.coffee"
 
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../../..", "mustache/plurals/rules.coffee"))
+          RESOURCES_DIR = File.expand_path(File.join(File.dirname(__FILE__), "../../../../../../resources/locales"))
 
           # The representation of the pluralization rules in the latest version of twitter-cldr-rb is too complicated
           # for parsing and converting it into JavaScript. For now we're gonna use older pluralization data that was

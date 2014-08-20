@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Shared
         class CurrenciesRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/currencies.coffee"))
+          set_template "mustache/shared/currencies.coffee"
 
           def currencies
             TwitterCldr::Shared::Currencies.currency_codes.inject({}) do |ret, currency_code|

@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Shared
         class CalendarRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/calendar.coffee"))
+          set_template "mustache/shared/calendar.coffee"
 
           def calendar
             TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data.to_json

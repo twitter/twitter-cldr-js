@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Numbers
         class NumbersRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/numbers/numbers.coffee"))
+          set_template "mustache/numbers/numbers.coffee"
 
           def tokens
             DataReaders::NumberDataReader.types.inject({}) do |ret, type|

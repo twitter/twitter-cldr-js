@@ -9,7 +9,7 @@ module TwitterCldr
       module Shared
 
         class ListRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/lists.coffee"))
+          set_template "mustache/shared/lists.coffee"
 
           def formats
             TwitterCldr.get_locale_resource(@locale, :lists)[@locale][:lists][:default].to_json

@@ -9,7 +9,7 @@ module TwitterCldr
       module Calendars
 
         class TimespanRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/calendars/timespan.coffee"))
+          set_template "mustache/calendars/timespan.coffee"
 
           def patterns
             [:ago, :until, :none].inject({}) do |final, direction|

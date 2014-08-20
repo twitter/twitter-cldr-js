@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Shared
         class PostalCodesRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/postal_codes.coffee"))
+          set_template "mustache/shared/postal_codes.coffee"
 
           def postal_codes
             TwitterCldr::Shared::PostalCodes.territories.inject({}) do |ret, country_code|

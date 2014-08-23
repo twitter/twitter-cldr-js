@@ -23,11 +23,11 @@ class TwitterCldr.CodePoint
   decomposition_data_index = 5
   decomposition_regex = /^(?:<(.+)>\s+)?(.+)?$/
   @indices = ["category", "bidi_class", "bidi_mirrored"]
-  @properties = ["sentence_break", "line_break", "word_break"]  
+  @properties = ["sentence_break", "line_break", "word_break"]
 
-  constructor : (@fields) -> 
+  constructor : (@fields) ->
     for i in [0...TwitterCldr.CodePoint.code_point_fields.length] by 1
-      field = TwitterCldr.CodePoint.code_point_fields[i]    
+      field = TwitterCldr.CodePoint.code_point_fields[i]
       unless field is "decomposition"
         @[field] = @fields[i]
 
@@ -40,9 +40,9 @@ class TwitterCldr.CodePoint
         return match[2].match(/\S+/g).map ((s) -> #splitting by whitespace
           parseInt(s, 16)
         )
-      else 
+      else
         return null
-    else 
+    else
       throw "decomposition " + decomp + " has invalid format"
 
   compatibility_decomposition_tag : ->
@@ -60,7 +60,7 @@ class TwitterCldr.CodePoint
 
   is_excluded_from_composition : ->
     TwitterCldr.CodePoint.is_excluded_from_composition(code_point)
-    
+
   @find : (code_point) ->
     if @code_point_cache[code_point]?
       return @code_point_cache[code_point]
@@ -78,7 +78,7 @@ class TwitterCldr.CodePoint
 
   @code_points_for_index_name : (index_name, value) ->
     @get_index(index_name)[value]
-  
+
   @code_points_for_property : (property_name, value)  ->
     property_data = @get_property_data(property_name)
     if property_data?
@@ -86,7 +86,7 @@ class TwitterCldr.CodePoint
     else
           throw "Couldn't find property " + property_name
 
-  
+
   # Search for code points wherein at least one property value contains prop_value.
   # For example, if prop_value is set to :Zs, this method will return all code
   # points that are considered spaces. If prop value is simply :Z, this method
@@ -110,7 +110,7 @@ class TwitterCldr.CodePoint
     if @canonical_compositions[(code_points.join("|"))]? then @find(@canonical_compositions[(code_points.join("|"))]) else null
 
 
-  @canonical_compositions = `{{{canonical_compositions}}}`
+  @canonical_compositions = {}
 
   @hangul_type : (code_point) ->
     if @hangul_type_cache[code_point]?
@@ -137,9 +137,9 @@ class TwitterCldr.CodePoint
 
   @index_key_cache = {}
 
-  @index_keys = `{{{index_keys}}}`
+  @index_keys = {}
 
-  @indices = `{{{indices}}}`
+  @indices = {}
 
   @get_index : (index_name) ->
     return @index_cache[index_name] if @index_cache[index_name]?
@@ -152,7 +152,7 @@ class TwitterCldr.CodePoint
 
     @index_cache[index_name] = index_data_formatted
 
-  @properties = `{{{properties}}}`
+  @properties = {}
 
   @get_property_data : (property_name) ->
     return @property_data_cache[property_name] if @property_data_cache[property_name]?
@@ -175,9 +175,9 @@ class TwitterCldr.CodePoint
 
   @composition_exclusion_cache = {}
 
-  @hangul_blocks = `{{{hangul_blocks}}}`
+  @hangul_blocks = {}
 
-  @composition_exclusions =  `{{{composition_exclusions}}}`
+  @composition_exclusions = {}
 
   @block_cache = {}
 
@@ -197,9 +197,9 @@ class TwitterCldr.CodePoint
     if block_data? then new TwitterCldr.Range(block_data[0], block_data[1]) else null
 
 
-  @blocks =  `{{{blocks}}}`
+  @blocks = {}
 
-  @block_data = `{{{block_data}}}`
+  @block_data = {}
 
 
   # Check if block constitutes a range. The code point beginning a range will have a name enclosed in <>, ending with 'First'

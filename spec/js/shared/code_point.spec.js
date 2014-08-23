@@ -2,6 +2,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/segmentation_data.js', 'utf8'));
 
 describe("CodePoint", function() {
   var clear_cache = function () {
@@ -11,7 +12,7 @@ describe("CodePoint", function() {
 
   beforeEach(function () {
     clear_cache();
-    
+
   });
 
   afterEach(function() {
@@ -23,7 +24,7 @@ describe("CodePoint", function() {
     describe("when decomposition is canonical", function() {
       var decomposition = '0028 007A 0029';
       var unicode_data = ['17D1', 'KHMER SIGN VIRIAM', 'Mn', '0', 'NSM', decomposition, "", "", "", 'N', "", "", "", "", ""];
-      var code_point = new TwitterCldr.CodePoint(unicode_data);  
+      var code_point = new TwitterCldr.CodePoint(unicode_data);
       it("parses decomposition mapping", function() {
         expect(code_point.decomposition()).toEqual([0x28, 0x7A, 0x29]);
       });
@@ -108,8 +109,8 @@ describe("CodePoint", function() {
         cp_data = TwitterCldr.CodePoint.find(parseInt(code_point));
 
         expect(cp_data).not.toBe(null);
-        // expect(["code_point", "name", "category", "combining_class"].map(function(property){ 
-        //     return cp_data[property]; 
+        // expect(["code_point", "name", "category", "combining_class"].map(function(property){
+        //     return cp_data[property];
         //   }, this)
         // ).toEqual(data.slice(0,3));
         expect(["0x" + cp_data.code_point.toString(16).toUpperCase(), cp_data.name, cp_data.category, cp_data.combining_class]).toEqual(data.slice(0,4));
@@ -121,7 +122,7 @@ describe("CodePoint", function() {
       cps = TwitterCldr.CodePoint.code_points_for_index_name("category", "Cc");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(0, 31));
-      
+
       cps = TwitterCldr.CodePoint.code_points_for_index_name("bidi_class", "BN");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(0, 8));
@@ -136,7 +137,7 @@ describe("CodePoint", function() {
       cps = TwitterCldr.CodePoint.code_points_for_property("line_break", "CM");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(0, 8));
-      
+
       cps = TwitterCldr.CodePoint.code_points_for_property("sentence_break", "Extend");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(768, 879));
@@ -148,7 +149,7 @@ describe("CodePoint", function() {
   });
   describe("#for_canonical_decomposition", function() {
     it("should return a code point with correct value", function() {
-      expect(TwitterCldr.CodePoint.for_canonical_decomposition([65, 768]).code_point).toEqual(192);  
+      expect(TwitterCldr.CodePoint.for_canonical_decomposition([65, 768]).code_point).toEqual(192);
     });
     it("should return null if no decomposition mapping exists", function() {
       expect(TwitterCldr.CodePoint.for_canonical_decomposition([987])).toBe(null);
@@ -178,7 +179,7 @@ describe("CodePoint", function() {
       expect(TwitterCldr.CodePoint.is_excluded_from_composition(194561)).toBe(true);
       expect(TwitterCldr.CodePoint.is_excluded_from_composition(831)).toBe(false);
       expect(TwitterCldr.CodePoint.is_excluded_from_composition(888)).toBe(false);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(119235)).toBe(false);  
+      expect(TwitterCldr.CodePoint.is_excluded_from_composition(119235)).toBe(false);
     });
   });
   describe("#get_block", function() {
@@ -188,17 +189,17 @@ describe("CodePoint", function() {
     it("finds the block that corresponds to the code point", function() {
       expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(120))).toEqualRange(new TwitterCldr.Range(0,127));
       expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(917600))).toEqualRange(new TwitterCldr.Range(917504,917631));
-      expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(1114200))).toBe(null);  
+      expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(1114200))).toBe(null);
     });
   });
   describe("get_range_start", function() {
     it("returns the data for a non-explicit range", function() {
-      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A, First>"] }
-      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toEqual([0xABC, "<CJK Ideograph Extension A>"]);  
+      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A, First>"] };
+      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toEqual([0xABC, "<CJK Ideograph Extension A>"]);
     });
     it("returns nil if the block data doesn't contain a non-explicit range", function() {
-      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A>"] }
+      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A>"] };
       expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toBe(null);
-    }); 
+    });
   });
 });

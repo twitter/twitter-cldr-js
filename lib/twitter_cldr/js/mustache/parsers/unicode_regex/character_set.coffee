@@ -20,7 +20,7 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
 
   codepoints : ->
     if @property?
-      method = "code_points_for_" + @property      
+      method = "code_points_for_" + @property
       ranges = TwitterCldr.CodePoint.code_points_for_property(@property, @property_value)
 
       if ranges?

@@ -19,11 +19,13 @@
 # required alias definition that adds twitter_cldr to Twitter's static build process
 ###<<module_def>>###
 
-
 {{{contents}}}
 
-root = if exports?
-  exports
-else
-  this.TwitterCldr = {}
-  this.TwitterCldr
+
+# root = if exports?
+#   exports
+# else
+#   this.TwitterCldr = {}
+#   this.TwitterCldr
+
+# root[key] = obj for key, obj of TwitterCldr

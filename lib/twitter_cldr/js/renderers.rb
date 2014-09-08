@@ -9,22 +9,22 @@ module TwitterCldr
       autoload :Base,                                   'twitter_cldr/js/renderers/base'
       autoload :Bundle,                                 'twitter_cldr/js/renderers/bundle'
       autoload :DataBundle,                             'twitter_cldr/js/renderers/data_bundle'
-                                                            
-      module Calendars                                      
+
+      module Calendars
         autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/calendars/datetime_renderer'
         autoload :AdditionalDateFormatSelectorRenderer, 'twitter_cldr/js/renderers/calendars/additional_date_format_selector_renderer'
         autoload :TimespanRenderer,                     'twitter_cldr/js/renderers/calendars/timespan_renderer'
-      end                                                   
-                                                            
-      module Numbers                                        
+      end
+
+      module Numbers
         autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/numbers/numbers_renderer'
-      end                                                   
-                                                            
-      module PluralRules                                    
+      end
+
+      module PluralRules
         autoload :PluralRulesCompiler,                  'twitter_cldr/js/renderers/plurals/rules/plural_rules_compiler'
         autoload :PluralRulesRenderer,                  'twitter_cldr/js/renderers/plurals/rules/plural_rules_renderer'
-      end                                                   
-                                                            
+      end
+
       module Shared
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
         autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/shared/code_point_renderer'

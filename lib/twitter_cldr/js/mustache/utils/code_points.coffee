@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.CodePoints
-  
+
   @to_char : (code_point) ->
     TwitterCldr.Utilities.pack_array([code_point])
 
@@ -10,14 +10,10 @@ class TwitterCldr.CodePoints
     TwitterCldr.Utilities.unpack_string(char[0])[0]
 
   @from_chars : (chars) ->
-    chars.map ( (char) ->
-      @from_char(char)
-    ), @
+    (@from_char(char) for char in chars)
 
   @to_chars : (code_points) ->
-    code_points.map ( (code_point) ->
-      @to_char(code_point)
-    ), @
+    (@to_char(code_point) for code_point in code_points)
 
   @from_string : (str) ->
     TwitterCldr.Utilities.unpack_string(str)

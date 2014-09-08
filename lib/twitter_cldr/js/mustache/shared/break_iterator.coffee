@@ -11,19 +11,19 @@ class TwitterCldr.BreakIterator
     @tailoring_resource_data = `{{{tailoring_resource_data}}}`
     @exceptions_resource_data = `{{{exceptions_resource_data}}}`
     @root_resource = `{{{root_resource_data}}}`
-  
+
   each_sentence : (str, block) ->
     @each_boundary(str, "sentence", block)
 
   each_word : (str, block) ->
     throw "Word segmentation is not currently supported."
-  
+
   each_line : (str, block) ->
-    throw "Line segmentation is not currently supported."  
+    throw "Line segmentation is not currently supported."
 
   boundary_name_for: (str) ->
     str.replace(/(?:^|\_)([A-Za-z])/, (match) ->
-      match.toUpperCase() 
+      match.toUpperCase()
       ) + "Break"
 
   each_boundary : (str, boundary_type, block) ->
@@ -38,7 +38,7 @@ class TwitterCldr.BreakIterator
       rule = null
       for r in rules
         match = r.match(search_str)
-        if match? 
+        if match?
           rule = r
           break
       if rule.boundary_symbol is "break"
@@ -46,7 +46,7 @@ class TwitterCldr.BreakIterator
         result.push(str.slice(last_offset, break_offset))
         if block?
           block(result[result.length-1])
-        
+
         last_offset = break_offset
 
       search_str = search_str.slice(match.boundary_offset)
@@ -63,12 +63,10 @@ class TwitterCldr.BreakIterator
   compile_exception_rule_for : (locale, boundary_type, boundary_name) ->
     if boundary_type is "sentence"
       cache_key = TwitterCldr.Utilities.compute_cache_key([locale, boundary_type])
-      
+
       result = null
       exceptions = @exceptions_for(locale, boundary_name)
-      regex_contents = exceptions.map(((exception) ->
-              TwitterCldr.Utilities.regex_escape(exception)
-            ), @).join("|")
+      regex_contents = (TwitterCldr.Utilities.regex_escape(exception) for exception in exceptions).join("|")
       @exceptions_cache[cache_key] ||=  @segmentation_parser.parse (
         @segmentation_tokenizer.tokenize("(?:"+regex_contents+") \u00D7")
       )
@@ -90,11 +88,11 @@ class TwitterCldr.BreakIterator
 
     rules
 
-  # replaces ruleset1's rules with rules with the same id from ruleset2      
+  # replaces ruleset1's rules with rules with the same id from ruleset2
   merge_rules : (ruleset1, ruleset2) ->
     result = []
     TwitterCldr.Utilities.arraycopy ruleset1, 0, result, 0, ruleset1.length
-    
+
     for i in [0...ruleset2.length] by 1
       for j in [0...result.length] by 1
         if ruleset2[i].id == result[j].id
@@ -104,7 +102,7 @@ class TwitterCldr.BreakIterator
 
   symbol_table_for : (boundary_data) ->
     table = new TwitterCldr.SymbolTable()
-    
+
     for i in [0...boundary_data.variables.length] by 1
       variable = boundary_data.variables[i]
       id = variable.id.toString()
@@ -116,33 +114,34 @@ class TwitterCldr.BreakIterator
 
   resolve_symbols : (tokens, symbol_table) ->
     result = []
-    
+
     for i in [0...tokens.length]
       token = tokens[i]
       if token.type == "variable"
         result = result.concat(symbol_table.fetch(token.value))
-      else 
+      else
         result.push(token)
 
     result
 
   rules_for : (boundary_data, symbol_table) ->
-    boundary_data.rules.map(((rule) ->
-          r = @segmentation_parser.parse(
-            @segmentation_tokenizer.tokenize(rule.value), {"symbol_table" : symbol_table} 
-            )
-              
-          r.string = rule.value
-          r.id = rule.id
-          r
-        ), @)
+    results = []
+    for rule in boundary_data.rules
+      r = @segmentation_parser.parse(
+        @segmentation_tokenizer.tokenize(rule.value), {"symbol_table" : symbol_table}
+      )
+      r.string = rule.value
+      r.id = rule.id
+      results.push(r)
+
+    results
+
 
   resource_for : (boundary_name) ->
     @root_resource["segments"][boundary_name]
 
   tailoring_resource_for : (locale, boundary_name) ->
     @tailoring_resource_data[locale][locale]["segments"][boundary_name]
-
 
   exceptions_for : (locale, boundary_name) ->
     result = @exceptions_resource_data[locale][locale]["exceptions"]

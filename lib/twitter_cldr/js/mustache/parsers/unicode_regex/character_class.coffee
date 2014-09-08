@@ -6,24 +6,18 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
     @type = "character_class"
     @grouping_pairs = TwitterCldr.CharacterClass.grouping_pairs
     super
-  
+
   @grouping_pairs = {
     "close_bracket" : "open_bracket"
   }
 
   @opening_types : ->
-    keys = []   
-    for key, value of @grouping_pairs
-      keys.push(value)
-
-    keys
+    values = (value for key, value of @grouping_pairs)
+    values
 
   @closing_types : ->
-    values = []    
-    for key, value of @grouping_pairs
-      values.push(key)
-
-    values
+    keys = (key for key, value of @grouping_pairs)
+    keys
 
   @opening_type_for : (type) ->
     if @grouping_pairs[type]? then @grouping_pairs[type] else null
@@ -35,7 +29,7 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
     @evaluate(@root)
 
   evaluate : (node) ->
-    if node instanceof TwitterCldr.CharacterClass.UnaryOperator or node instanceof TwitterCldr.CharacterClass.BinaryOperator    
+    if node instanceof TwitterCldr.CharacterClass.UnaryOperator or node instanceof TwitterCldr.CharacterClass.BinaryOperator
       switch node.operator
         when "negate"
           TwitterCldr.UnicodeRegex.get_valid_regexp_chars().subtract(@evaluate(node.child))
@@ -44,16 +38,16 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
         when "dash"
           @evaluate(node.left).difference(@evaluate(node.right))
         when "ampersand"
-          @evaluate(node.left).intersection(@evaluate(node.right))  
-          
+          @evaluate(node.left).intersection(@evaluate(node.right))
+
     else
       if node?
         node.to_set()
       else
         new TwitterCldr.RangeSet([])
-    
-  class @.BinaryOperator 
+
+  class @.BinaryOperator
     constructor : (@operator, @left, @right) ->
 
-  class @.UnaryOperator 
+  class @.UnaryOperator
     constructor : (@operator, @child) ->

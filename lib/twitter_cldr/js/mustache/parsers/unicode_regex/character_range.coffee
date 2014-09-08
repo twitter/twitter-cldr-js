@@ -4,7 +4,7 @@
 class TwitterCldr.CharacterRange extends TwitterCldr.Component
 
   constructor : (@initial, @final) ->
-    
+
 
     # Unfortunately, due to the ambiguity of having both character
     # ranges and set operations in the same syntax (which both use
@@ -15,4 +15,7 @@ class TwitterCldr.CharacterRange extends TwitterCldr.Component
     super
 
   to_set : ->
-    new TwitterCldr.RangeSet ([(new TwitterCldr.Range @initial.to_set().to_full_array()[0], @final.to_set().to_full_array()[0])])
+    new TwitterCldr.RangeSet([new TwitterCldr.Range(
+        @initial.to_set().to_full_array()[0],
+        @final.to_set().to_full_array()[0])
+    ])

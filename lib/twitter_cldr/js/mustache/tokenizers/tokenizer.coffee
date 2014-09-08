@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.TokenRecognizer
-  constructor : (@token_type, @regex, @cleaner, @content = null) -> 
+  constructor : (@token_type, @regex, @cleaner, @content = null) ->
 
   recognizes : (text) ->
     @regex.test text
@@ -12,8 +12,8 @@ class TwitterCldr.TokenRecognizer
 
 class TwitterCldr.Tokenizer
   constructor : (@recognizers, @custom_splitter = null, @remove_empty_entries = true) ->
-    @splitter = (@custom_splitter || new RegExp("(" + @recognizers.map((recognizer) ->
-      recognizer.regex.source
+    @splitter = (@custom_splitter || new RegExp("(" + ((recognizer.regex.source
+    ) for recognizer in recognizers
     ).join("|") + ")"))
 
   @union : (tokenizers, block) ->
@@ -30,11 +30,10 @@ class TwitterCldr.Tokenizer
       if (custom_splitter? and !(@custom_splitter(tokenizer)))
         flag = false
     splitter = null
-    if flag 
+    if flag
       splitter = new Regexp(
-        tokenizers.map ((tokenizer) ->
-          tokenizer.custom_splitter.source
-        ).join("|")
+        ((tokenizer.custom_splitter.source
+        ) for tokenizer in tokenizers).join("|")
       )
     new TwitterCldr.Tokenizer(recognizers, splitter)
 
@@ -63,22 +62,22 @@ class TwitterCldr.Tokenizer
         if r.recognizes(piece)
           recognizer = r
           break
-      
+
       if recognizer.token_type is "composite"
         content = piece.match(recognizer.content)[0]
-        result.push new TwitterCldr.CompositeToken(@tokenize(content))
+        result.push(new TwitterCldr.CompositeToken(@tokenize(content)))
 
       else
         cleaned_text = recognizer.clean(piece)
         if ((@remove_empty_entries and cleaned_text.length > 0) or !@remove_empty_entries)
-          result.push new TwitterCldr.Token({"value" : cleaned_text, "type" : recognizer.token_type})
+          result.push(new TwitterCldr.Token({"value" : cleaned_text, "type" : recognizer.token_type}))
 
     result
 
   clear_splitter : ->
     @splitter = null
 
-  get_splitter : -> 
-    @splitter = (@custom_splitter || new RegExp("(" + @recognizers.map((recognizer) ->
-      recognizer.regex.source
+  get_splitter : ->
+    @splitter = (@custom_splitter || new RegExp("(" + ((recognizer.regex.source
+    ) for recognizer in @recognizers
     ).join("|") + ")"))

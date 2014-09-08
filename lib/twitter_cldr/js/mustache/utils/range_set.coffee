@@ -45,32 +45,30 @@ class TwitterCldr.RangeSet
         sub_lists.push [item]
         last_item = item
 
-    sub_lists.map ((sub_list) ->
-      if compress && sub_list.length is 1
+    ( (if compress && sub_list.length is 1
         sub_list[0]
       else
-        new TwitterCldr.Range sub_list[0], sub_list[sub_list.length-1]
-    )
+        new TwitterCldr.Range(sub_list[0], sub_list[sub_list.length-1])
+      ) for sub_list in sub_lists)
 
 
-  to_array : (compress = false) -> 
+  to_array : (compress = false) ->
     if compress
-      @ranges.map ((range) ->
-        if range.first is range.last
+      ( (if range.first is range.last
           range.first
         else
           TwitterCldr.Utilities.clone(range)
-      )
+        ) for range in @ranges)
     else
       TwitterCldr.Utilities.clone(@ranges)
 
   to_full_array : ->
     result = []
-    
+
     for range in @ranges
       result = result.concat range.to_array()
 
-    result    
+    result
 
   includes : (obj) ->
     if obj instanceof TwitterCldr.Range
@@ -83,7 +81,7 @@ class TwitterCldr.RangeSet
 
   is_empty : ->
     @ranges.length == 0
-      
+
   union : (range_set) ->
     new TwitterCldr.RangeSet @ranges.concat(range_set.ranges)
 
@@ -109,14 +107,14 @@ class TwitterCldr.RangeSet
       for our_range in current_ranges
         if @does_overlap their_range, our_range
           new_ranges = new_ranges.concat @find_subtraction(their_range, our_range)
-        else 
+        else
           new_ranges.push our_range
 
       current_ranges = new_ranges
 
     new TwitterCldr.RangeSet(new_ranges)
 
-  
+
   # symmetric difference (the union without the intersection)
   # http://en.wikipedia.org/wiki/Symmetric_difference
   difference : (range_set) ->
@@ -124,7 +122,7 @@ class TwitterCldr.RangeSet
 
   flatten : ->
     if @ranges.length <= 1
-      return  
+      return
 
     sorted_ranges = @ranges.sort ((a,b) ->
       if ((!a.is_numeric()) and (!b.is_numeric()))
@@ -133,8 +131,8 @@ class TwitterCldr.RangeSet
         return 1
       else if a.first < b.first
         return -1
-      else 
-        return 0  
+      else
+        return 0
     )
 
     new_ranges = [sorted_ranges[0]]
@@ -143,10 +141,10 @@ class TwitterCldr.RangeSet
 
       if (@are_adjacent previous_range, range) or (@does_overlap previous_range, range)
         new_ranges.push (new TwitterCldr.Range(TwitterCldr.Utilities.min([range.first, previous_range.first]),TwitterCldr.Utilities.max([range.last, previous_range.last])))
-      else 
+      else
         new_ranges.push (previous_range)
         new_ranges.push (range)
-    
+
     @ranges = new_ranges
 
   # returns true if range1 and range2 are within 1 of each other
@@ -154,8 +152,8 @@ class TwitterCldr.RangeSet
     range1.is_numeric() and range2.is_numeric() and
     ((range1.last is range2.first - 1) or (range2.first is range1.last + 1))
 
-  does_overlap : (range1, range2) -> 
-    range1.is_numeric() and range2.is_numeric() and 
+  does_overlap : (range1, range2) ->
+    range1.is_numeric() and range2.is_numeric() and
     (
       (range1.last >= range2.first and range1.last <= range2.last) or
       (range1.first >= range2.first and range1.first <= range2.last) or
@@ -190,7 +188,7 @@ class TwitterCldr.RangeSet
       results = [new TwitterCldr.Range range1.last + 1, range2.last]
 
     filtered_results = []
-    for range in results 
+    for range in results
       if range.first <= range.last
         filtered_results.push range
 

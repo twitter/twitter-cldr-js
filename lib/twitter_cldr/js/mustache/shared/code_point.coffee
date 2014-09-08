@@ -37,9 +37,7 @@ class TwitterCldr.CodePoint
     match = decomp.match(decomposition_regex)
     if match?
       if match[2]?
-        return match[2].match(/\S+/g).map ((s) -> #splitting by whitespace
-          parseInt(s, 16)
-        )
+        return (parseInt(s, 16) for s in match[2].match(/\S+/g))
       else
         return null
     else

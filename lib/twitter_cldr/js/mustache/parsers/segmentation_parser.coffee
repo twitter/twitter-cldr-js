@@ -14,7 +14,7 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 
   class @.BreakRule extends @.Rule
     constructor : (@left, @right) ->
-      @boundary_symbol = "break"    
+      @boundary_symbol = "break"
       super
 
     match : (str) ->
@@ -40,9 +40,9 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 
     match : (str) ->
       match = @regex.match(str)
-      if match? 
-        new TwitterCldr.SegmentationParser.RuleMatchData(match[0], str.indexOf(match[0]) + match[0].length) 
-      else 
+      if match?
+        new TwitterCldr.SegmentationParser.RuleMatchData(match[0], str.indexOf(match[0]) + match[0].length)
+      else
         null
 
   do_parse: (options = {}) ->
@@ -67,14 +67,22 @@ class TwitterCldr.SegmentationParser extends TwitterCldr.Parser
 
     switch boundary_symbol
       when "break"
-        result = new TwitterCldr.SegmentationParser.BreakRule(@parse_regex(@add_anchors(regex_token_lists[0]), options), @parse_regex(@add_anchors(regex_token_lists[1]), options))
+        result = new TwitterCldr.SegmentationParser.BreakRule(
+          @parse_regex(@add_anchors(regex_token_lists[0]), options),
+          @parse_regex(@add_anchors(regex_token_lists[1]), options)
+        )
       when "no_break"
-        result = new TwitterCldr.SegmentationParser.NoBreakRule(@parse_regex(@add_anchors([].concat(regex_token_lists...)), options))
-    
+        result = new TwitterCldr.SegmentationParser.NoBreakRule(
+          @parse_regex(
+            @add_anchors(
+              [].concat(regex_token_lists...)
+            ), options
+          )
+        )
+
     result
 
   add_anchors : (token_list) ->
-    # token_list.splice(0, 0, @begin_token)
     [@begin_token].concat(token_list)
 
   parse_regex : (tokens, options = {}) ->

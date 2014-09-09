@@ -9,9 +9,9 @@ class TwitterCldr.RangeSet
     @ranges = []
     for range in ranges
       if range instanceof TwitterCldr.Range
-        @ranges.push (new TwitterCldr.Range range.first, range.last)
+        @ranges.push (new TwitterCldr.Range(range.first, range.last))
       else
-        @ranges.push (new TwitterCldr.Range range, range)
+        @ranges.push (new TwitterCldr.Range(range, range))
     @flatten()
 
   @from_array : (array, compress = false) ->
@@ -37,12 +37,12 @@ class TwitterCldr.RangeSet
 
         if diff > 0
           if diff is 1
-            sub_lists[sub_lists.length-1].push item
+            sub_lists[sub_lists.length-1].push(item)
           else
-            sub_lists.push [item]
+            sub_lists.push([item])
           last_item = item
       else
-        sub_lists.push [item]
+        sub_lists.push([item])
         last_item = item
 
     ( (if compress && sub_list.length is 1
@@ -66,7 +66,7 @@ class TwitterCldr.RangeSet
     result = []
 
     for range in @ranges
-      result = result.concat range.to_array()
+      result = result.concat(range.to_array())
 
     result
 
@@ -76,7 +76,7 @@ class TwitterCldr.RangeSet
         return true if range.first <= obj.first && range.last >= obj.last
     else
       for range in @ranges
-          return true if range.includes obj
+          return true if range.includes(obj)
     false
 
   is_empty : ->
@@ -89,9 +89,9 @@ class TwitterCldr.RangeSet
     new_ranges = []
     for their_range in range_set.ranges
       for our_range in @ranges
-        if @does_overlap their_range, our_range
+        if @does_overlap(their_range, our_range)
           if intrsc = @find_intersection(their_range, our_range)
-            new_ranges.push intrsc
+            new_ranges.push(intrsc)
 
     new TwitterCldr.RangeSet new_ranges
 
@@ -105,10 +105,10 @@ class TwitterCldr.RangeSet
       new_ranges = []
 
       for our_range in current_ranges
-        if @does_overlap their_range, our_range
-          new_ranges = new_ranges.concat @find_subtraction(their_range, our_range)
+        if @does_overlap(their_range, our_range)
+          new_ranges = new_ranges.concat(@find_subtraction(their_range, our_range))
         else
-          new_ranges.push our_range
+          new_ranges.push(our_range)
 
       current_ranges = new_ranges
 
@@ -139,11 +139,11 @@ class TwitterCldr.RangeSet
     for range in sorted_ranges
       previous_range = new_ranges.pop()
 
-      if (@are_adjacent previous_range, range) or (@does_overlap previous_range, range)
-        new_ranges.push (new TwitterCldr.Range(TwitterCldr.Utilities.min([range.first, previous_range.first]),TwitterCldr.Utilities.max([range.last, previous_range.last])))
+      if (@are_adjacent(previous_range, range)) or (@does_overlap(previous_range, range))
+        new_ranges.push(new TwitterCldr.Range(TwitterCldr.Utilities.min([range.first, previous_range.first]),TwitterCldr.Utilities.max([range.last, previous_range.last])))
       else
-        new_ranges.push (previous_range)
-        new_ranges.push (range)
+        new_ranges.push(previous_range)
+        new_ranges.push(range)
 
     @ranges = new_ranges
 
@@ -165,9 +165,9 @@ class TwitterCldr.RangeSet
     if range2.first <= range1.first and range1.last <= range2.last
       TwitterCldr.Utilities.clone(range1)
     else if range1.last >= range2.first and range1.last <= range2.last
-      new TwitterCldr.Range range2.first, range1.last
+      new TwitterCldr.Range(range2.first, range1.last)
     else if range1.first >= range2.first and range1.first <= range2.last
-      new TwitterCldr.Range range1.first, range2.last
+      new TwitterCldr.Range(range1.first, range2.last)
     else if range1.first <= range2.first and range1.last >= range2.last
       new TwitterCldr.Range(TwitterCldr.Utilities.max([range1.first, range2.first]),TwitterCldr.Utilities.min([range1.last, range2.last]))
 
@@ -179,17 +179,17 @@ class TwitterCldr.RangeSet
       results = []
     # case: range1 comes in the middle
     else if range2.first <= range1.first and range2.last >= range1.last
-      results = [(new TwitterCldr.Range range2.first, range1.first - 1), (new TwitterCldr.Range range1.last + 1, range2.last)]
+      results = [(new TwitterCldr.Range(range2.first, range1.first - 1)), (new TwitterCldr.Range(range1.last + 1, range2.last))]
     # case: range1 trails
     else if range2.last >= range1.first and range1.last >= range2.last
-      results = [new TwitterCldr.Range range2.first, range1.first - 1]
+      results = [new TwitterCldr.Range(range2.first, range1.first - 1)]
     # case: range1 leads
     else if range1.last >= range2.first && range1.first <= range2.first
-      results = [new TwitterCldr.Range range1.last + 1, range2.last]
+      results = [new TwitterCldr.Range(range1.last + 1, range2.last)]
 
     filtered_results = []
     for range in results
       if range.first <= range.last
-        filtered_results.push range
+        filtered_results.push(range)
 
     filtered_results

@@ -21,4 +21,3 @@ class TwitterCldr.UnicodeString extends TwitterCldr.Component
     cps = (if @codepoints instanceof Array then @codepoints else [@codepoints])
     @array_to_regex(cps)
 
-    

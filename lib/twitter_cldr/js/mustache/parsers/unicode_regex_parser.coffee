@@ -20,16 +20,16 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
 
     @unary_operators = [
       "negate"
-    ]  
+    ]
 
   parse : (tokens, options = {}) ->
-    super(@preprocess(@substitute_variables(tokens, options["symbol_table"])), options)
+    super(@preprocess(@substitute_variables(tokens, options.symbol_table)), options)
 
   make_token : (type, value) ->
     new TwitterCldr.Token ({"type": type, "value" : value})
 
   # Identifies regex ranges and makes implicit operators explicit
-  preprocess : (tokens) -> 
+  preprocess : (tokens) ->
     result = []
     i = 0
 
@@ -49,7 +49,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
         final = @[tokens[i+2].type](tokens[i+2])
         result.push(@make_character_range(initial, final))
         i += 3
-      else 
+      else
         if @is_negated_token(tokens[i])
           result = result.concat [
             @make_token("open_bracket")
@@ -66,7 +66,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
 
   substitute_variables : (tokens, symbol_table) ->
     return tokens unless symbol_table?
-    
+
     result = []
     for i in [0...tokens.length] by 1
       token = tokens[i]
@@ -94,7 +94,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
   is_binary_operator : (token) ->
     token? and token.type in @binary_operators
 
-  do_parse : (options) -> 
+  do_parse : (options) ->
     elements = []
     while @current_token()
       switch @current_token().type
@@ -147,7 +147,7 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
     operand_stack = []
     open_count = 0
 
-    while true 
+    while true
       if @current_token().type in TwitterCldr.CharacterClass.closing_types()
         last_operator = @peek(operator_stack)
         open_count -= 1
@@ -170,11 +170,11 @@ class TwitterCldr.UnicodeRegexParser extends TwitterCldr.Parser
       else if @current_token().type in @unary_operators.concat(@binary_operators)
         operator_stack.push(@current_token())
 
-      else 
+      else
         operand_stack.push(@[@current_token().type](@current_token()))
-      
+
       @next_token(@current_token().type)
-      
+
       break if operator_stack.length is 0 and open_count is 0
 
     new TwitterCldr.CharacterClass(operand_stack.pop())

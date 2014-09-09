@@ -13,7 +13,4 @@ class TwitterCldr.Range
     number >= @first and number <= @last
 
   is_numeric : ->
-    # if @first instanceof Array or @last instanceof Array
-    #   return false
-
     (!(@first instanceof Array) and !(@last instanceof Array))

@@ -2,7 +2,6 @@
 
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
-require 'pry'
 
 module TwitterCldr
   module Js
@@ -17,13 +16,13 @@ module TwitterCldr
           end
 
           def tailoring_resource_data
-            available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/shared/segments/tailorings").inject([]) { |ret, file|  
+            available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/shared/segments/tailorings").inject([]) { |ret, file|
               if file[0] != '.'
                 ret << (file[0...file.size-4])
               end
               ret
             }
-            resource = available_locales.inject({}) { |ret, locale| 
+            resource = available_locales.inject({}) { |ret, locale|
               ret[locale] = TwitterCldr.get_resource("shared", "segments", "tailorings", locale)
               ret
             }
@@ -31,13 +30,13 @@ module TwitterCldr
           end
 
           def exceptions_resource_data
-            available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/uli/segments").inject([]) { |ret, file|  
+            available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/uli/segments").inject([]) { |ret, file|
               if file[0] != '.'
                 ret << (file[0...file.size-4])
               end
               ret
             }
-            available_locales.inject({}) { |ret, locale| 
+            available_locales.inject({}) { |ret, locale|
               ret[locale] = TwitterCldr.get_resource("uli", "segments", locale)
               ret
             }.to_json

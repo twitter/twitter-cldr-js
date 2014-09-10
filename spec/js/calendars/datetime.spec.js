@@ -441,5 +441,13 @@ describe("DateTimeFormatter", function() {
         formatter.format(new Date(), {format: "additional", type: patterns[key]});
       }
     });
+
+    it("correctly formats a few English additional formats", function() {
+      date = new Date(2012, 1, 1);
+      expect(formatter.format(date, {format: "additional", type: "EHm"})).toEqual("Wed 00:00");
+      expect(formatter.format(date, {format: "additional", type: "MMMEd"})).toEqual("Wed, Feb 1");
+      expect(formatter.format(date, {format: "additional", type: "yMMMEd"})).toEqual("Wed, Feb 1, 2012");
+      expect(formatter.format(date, {format: "additional", type: "yQQQQ"})).toEqual("1st quarter 2012");
+    });
   });
 });

@@ -23,7 +23,13 @@ module TwitterCldr
                   pattern_list = pattern_list[TwitterCldr::DEFAULT_CALENDAR_TYPE][:additional_formats].keys
                   pattern_list.inject({}) do |additionals, pattern|
                     data_reader = const.new(@locale, :type => type, :additional_format => pattern.to_s)
-                    additionals[pattern] = data_reader.tokenizer.tokenize(data_reader.pattern).map(&:to_hash)
+
+                    additionals[pattern] = if data_reader.tokenizer.respond_to?(:full_tokenize)
+                      data_reader.tokenizer.full_tokenize(data_reader.pattern)
+                    else
+                      data_reader.tokenizer.tokenize(data_reader.pattern)
+                    end.map(&:to_hash)
+
                     additionals
                   end
                 else

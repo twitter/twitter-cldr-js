@@ -18,7 +18,7 @@ module TwitterCldr
           def tailoring_resource_data
             available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/shared/segments/tailorings").inject([]) { |ret, file|
               if file[0] != '.'
-                ret << (file[0...file.size-4])
+                ret << (file.chomp(File.extname(file)))
               end
               ret
             }
@@ -32,7 +32,7 @@ module TwitterCldr
           def exceptions_resource_data
             available_locales = Dir.entries(TwitterCldr::RESOURCES_DIR + "/uli/segments").inject([]) { |ret, file|
               if file[0] != '.'
-                ret << (file[0...file.size-4])
+                ret << (file.chomp(File.extname(file)))
               end
               ret
             }

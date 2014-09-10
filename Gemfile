@@ -14,4 +14,5 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
+  gem 'twitter_cldr', '~> 3.0.0'
 end

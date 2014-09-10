@@ -1,3 +1,8 @@
+== 2.3.0
+
+* Fixed issue affecting additional date/time formats that was causing pattern tokens to be interpreted as plaintext.
+* Moved twitter-cldr-rb from a runtime to a development dependency.
+
 === 2.2.4
 
 * Upgrading to twitter-cldr-rb 2.4.3 to fix abbreviated timespan issue in en-GB.

@@ -106,7 +106,8 @@ class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
       else
         currency = symbol: options.currency
 
-      options.precision ||= @defaults_for_currency(options.currency).digits
+      unless options.precision?
+        options.precision = @defaults_for_currency(options.currency).digits
     else
       currency = symbol: @default_currency_symbol
 

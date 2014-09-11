@@ -35,6 +35,10 @@ describe("CurrencyFormatter", function() {
       expect(formatter.format(12.345, {currency: "JPY", precision: 1})).toEqual("¥12.3");
     });
 
+    it("should allow a precision of zero", function() {
+      expect(formatter.format(12.3, {currency: "EUR", precision: 0})).toEqual("€12");
+    });
+
     it("should use the cldr_symbol for the corresponding currency code if use_cldr_code is specified", function() {
       TwitterCldr.Currencies.currencies = {
         "JPY": {symbol: "¥", cldr_symbol: "YEN", currency: "JPY", "name": "Japanese yen"}

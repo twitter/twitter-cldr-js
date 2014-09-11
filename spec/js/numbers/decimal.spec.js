@@ -20,5 +20,9 @@ describe("DecimalFormatter", function() {
     it("should respect the precision option", function() {
       expect(formatter.format(-12, {precision: 3})).toEqual("-12.000");
     });
+
+    it("should allow a precision of zero", function() {
+      expect(formatter.format(12.3, {precision: 0})).toEqual("12");
+    });
   });
 });

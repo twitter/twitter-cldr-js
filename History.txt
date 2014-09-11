@@ -1,3 +1,7 @@
+== 2.3.1
+
+* Fixed issue with currency formatting that ignored the precision option when set to zero.
+
 == 2.3.0
 
 * Fixed issue affecting additional date/time formats that was causing pattern tokens to be interpreted as plaintext.

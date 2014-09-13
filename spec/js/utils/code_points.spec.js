@@ -11,7 +11,7 @@ describe("CodePoints", function() {
   });
   describe("#from_char", function() {
     it("converts a character to a unicode code point", function() {
-      expect(TwitterCldr.CodePoints.from_char('∞')).toEqual(0x221E);      
+      expect(TwitterCldr.CodePoints.from_char('∞')).toEqual(0x221E);
     });
   });
   describe("#to_chars", function() {

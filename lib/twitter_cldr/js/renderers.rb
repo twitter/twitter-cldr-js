@@ -38,8 +38,6 @@ module TwitterCldr
         autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/shared/unicode_regex_renderer'
         autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/shared/break_iterator_renderer'
         autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/shared/territories_containment_renderer'
-
-        autoload :CodePointDataRenderer,                'twitter_cldr/js/renderers/shared/code_point_renderer'
       end
 
       module Parsers
@@ -70,11 +68,5 @@ module TwitterCldr
         autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/utils/code_points'
       end
     end
-    #Data Renderers
-    # module DataRenderers
-    #   module Shared
-    #     autoload :CodePointDataRenderer,                 'twitter_cldr/js/renderers/shared/code_point_renderer'
-    #   end
-    # end
   end
 end

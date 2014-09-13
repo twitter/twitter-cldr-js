@@ -2,7 +2,6 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/segmentation_data.js', 'utf8'));
 
 describe("CodePoint", function() {
   var clear_cache = function () {
@@ -72,51 +71,6 @@ describe("CodePoint", function() {
       });
     });
   });
-  describe("#find", function() {
-    it("retrieves information for any valid code point", function() {
-      var data = TwitterCldr.CodePoint.find(0x301);
-      expect(data instanceof TwitterCldr.CodePoint).toBe(true);
-      expect(data.fields.length).toEqual(15);
-    });
-
-    it("returns null if the information is not found", function() {
-      expect(TwitterCldr.CodePoint.find(0xFFFFFFF)).toBe(null);
-    });
-
-    it("fetches valid information for the specified code point", function() {
-      test_code_points_data({
-              "0x17D1"  : ["0x17D1", "KHMER SIGN VIRIAM", "Mn", "0", "NSM", "", "", "", "", "N", "", "", "", "", ""],
-              "0xFE91"  : ["0xFE91", "ARABIC LETTER BEH INITIAL FORM", "Lo", "0", "AL", "<initial> 0628", "", "", "", "N", "GLYPH FOR INITIAL ARABIC BAA", "", "", "", ""],
-              "0x24B5"  : ["0x24B5", "PARENTHESIZED LATIN SMALL LETTER Z", "So", "0", "L", "<compat> 0028 007A 0029", "", "", "", "N", "", "", "", "", ""],
-              "0x2128"  : ["0x2128", "BLACK-LETTER CAPITAL Z", "Lu", "0", "L", "<font> 005A", "", "", "", "N", "BLACK-LETTER Z", "", "", "", ""],
-              "0x1F241" : ["0x1F241", "TORTOISE SHELL BRACKETED CJK UNIFIED IDEOGRAPH-4E09", "So", "0", "L", "<compat> 3014 4E09 3015", "", "", "", "N", "", "", "", "", ""]
-            });
-    });
-
-    it("fetches valid information for a code point within a range", function() {
-      test_code_points_data({
-              "0x4E11" : ["0x4E11", "<CJK Ideograph>", "Lo", "0", "L", "", "", "", "", "N", "", "", "", "", ""],
-              "0xAC55" : ["0xAC55", "<Hangul Syllable>", "Lo", "0", "L", "", "", "", "", "N", "", "", "", "", ""],
-              "0xD7A1" : ["0xD7A1", "<Hangul Syllable>", "Lo", "0", "L", "", "", "", "", "N", "", "", "", "", ""],
-              "0xDAAA" : ["0xDAAA", "<Non Private Use High Surrogate>", "Cs", "0", "L", "", "", "", "", "N", "", "", "", "", ""],
-              "0xF8FE" : ["0xF8FE", "<Private Use>", "Co", "0", "L", "", "", "", "", "N", "", "", "", "", ""]
-            });
-    });
-
-    test_code_points_data = function(test_data) {
-      for (var code_point in test_data) {
-        data = test_data[code_point];
-        cp_data = TwitterCldr.CodePoint.find(parseInt(code_point));
-
-        expect(cp_data).not.toBe(null);
-        // expect(["code_point", "name", "category", "combining_class"].map(function(property){
-        //     return cp_data[property];
-        //   }, this)
-        // ).toEqual(data.slice(0,3));
-        expect(["0x" + cp_data.code_point.toString(16).toUpperCase(), cp_data.name, cp_data.category, cp_data.combining_class]).toEqual(data.slice(0,4));
-      }
-    };
-  });
   describe("#code_points_for_index_name", function() {
     it("returns code points for the given general unicode property name", function() {
       cps = TwitterCldr.CodePoint.code_points_for_index_name("category", "Cc");
@@ -147,18 +101,18 @@ describe("CodePoint", function() {
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(1488, 1514));
     });
   });
-  describe("#for_canonical_decomposition", function() {
-    it("should return a code point with correct value", function() {
-      expect(TwitterCldr.CodePoint.for_canonical_decomposition([65, 768]).code_point).toEqual(192);
-    });
-    it("should return null if no decomposition mapping exists", function() {
-      expect(TwitterCldr.CodePoint.for_canonical_decomposition([987])).toBe(null);
-    });
-    it("should cache the decomposition map", function() {
-      expect(TwitterCldr.CodePoint.for_canonical_decomposition([0xA0])).toBe(null);
-      expect(TwitterCldr.CodePoint.for_canonical_decomposition([0xA0])).toBe(null);
-    });
-  });
+  // describe("#for_canonical_decomposition", function() {
+  //   it("should return a code point with correct value", function() {
+  //     expect(TwitterCldr.CodePoint.for_canonical_decomposition([65, 768]).code_point).toEqual(192);
+  //   });
+  //   it("should return null if no decomposition mapping exists", function() {
+  //     expect(TwitterCldr.CodePoint.for_canonical_decomposition([987])).toBe(null);
+  //   });
+  //   it("should cache the decomposition map", function() {
+  //     expect(TwitterCldr.CodePoint.for_canonical_decomposition([0xA0])).toBe(null);
+  //     expect(TwitterCldr.CodePoint.for_canonical_decomposition([0xA0])).toBe(null);
+  //   });
+  // });
   describe("#hangul_type", function() {
     it("returns null if not a part of a hangul block", function() {
       expect(TwitterCldr.CodePoint.hangul_type(4380)).toBe(null);

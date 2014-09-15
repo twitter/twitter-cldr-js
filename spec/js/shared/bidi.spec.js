@@ -102,4 +102,13 @@ describe("Bidi", function() {
 
     expect(num_failed).toEqual(0);
   });
+
+  it("should be able to reorder RTL text", function() {
+    var bidi_str = TwitterCldr.Bidi.from_string("hello نزوة world", {"direction": "RTL"});
+    bidi_str.reorder_visually();
+    expect(bidi_str.toString()).toEqual("world ةوزن hello");
+  });
+
+  // TODO: add tests for all other methods of Bidi class
+  xit("should implement all other methods properly")
 });

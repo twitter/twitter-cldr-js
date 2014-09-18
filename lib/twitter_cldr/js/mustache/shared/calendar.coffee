@@ -15,6 +15,12 @@ class TwitterCldr.Calendar
   @weekdays: (options = {}) ->
     @get_root("days", options)
 
+  @quarters: (options = {}) ->
+    @get_root("quarters", options)
+
+  @periods: (options = {}) ->
+    @get_root("periods", options)
+
   @get_root: (key, options = {}) ->
     root = @calendar[key]
     names_form = options["names_form"] || "wide"

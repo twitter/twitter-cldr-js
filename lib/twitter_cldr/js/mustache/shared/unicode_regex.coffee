@@ -16,7 +16,8 @@ class TwitterCldr.UnicodeRegex
   # These don't play nicely with Ruby's regular expression engine, and I think we
   # can safely disregard them.
   @get_invalid_regexp_chars : ->
-    @invalid_regexp_chars ||= new TwitterCldr.RangeSet([(new TwitterCldr.Range(2, 7)), (new TwitterCldr.Range(55296, 57343))])
+    @invalid_regexp_chars ||= new TwitterCldr.RangeSet([(new TwitterCldr.Range(2, 7)),
+              (new TwitterCldr.Range(55296, 57343))])
 
   @get_valid_regexp_chars : ->
     @valid_regexp_chars ||= @get_all_unicode().subtract(@get_invalid_regexp_chars())
@@ -31,9 +32,7 @@ class TwitterCldr.UnicodeRegex
     @parser = new TwitterCldr.UnicodeRegexParser()
 
   to_regexp_str : ->
-    @regexp_str ||= ((element.to_regexp_str()
-    ) for element in @elements
-    ).join("")
+    @regexp_str ||= ((element.to_regexp_str()) for element in @elements).join("")
 
   to_regexp : ->
     new RegExp(@to_regexp_str(), @modifiers)

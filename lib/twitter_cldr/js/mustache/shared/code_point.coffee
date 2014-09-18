@@ -46,7 +46,7 @@ class TwitterCldr.CodePoint
   compatibility_decomposition_tag : ->
     decomp = @fields[decomposition_data_index]
     if (match = decomp.match(decomposition_regex))
-      if !match[1]? then return null else return match[1]
+      if match[1]? then return match[1] else return null
     else
       throw "decomposition " + decomp + " has invalid format"
 
@@ -72,7 +72,7 @@ class TwitterCldr.CodePoint
 
   #   target_data = @block_data[target]
   #   code_point_data = target_data[code_point]
-  #   if !code_point_data?
+  #   unless code_point_data?
   #     code_point_data = @get_range_start(code_point, target_data)
 
   #   @code_point_cache[code_point] = new CodePoint(code_point_data) if code_point_data?

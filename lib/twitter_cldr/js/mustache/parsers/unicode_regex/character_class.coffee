@@ -12,12 +12,10 @@ class TwitterCldr.CharacterClass extends TwitterCldr.Component
   }
 
   @opening_types : ->
-    values = (value for key, value of @grouping_pairs)
-    values
+    (value for key, value of @grouping_pairs)
 
   @closing_types : ->
-    keys = (key for key, value of @grouping_pairs)
-    keys
+    (key for key, value of @grouping_pairs)
 
   @opening_type_for : (type) ->
     if @grouping_pairs[type]? then @grouping_pairs[type] else null

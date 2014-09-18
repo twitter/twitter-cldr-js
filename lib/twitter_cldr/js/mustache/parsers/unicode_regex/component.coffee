@@ -3,7 +3,7 @@
 
 class TwitterCldr.Component
   to_utf8 : (codepoints) ->
-    if !(codepoints instanceof Array)
+    unless codepoints instanceof Array
       codepoints = [codepoints]
 
     (@to_hex(cp) for cp in codepoints)

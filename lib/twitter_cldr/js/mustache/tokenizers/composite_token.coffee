@@ -6,6 +6,6 @@ class TwitterCldr.CompositeToken
     @type = "composite"
 
   to_string : ->
-    if !@tokens?
+    unless @tokens?
       return null
     (token.to_string() for token in @tokens).join("")

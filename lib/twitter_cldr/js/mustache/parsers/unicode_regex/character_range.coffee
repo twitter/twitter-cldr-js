@@ -4,8 +4,6 @@
 class TwitterCldr.CharacterRange extends TwitterCldr.Component
 
   constructor : (@initial, @final) ->
-
-
     # Unfortunately, due to the ambiguity of having both character
     # ranges and set operations in the same syntax (which both use
     # the "-" operator and square brackets), we have to treat

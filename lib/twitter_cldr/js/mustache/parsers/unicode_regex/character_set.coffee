@@ -7,7 +7,6 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
     if name_parts.length == 2
       @property = name_parts[0].toLowerCase()
       @property_value = name_parts[1]
-
     else
       @property_value = text
       @property = null
@@ -29,10 +28,8 @@ class TwitterCldr.CharacterSet extends TwitterCldr.Component
 
       if ranges?
         new TwitterCldr.RangeSet(ranges)
-
       else
         throw "Couldn't find property " + @property + " containing property value " + @property_value
-
     else
       new TwitterCldr.RangeSet(
         TwitterCldr.CodePoint.code_points_for_property_value(@property_value)

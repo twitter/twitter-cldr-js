@@ -211,6 +211,33 @@ describe("DateTimeFormatter", function() {
     });
   });
 
+  describe("#month_stand_alone", function() {
+    it("test: pattern L", function() {
+      expect(formatter.month_stand_alone(new Date(2010, 0, 1), 'L', 1)).toEqual('1');
+      expect(formatter.month_stand_alone(new Date(2010, 9, 1), 'L', 1)).toEqual('10');
+    });
+
+    it("test: pattern LL", function() {
+      expect(formatter.month_stand_alone(new Date(2010, 0, 1), 'LL', 2)).toEqual('01');
+      expect(formatter.month_stand_alone(new Date(2010, 9, 1), 'LL', 2)).toEqual('10');
+    });
+
+    it("test: pattern LLL", function() {
+      expect(formatter.month_stand_alone(new Date(2010, 0, 1), 'LLL', 3)).toEqual('Jan');
+      expect(formatter.month_stand_alone(new Date(2010, 9, 1), 'LLL', 3)).toEqual('Oct');
+    });
+
+    it("test: pattern LLLL", function() {
+      expect(formatter.month_stand_alone(new Date(2010, 0, 1), 'LLLL', 4)).toEqual('January');
+      expect(formatter.month_stand_alone(new Date(2010, 9, 1), 'LLLL', 4)).toEqual('October');
+    });
+
+    it("test: pattern LLLLL", function() {
+      expect(formatter.month_stand_alone(new Date(2010, 0, 1), 'LLLLL', 5)).toEqual('J');
+      expect(formatter.month_stand_alone(new Date(2010, 9, 1), 'LLLLL', 5)).toEqual('O');
+    });
+  });
+
   describe("#period", function() {
     it("test: a", function() {
       expect(formatter.period(new Date(2000, 0, 1, 1, 1, 1), 'a', 1)).toEqual('AM');

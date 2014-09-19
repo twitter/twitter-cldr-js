@@ -61,21 +61,20 @@ class TwitterCldr.CodePoint
 
   # This method will be required in an upcoming feature (String Collation).
   # It is currently untested.
+  @find : (code_point) ->
+    if @code_point_cache[code_point]?
+      return @code_point_cache[code_point]
 
-  # @find : (code_point) ->
-  #   if @code_point_cache[code_point]?
-  #     return @code_point_cache[code_point]
+    target = @get_block_name(code_point)
 
-  #   target = @get_block_name(code_point)
+    return null unless target?
 
-  #   return null unless target?
+    target_data = @block_data[target]
+    code_point_data = target_data[code_point]
+    unless code_point_data?
+      code_point_data = @get_range_start(code_point, target_data)
 
-  #   target_data = @block_data[target]
-  #   code_point_data = target_data[code_point]
-  #   unless code_point_data?
-  #     code_point_data = @get_range_start(code_point, target_data)
-
-  #   @code_point_cache[code_point] = new CodePoint(code_point_data) if code_point_data?
+    @code_point_cache[code_point] = new CodePoint(code_point_data) if code_point_data?
 
   @code_points_for_index_name : (index_name, value) ->
     @get_index(index_name)[value]
@@ -107,7 +106,7 @@ class TwitterCldr.CodePoint
 
     @index_key_cache[prop_value] = result
 
-  @canonical_compositions = `{{{canonical_compositions}}}`
+  @canonical_compositions = {}
 
   @hangul_type : (code_point) ->
     if @hangul_type_cache[code_point]?
@@ -136,11 +135,11 @@ class TwitterCldr.CodePoint
 
   @index_keys = `{{{index_keys}}}`
 
-  @indices = `{{{indices}}}`
+  @index_data = `{{{index_data}}}`
 
   @get_index : (index_name) ->
     return @index_cache[index_name] if @index_cache[index_name]?
-    index_data = @indices[index_name]
+    index_data = @index_data[index_name]
     index_data_formatted = {}
     for k, v of index_data
       index_data_formatted[k] = []
@@ -149,11 +148,11 @@ class TwitterCldr.CodePoint
 
     @index_cache[index_name] = index_data_formatted
 
-  @properties = `{{{properties}}}`
+  @property_data = `{{{property_data}}}`
 
   @get_property_data : (property_name) ->
     return @property_data_cache[property_name] if @property_data_cache[property_name]?
-    property_data = @properties[property_name]
+    property_data = @property_data[property_name]
     property_data_formatted = {}
     for k, v of property_data
       property_data_formatted[k] = []
@@ -172,9 +171,9 @@ class TwitterCldr.CodePoint
 
   @composition_exclusion_cache = {}
 
-  @hangul_blocks = `{{{hangul_blocks}}}`
+  @hangul_blocks = {} # Not implemented yet.
 
-  @composition_exclusions = `{{{composition_exclusions}}}`
+  @composition_exclusions = {} # Not implemented yet.
 
   @block_cache = {}
 
@@ -194,7 +193,7 @@ class TwitterCldr.CodePoint
     if block_data? then new TwitterCldr.Range(block_data[0], block_data[1]) else null
 
 
-  @blocks = `{{{blocks}}}`
+  @blocks = {} # Not implemented yet.
 
   @block_data = {} # Not implemented yet.
 

@@ -53,7 +53,7 @@ module TwitterCldr
             end.to_json
           end
 
-          def indices
+          def index_data
             index_data = {}
             [:category, :bidi_class, :bidi_mirrored].each do |key|
               data = TwitterCldr.get_resource(:unicode_data, :indices, key)
@@ -68,7 +68,7 @@ module TwitterCldr
             index_data.to_json
           end
 
-          def properties
+          def property_data
             property_data = {}
             [:line_break, :sentence_break, :word_break].each do |key|
               data = TwitterCldr.get_resource(:unicode_data, :properties, key)
@@ -83,20 +83,18 @@ module TwitterCldr
             property_data.to_json
           end
 
-          # This will be needed for String Collation.
-
-          # def block_data
-          #   block_data = {}
-          #   blocks = TwitterCldr.get_resource(:unicode_data, :blocks)
-          #   blocks.each do |key, _|
-          #     data = TwitterCldr.get_resource(:unicode_data, :blocks, key)
-          #     block_data[key] = data.inject({}) do |ret, (k, v)|
-          #       ret[k] = v
-          #       ret
-          #     end
-          #   end
-          #   block_data.to_json
-          # end
+          def block_data
+            block_data = {}
+            blocks = TwitterCldr.get_resource(:unicode_data, :blocks)
+            blocks.each do |key, _|
+              data = TwitterCldr.get_resource(:unicode_data, :blocks, key)
+              block_data[key] = data.inject({}) do |ret, (k, v)|
+                ret[k] = v
+                ret
+              end
+            end
+            block_data.to_json
+          end
 
         end
       end

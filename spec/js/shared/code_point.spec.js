@@ -113,47 +113,47 @@ describe("CodePoint", function() {
   //     expect(TwitterCldr.CodePoint.for_canonical_decomposition([0xA0])).toBe(null);
   //   });
   // });
-  describe("#hangul_type", function() {
-    it("returns null if not a part of a hangul block", function() {
-      expect(TwitterCldr.CodePoint.hangul_type(4380)).toBe(null);
-    });
-    it("returns the correct part (i.e. lpart, vpart, or tpart, etc) before composition of decomposition", function() {
-       expect(TwitterCldr.CodePoint.hangul_type(4360)).toBe("lparts");
-       expect(TwitterCldr.CodePoint.hangul_type(4460)).toBe("vparts");
-       expect(TwitterCldr.CodePoint.hangul_type(4530)).toBe("tparts");
-    });
-    it("returns null if no part can be found", function() {
-      expect(TwitterCldr.CodePoint.hangul_type(4400)).toBe(null);
-    });
-  });
-  describe("#is_excluded_from_composition", function() {
-    it("excludes anything in the list of ranges", function() {
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(832)).toBe(true);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(884)).toBe(true);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(194561)).toBe(true);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(831)).toBe(false);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(888)).toBe(false);
-      expect(TwitterCldr.CodePoint.is_excluded_from_composition(119235)).toBe(false);
-    });
-  });
-  describe("#get_block", function() {
-    beforeEach(function() {
-      clear_cache();
-    });
-    it("finds the block that corresponds to the code point", function() {
-      expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(120))).toEqualRange(new TwitterCldr.Range(0,127));
-      expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(917600))).toEqualRange(new TwitterCldr.Range(917504,917631));
-      expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(1114200))).toBe(null);
-    });
-  });
-  describe("get_range_start", function() {
-    it("returns the data for a non-explicit range", function() {
-      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A, First>"] };
-      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toEqual([0xABC, "<CJK Ideograph Extension A>"]);
-    });
-    it("returns nil if the block data doesn't contain a non-explicit range", function() {
-      block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A>"] };
-      expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toBe(null);
-    });
-  });
+  // describe("#hangul_type", function() {
+  //   it("returns null if not a part of a hangul block", function() {
+  //     expect(TwitterCldr.CodePoint.hangul_type(4380)).toBe(null);
+  //   });
+  //   it("returns the correct part (i.e. lpart, vpart, or tpart, etc) before composition of decomposition", function() {
+  //      expect(TwitterCldr.CodePoint.hangul_type(4360)).toBe("lparts");
+  //      expect(TwitterCldr.CodePoint.hangul_type(4460)).toBe("vparts");
+  //      expect(TwitterCldr.CodePoint.hangul_type(4530)).toBe("tparts");
+  //   });
+  //   it("returns null if no part can be found", function() {
+  //     expect(TwitterCldr.CodePoint.hangul_type(4400)).toBe(null);
+  //   });
+  // });
+  // describe("#is_excluded_from_composition", function() {
+  //   it("excludes anything in the list of ranges", function() {
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(832)).toBe(true);
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(884)).toBe(true);
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(194561)).toBe(true);
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(831)).toBe(false);
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(888)).toBe(false);
+  //     expect(TwitterCldr.CodePoint.is_excluded_from_composition(119235)).toBe(false);
+  //   });
+  // });
+  // describe("#get_block", function() {
+  //   beforeEach(function() {
+  //     clear_cache();
+  //   });
+  //   it("finds the block that corresponds to the code point", function() {
+  //     expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(120))).toEqualRange(new TwitterCldr.Range(0,127));
+  //     expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(917600))).toEqualRange(new TwitterCldr.Range(917504,917631));
+  //     expect(TwitterCldr.CodePoint.get_block_range(TwitterCldr.CodePoint.get_block_name(1114200))).toBe(null);
+  //   });
+  // });
+  // describe("get_range_start", function() {
+  //   it("returns the data for a non-explicit range", function() {
+  //     block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A, First>"] };
+  //     expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toEqual([0xABC, "<CJK Ideograph Extension A>"]);
+  //   });
+  //   it("returns nil if the block data doesn't contain a non-explicit range", function() {
+  //     block_data = { 0x1337 : [0x1337, "<CJK Ideograph Extension A>"] };
+  //     expect(TwitterCldr.CodePoint.get_range_start(0xABC, block_data)).toBe(null);
+  //   });
+  // });
 });

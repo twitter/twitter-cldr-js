@@ -7,9 +7,11 @@ module TwitterCldr
   module Js
     module Renderers
       module Parsers
+
         class UnicodeRegexParserRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/parsers/unicode_regex_parser.coffee"))
+          set_template "mustache/parsers/unicode_regex_parser.coffee"
         end
+
       end
     end
   end

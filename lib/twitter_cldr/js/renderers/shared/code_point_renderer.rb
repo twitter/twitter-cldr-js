@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       module Shared
         class CodePointRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/code_point.coffee"))
+          set_template "mustache/shared/code_point.coffee"
 
           def blocks
             block_data = TwitterCldr.get_resource(:unicode_data, :blocks)

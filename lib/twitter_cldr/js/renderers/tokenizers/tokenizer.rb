@@ -7,8 +7,9 @@ module TwitterCldr
   module Js
     module Renderers
       module Tokenizers
+
         class TokenizerRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/tokenizers/tokenizer.coffee"))
+          set_template "mustache/tokenizers/tokenizer.coffee"
         end
 
       end

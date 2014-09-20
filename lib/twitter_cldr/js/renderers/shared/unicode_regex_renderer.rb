@@ -7,9 +7,11 @@ module TwitterCldr
   module Js
     module Renderers
       module Shared
+
         class UnicodeRegexRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/shared/unicode_regex.coffee"))
+          set_template "mustache/shared/unicode_regex.coffee"
         end
+
       end
     end
   end

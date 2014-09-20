@@ -7,8 +7,9 @@ module TwitterCldr
   module Js
     module Renderers
       module Utils
+
         class RangeSetRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../..", "mustache/utils/range_set.coffee"))
+          set_template "mustache/utils/range_set.coffee"
         end
 
       end

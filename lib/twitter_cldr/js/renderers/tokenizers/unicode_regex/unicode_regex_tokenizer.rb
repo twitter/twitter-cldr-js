@@ -9,7 +9,7 @@ module TwitterCldr
       module Tokenizers
 
         class UnicodeRegexTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-          self.template_file = File.expand_path(File.join(File.dirname(__FILE__), "../../..", "mustache/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"))
+          set_template "mustache/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
         end
 
       end

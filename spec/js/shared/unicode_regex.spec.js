@@ -8,8 +8,7 @@ beforeEach(function() {
     if (!(expected instanceof TwitterCldr.UnicodeRegex))
       return false;
     var match = this.actual.match(expected.to_regexp_str());
-    return match != null && this.actual === match[0];
-    
+    return match !== null && this.actual === match[0];
   };
   this.addMatchers({
     toMatchUnicodeRegexExactly : toMatchUnicodeRegexExactly,
@@ -18,7 +17,7 @@ beforeEach(function() {
 describe("UnicodeRegex", function() {
   var compile = function (str, symbol_table) {
     return TwitterCldr.UnicodeRegex.compile(str, "", symbol_table);
-  }
+  };
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
   var symbol_table = new TwitterCldr.SymbolTable({
     "$FOO" : tokenizer.tokenize("[g-k]"),
@@ -92,7 +91,7 @@ describe("UnicodeRegex", function() {
 
       it("should match a regex with a non-capturing group", function() {
         var regex = compile("a(?:b)c");
-        var match = regex.match("abc")
+        var match = regex.match("abc");
         expect(match).not.toBe(null);
         expect(match.length).toEqual(1);
       });
@@ -131,7 +130,7 @@ describe("UnicodeRegex", function() {
       });
 
       it("should match a regex with a char class containing a unicode range", function() {
-        var regex = compile("[\\u0067-\\u0071]")  // g-q;
+        var regex = compile("[\\u0067-\\u0071]"); // g-q;
         expect("g").toMatchUnicodeRegexExactly(regex);
         expect("q").toMatchUnicodeRegexExactly(regex);
         expect("h").toMatchUnicodeRegexExactly(regex);

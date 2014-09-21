@@ -24,7 +24,7 @@ class TwitterCldr.UnicodeRegexTokenizer
       new TwitterCldr.TokenRecognizer("close_bracket", new RegExp(/\]/)),
 
       new TwitterCldr.TokenRecognizer("string", new RegExp(/[\s\S]/), ((val) ->
-          if val is " " 
+          if val is " "
             val
           else
             TwitterCldr.Utilities.trim_string(val)

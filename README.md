@@ -65,7 +65,7 @@ The default CLDR data set only includes 4 date formats, full, long, medium, and 
 Besides the default date formats, CLDR supports a number of additional ones.  The list of available formats varys for each locale.  To get a full list, use the `additional_formats` method:
 
 ```javascript
-// ["EEEEd", "Ed", "GGGGyMd", "H", "Hm", "Hms", "M", "MEd", "MMM", "MMMEEEEd", "MMMEd", ... ] 
+// ["EEEEd", "Ed", "GGGGyMd", "H", "Hm", "Hms", "M", "MEd", "MMM", "MMMEEEEd", "MMMEd", ... ]
 TwitterCldr.DateTimeFormatter.additional_formats();
 ```
 
@@ -293,6 +293,74 @@ TwitterCldr.TerritoriesContainment.contains('419', 'BZ') // true
 TwitterCldr.TerritoriesContainment.contains('419', 'FR') // false
 ```
 
+### Unicode Regular Expressions
+
+Unicode regular expressions are an implmentaion of regular expressions that support all Unicode characters in the [BMP](http://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane). They provide support for multi-character strings, Unicode character escapes, set operations (unions, intersections, and differences), and character sets.
+
+#### Changes to Character Classes
+
+Here's a complete list of the operations you can do inside a Unicode regex's character class.
+
+| Regex              | Description                                                                                                         |
+|:-------------------|:--------------------------------------------------------------------------------------------------------------------|
+|`[a]`               | The set containing 'a'.                                                                                             |
+|`[a-z]`             | The set containing 'a' through 'z' and all letters in between, in Unicode order.                                    |
+|`[^a-z]`            | The set containing all characters except 'a' through 'z', that is, U+0000 through 'a'-1 and 'z'+1 through U+10FFFF. |
+|`[[pat1][pat2]]`    | The union of sets specified by pat1 and pat2.                                                                       |
+|`[[pat1]&[pat2]]`   | The intersection of sets specified by pat1 and pat2.                                                                |
+|`[[pat1]-[pat2]]`   | The [symmetric difference](http://en.wikipedia.org/wiki/Symmetric_difference) of sets specified by pat1 and pat2.   |
+|`[:Lu:] or \p{Lu}`  | The set of characters having the specified Unicode property; in this case, Unicode uppercase letters.               |
+|`[:^Lu:] or \P{Lu}` | The set of characters not having the given Unicode property.                                                        |
+
+For a description of available Unicode properties, see [Wikipedia](http://en.wikipedia.org/wiki/Unicode_character_property#General_Category) (click on "[show]").
+
+#### Using Unicode Regexes
+
+Create Unicode regular expressions via the `compile` method:
+
+```javascript
+
+regex = TwitterCldr.UnicodeRegex.compile("[:Lu:]+");
+regex2 = TwitterCldr.UnicodeRegex.compile("\\p{Lu}+", "g");
+							//escaping the '\'
+regex3 = TwitterCldr.UnicodeRegex.compile("[[a-z]-[d-g]]+", "g");
+							//supports the JavaScript RegExp modifiers
+```
+
+Once compiled, instances of `UnicodeRegex` behave just like normal javascript regexes and support the `match` method:
+
+```javascript
+
+regex.match("ABC");  // ["ABC"]
+regex2.match("ABCDfooABC");  // ["ABCD", "ABC"]
+regex3.match("dog"); // ["o"]
+```
+
+Protip: Try to avoid negation in character classes (eg. [^abc] and \P{Lu}) as it tends to negatively affect both performance when constructing regexes as well as matching.
+
+### Text Segmentation
+
+TwitterCLDR currently supports text segmentation by sentence as described in the [Unicode Technical Report #29](http://www.unicode.org/reports/tr29/). The segmentation algorithm makes use of Unicode regular expressions (described above). Segmentation by word, line, and grapheme boundaries could also be supported if someone wants them.
+
+Text segmentation is performed by the `BreakIterator` class (name borrowed from ICU). You can use the `each_sentence` method segment by sentence.
+
+```javascript
+
+iterator = new TwitterCldr.BreakIterator("en");
+iterator.each_sentence("The. Quick. Brown. Fox.");
+						// "The.", " Quick.", " Brown.", " Fox."
+```
+
+To improve segmentation accuracy, a list of special segmentation exceptions have been created by the ULI (Unicode Interoperability Technical Committee, yikes what a mouthful). They help with special cases like the abbreviations "Mr." and "Ms." where breaks should not occur. ULI rules are enabled by default, but you can disable them via the `use_uli_exceptions` option:
+
+```javascript
+
+iterator = new TwitterCldr.BreakIterator ("en",
+						{"use_uli_exceptions" : false}
+					);
+iterator.each_sentence("I like Ms. Murphy, she's nice.");
+						// ["I like Ms.", " Murphy, she's nice."]
+```
 
 ### Generating the JavaScript
 

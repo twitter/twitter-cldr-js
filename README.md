@@ -351,7 +351,7 @@ iterator.each_sentence("The. Quick. Brown. Fox.");
 						// "The.", " Quick.", " Brown.", " Fox."
 ```
 
-To improve segmentation accuracy, a list of special segmentation exceptions have been created by the ULI (Unicode Interoperability Technical Committee, yikes what a mouthful). They help with special cases like the abbreviations "Mr." and "Ms." where breaks should not occur. ULI rules are enabled by default, but you can disable them via the `use_uli_exceptions` option:
+To improve segmentation accuracy, a list of special segmentation exceptions have been created by the ULI (Unicode Interoperability Technical Committee). They help with special cases like the abbreviations "Mr." and "Ms." where breaks should not occur. ULI rules are enabled by default, but you can disable them via the `use_uli_exceptions` option:
 
 ```javascript
 

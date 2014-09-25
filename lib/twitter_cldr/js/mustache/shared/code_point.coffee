@@ -53,32 +53,6 @@ class TwitterCldr.CodePoint
   is_compatibility_decomposition : ->
     return @compatibility_decomposition_tag()?
 
-  hangul_type : ->
-    TwitterCldr.CodePoint.hangul_type(code_point)
-
-  is_excluded_from_composition : ->
-    TwitterCldr.CodePoint.is_excluded_from_composition(code_point)
-
-  # This method will be required in an upcoming feature (String Collation).
-  # It is currently untested.
-  @find : (code_point) ->
-    if @code_point_cache[code_point]?
-      return @code_point_cache[code_point]
-
-    target = @get_block_name(code_point)
-
-    return null unless target?
-
-    target_data = @block_data[target]
-    code_point_data = target_data[code_point]
-    unless code_point_data?
-      code_point_data = @get_range_start(code_point, target_data)
-
-    @code_point_cache[code_point] = new CodePoint(code_point_data) if code_point_data?
-
-  @code_points_for_index_name : (index_name, value) ->
-    @get_index(index_name)[value]
-
   @code_points_for_property : (property_name, value)  ->
     property_data = @get_property_data(property_name)
     if property_data?
@@ -86,14 +60,11 @@ class TwitterCldr.CodePoint
     else
           throw "Couldn't find property " + property_name
 
-
   # Search for code points wherein at least one property value contains prop_value.
-  # For example, if prop_value is set to :Zs, this method will return all code
-  # points that are considered spaces. If prop value is simply :Z, this method
-  # will return all code points who have a property value that contains :Z, i.e.
-  # spaces as well as line separators (:Zl) and paragraph separators (:Zp).
-
-
+  # For example, if prop_value is set to "Zs", this method will return all code
+  # points that are considered spaces. If prop value is simply "Z", this method
+  # will return all code points who have a property value that contains "Z", i.e.
+  # spaces as well as line separators ("Zl") and paragraph separators ("Zp").
   @code_points_for_property_value : (prop_value) ->
     if @index_key_cache[prop_value]?
       return @index_key_cache[prop_value]
@@ -105,31 +76,6 @@ class TwitterCldr.CodePoint
           result = result.concat(@get_index(index_name)[index_key])
 
     @index_key_cache[prop_value] = result
-
-  @canonical_compositions = {}
-
-  @hangul_type : (code_point) ->
-    if @hangul_type_cache[code_point]?
-      return @hangul_type_cache[code_point]
-    if code_point
-      for type in ["lparts", "vparts", "tparts", "compositions"]
-        for range in @hangul_blocks[type]
-          range = new TwitterCldr.Range(range[0], range[1])
-          return @hangul_type_cache[code_point] = type if range.includes(code_point)
-      @hangul_type_cache[code_point] = null
-    else
-      @hangul_type_cache[code_point] = null
-
-  @is_excluded_from_composition : (code_point) ->
-    if @composition_exclusion_cache[code_point]?
-      return @composition_exclusion_cache[code_point]
-
-    for exclusion in @composition_exclusions
-      range = new TwitterCldr.Range(exclusion[0], exclusion[1])
-      if range.includes(code_point)
-        return @composition_exclusion_cache[code_point] = true
-
-    @composition_exclusion_cache[code_point] = false
 
   @index_key_cache = {}
 
@@ -165,18 +111,6 @@ class TwitterCldr.CodePoint
 
   @property_data_cache = {}
 
-  @hangul_type_cache = {}
-
-  @code_point_cache = {}
-
-  @composition_exclusion_cache = {}
-
-  @hangul_blocks = {} # Not implemented yet.
-
-  @composition_exclusions = {} # Not implemented yet.
-
-  @block_cache = {}
-
   @get_block_name : (code_point) ->
     if @block_cache[code_point]?
       return @block_cache[code_point]
@@ -185,31 +119,3 @@ class TwitterCldr.CodePoint
       if range.includes(code_point)
         return @block_cache[code_point] = k
     return null
-
-  @get_block_range : (block_name) ->
-    if !block_name?
-      return null
-    block_data = @blocks[block_name]
-    if block_data? then new TwitterCldr.Range(block_data[0], block_data[1]) else null
-
-
-  @blocks = {} # Not implemented yet.
-
-  @block_data = {} # Not implemented yet.
-
-
-  # Check if block constitutes a range. The code point beginning a range will have a name enclosed in <>, ending with 'First'
-  # eg: <CJK Ideograph Extension A, First>
-  # http://unicode.org/reports/tr44/#Code_Point_Ranges
-  @get_range_start : (code_point, block_data) ->
-    keys = []
-    for k, v of block_data
-      keys.push k
-    start_data = block_data[TwitterCldr.Utilities.min(keys)]
-    if start_data[1]? and /<.*, First>/.test start_data[1]
-      start_data = TwitterCldr.Utilities.clone (start_data)
-      start_data[0] = code_point
-      start_data[1] = start_data[1].replace(', First', '')
-      start_data
-    else
-      null

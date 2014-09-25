@@ -8,7 +8,7 @@ module TwitterCldr
     module Tasks
 
       class << self
-        def update
+        def update()
           build(
             :begin_msg  => "Updating build... ",
             :output_dir => File.expand_path(File.join(File.dirname(__FILE__), "../../../assets/javascripts/twitter_cldr")),

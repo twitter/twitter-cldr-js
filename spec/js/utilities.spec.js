@@ -4,6 +4,53 @@
 var TwitterCldr = require('../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Utilities", function() {
+  describe("#remove_duplicates", function() {
+    it("should remove duplicates elements from the array", function() {
+      expect(TwitterCldr.Utilities.remove_duplicates([1,2,3,4,1,5])).toEqual([1,2,3,4,5]);
+    });
+  });
+
+  describe("#regex_escape", function() {
+    it("escapes special characters strings properly so that they can be used in regexes.", function() {
+      expect(TwitterCldr.Utilities.regex_escape("([.*+?^=!:${}()|\[\]\/\\])")).toEqual("\\(\\[\\.\\*\\+\\?\\^\\=\\!\\:\\$\\{\\}\\(\\)\\|\\[\\]\\/\\\\\\]\\)")
+    });
+  });
+
+  describe("#trim_string", function() {
+    it("removes all the leading whitespace from a string", function() {
+      expect(TwitterCldr.Utilities.trim_string("    Hello")).toEqual("Hello");
+    });
+    it("removes all the trailing whitespace from a string", function() {
+      expect(TwitterCldr.Utilities.trim_string("Hello    ")).toEqual("Hello");
+    });
+    it("removes all the leading and trailing backspace from a string.", function() {
+      expect(TwitterCldr.Utilities.trim_string("    Hello    ")).toEqual("Hello");
+    });
+  });
+
+  describe("#clone", function() {
+    it("clones objects", function() {
+      var obj = {a : "b", c : "d"};
+      var clone = TwitterCldr.Utilities.clone(obj);
+      expect(clone).toEqual(obj);
+      expect(clone).not.toBe(obj);
+      expect(clone["a"]).toEqual(obj["a"]);
+      expect(clone["c"]).toEqual(obj["c"]);  
+    });
+  });
+
+  describe("#compute_cache_key", function() {
+    it("creates a cache key for an array of pieces", function() {
+      expect(TwitterCldr.Utilities.compute_cache_key(["a", "b"])).toEqual("a|b");  
+    });
+    it("returns null for empty arrays", function() {
+      expect(TwitterCldr.Utilities.compute_cache_key([])).toBe(null);  
+    });
+    it("returns null if no parameters are passed", function() {
+      expect(TwitterCldr.Utilities.compute_cache_key()).toBe(null);  
+    });
+  });
+
   describe("#is_even", function() {
     it("should return true if the given number is even", function() {
       for(var i = 0; i <= 1000; i += 2) {

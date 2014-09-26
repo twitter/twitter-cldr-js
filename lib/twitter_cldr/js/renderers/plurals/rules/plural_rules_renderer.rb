@@ -21,16 +21,23 @@ module TwitterCldr
           # TODO: In the future we should try to parse raw CLDR data right here and generate JavaScript version from
           # this data rather than from the Ruby lambdas in twitter-cldr-rb.
           def rules
-            rule_str = pluralization_rules.scan(/lambda\s*\{\s*\|n\|(.*?)\}/).first.first.strip
+            rule_str = raw_pluralization_rules.scan(/lambda\s*\{\s*\|n\|(.*?)\}/).first.first.strip
             js_str = PluralRulesCompiler.rule_to_js(rule_str)
-            hash = eval(pluralization_rules)
-            %Q({"keys": #{hash[@locale][:i18n][:plural][:keys].to_json}, "rule": #{js_str}})
+            %Q({"keys": #{all_rules.to_json}, "rule": #{js_str}})
+          end
+
+          def all_rules
+            pluralization_rules[@locale][:i18n][:plural][:keys]
           end
 
           private
 
           def pluralization_rules
-            @pluralization_rules ||= load_pluralization_rules(@locale)
+            @pluralization_rules ||= eval(raw_pluralization_rules)
+          end
+
+          def raw_pluralization_rules
+            @raw_pluralization_rules ||= load_pluralization_rules(@locale)
           end
 
           def load_pluralization_rules(locale)

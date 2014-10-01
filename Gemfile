@@ -14,5 +14,6 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
-  gem 'twitter_cldr', '~> 3.0.0'
+  gem 'twitter_cldr', path: '~/workspace/twitter-cldr-rb' #, '~> 3.0.0'
+  gem 'ruby-cldr', path: '~/workspace/ruby-cldr'
 end

@@ -2,13 +2,15 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.PluralRules
-  @rules = `{{{rules}}}`
+  @rule = `{{{rules}}}`
+  @runtime = `{{{runtime}}}`
+  @names = {{{names}}}
 
   @all: ->
-    return @rules.keys
+    return @names
 
   @rule_for: (number) ->
     try
-      return @rules.rule(number)
+      return @rule(number.toString(), @runtime)
     catch error
       return "other"

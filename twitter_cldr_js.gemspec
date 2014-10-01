@@ -18,11 +18,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'railties', '~> 3.1'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'mustache',      '~> 0.99.4'
-  s.add_development_dependency 'ruby_parser',   '~> 2.3.1'
-  s.add_development_dependency 'therubyracer',  '~> 0.12.0'
-  s.add_development_dependency 'uglifier',      '~> 1.2.4'
-  s.add_development_dependency 'coffee-script', '~> 2.2.0'
+  s.add_development_dependency 'mustache',                '~> 0.99.4'
+  s.add_development_dependency 'ruby_parser',             '~> 2.3.1'
+  s.add_development_dependency 'therubyracer',            '~> 0.12.0'
+  s.add_development_dependency 'uglifier',                '~> 1.2.4'
+  s.add_development_dependency 'coffee-script',           '~> 2.2.0'
+  s.add_development_dependency 'cldr-plurals',            '~> 1.0.0'
+  s.add_development_dependency 'cldr-plurals-runtime-js', '~> 1.0.0'
 
   s.require_path = 'lib'
 

@@ -15,15 +15,19 @@ module TwitterCldr
           set_template "mustache/plurals/rules.coffee"
 
           def rules
-            rule_list = CldrPlurals::Compiler::RuleList.new(locale)
+            plurals = resource.map do |plural_type, plural_data|
+              rule_list = CldrPlurals::Compiler::RuleList.new(locale)
 
-            resource.each_pair do |name, rule_text|
-              unless name == :other
-                rule_list.add_rule(name, rule_text)
+              plural_data.each_pair do |name, rule_text|
+                unless name == :other
+                  rule_list.add_rule(name, rule_text)
+                end
               end
+
+              "#{plural_type}: #{rule_list.to_code(:javascript)}"
             end
 
-            rule_list.to_code(:javascript)
+            "{#{plurals.join(', ')}}"
           end
 
           def runtime
@@ -31,7 +35,12 @@ module TwitterCldr
           end
 
           def names
-            resource.keys.map(&:to_s).inspect
+            names = resource.map do |plural_type, plural_data|
+              sub_names = plural_data.keys.map(&:to_s).inspect
+              "#{plural_type}: #{sub_names}"
+            end
+
+            "{#{names.join(', ')}}"
           end
 
           private

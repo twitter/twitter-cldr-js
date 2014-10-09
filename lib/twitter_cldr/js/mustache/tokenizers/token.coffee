@@ -6,7 +6,7 @@ class TwitterCldr.Token
   constructor : (options = {}) ->
     for k, v of options
       @[k] = v
-  
+
   to_hash : ->
     { "value" : @value, "type" : @type }
 

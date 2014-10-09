@@ -10,13 +10,13 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
 
   equals : (list) ->
     contents = descriptor(@current_token())
-    list.append(new TwitterCldr.RBNFSubstitution("equals", contents, 2))
+    list = list.append(new TwitterCldr.RBNFSubstitution("equals", contents, 2))
     @next_token("equals")
     @exchange(list)
 
   left_arrow : (list) ->
     contents = descriptor(@current_token())
-    list.append(new TwitterCldr.RBNFSubstitution("left_arrow", contents, 2))
+    list = list.append(new TwitterCldr.RBNFSubstitution("left_arrow", contents, 2))
     @next_token("left_arrow")
     @exchange(list)
 
@@ -31,7 +31,7 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
       sub.length += 1
       @next_token("right_arrow")
 
-    list.append(sub)
+    list = list.append(sub)
     @exchange(list)
 
     plaintext : (list) ->
@@ -47,7 +47,7 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
       list
 
     add_and_advance : (list) ->
-      list.append(@current_token())
+      list = list.append(@current_token())
       @next_token(@current_token().type)
       @exchange(list)
 

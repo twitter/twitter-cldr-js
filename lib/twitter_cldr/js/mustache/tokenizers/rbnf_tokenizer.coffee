@@ -20,7 +20,7 @@ class TwitterCldr.RBNFTokenizer
       new TwitterCldr.TokenRecognizer("decimal", new RegExp(/[0#][0#,\.]+/)),
 
       # ending
-      new TwitterCldr.TokenRecognizer("semicolon", new RegExp(/;/)),
+      new TwitterCldr.TokenRecognizer("semicolon", new RegExp(/;/))
     ]
     splitter_source = (r.regex().source() for r in recognizers).join("|")
     splitter = new RegExp(splitter_source)

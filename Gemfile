@@ -14,5 +14,5 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
-  gem 'twitter_cldr', :github => 'twitter/twitter-cldr-rb', :branch => 'updated_plurals_v26'
+  gem 'twitter_cldr', '~> 3.1.0'
 end

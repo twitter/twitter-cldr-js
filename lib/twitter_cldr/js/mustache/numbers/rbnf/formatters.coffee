@@ -1,164 +1,110 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-class TwitterCldr.RBNFRuleFormatters
+class TwitterCldr.RBNFRuleFormatter
+  @keep_soft_hyphens = true # default value
   @format : (number, rule_set, rule_group, locale) ->
     rule = rule_set.rule_for(number)
     formatter = formatter.formatter_for(rule, rule_set, rule_group, locale)
     result = formatter.format(number, rule)
     if @keep_soft_hyphens then result else remove_soft_hyphens(result)
 
-  @formatter_for(rule, rule_set, rule_group, locale)
+  @formatter_for : (rule, rule_set, rule_group, locale) ->
+    if rule.is_master()
+      new TwitterCldr.RBNFMasterRuleFormatter(rule_set, rule_group, locale)
+    if rule.is_improper_fraction()
+      new TwitterCldr.RBNFImproperFractionRuleFormatter(rule_set, rule_group, locale)
+    if rule.is_proper_fraction()
+      new TwitterCldr.RBNFProperFractionRuleFormatter(rule_set, rule_group, locale)
+    if rule.is_negative()
+      new TwitterCldr.RBNFNegativeRuleFormatter(rule_set, rule_group, locale)
+    new TwitterCldr.RBNFNormalRuleFormatter(rule_set, rule_group, locale)
 
-module TwitterCldr
-  module Formatters
-    module Rbnf
+  @remove_soft_hyphens : (result) ->
+    result.replace(TwitterCldr.Utilities.pack_array([173]), "")
 
-      class InvalidRbnfTokenError < StandardError; end
+class TwitterCldr.RBNFNormalRuleFormatter
+  constructor : (@rule_set, @rule_group, @locale) ->
+    @is_fractional = false
 
-      class RuleFormatter
-        class << self
+  format : (number, rule) ->
+    results = []
+    for token in tokens
+      result = @[token.type](number, rule, token)
+      results = results.append(if @omit then "" else result)
+    results.join("")
 
-          attr_accessor :keep_soft_hyphens
+  right_arrow : (number, rule, token) ->
+    # this seems to break things even though the docs require it:
+    # rule = rule_set.previous_rule_for(rule) if token.length == 3
+    remainder = Math.abs(number) % rule.divisor
+    @generate_replacement(remainder, rule, token)
 
-          def format(number, rule_set, rule_group, locale)
-            rule = rule_set.rule_for(number)
-            # puts "#{number}, #{rule.base_value}: '" + rule.rule_text + "'"
-            formatter = formatter_for(rule, rule_set, rule_group, locale)
-            result = formatter.format(number, rule)
-            keep_soft_hyphens ? result : remove_soft_hyphens(result)
-          end
+  left_arrow : (number, rule, token) ->
+    quotient = Math.abs(number) / rule.divisor
+    @generate_replacement(quotient, rule, token)
 
-          def formatter_for(rule, rule_set, rule_group, locale)
-            const = case rule.base_value
-              when Rule::MASTER
-                MasterRuleFormatter
-              when Rule::IMPROPER_FRACTION
-                ImproperFractionRuleFormatter
-              when Rule::PROPER_FRACTION
-                ProperFractionRuleFormatter
-              when Rule::NEGATIVE
-                NegativeRuleFormatter
-              else
-                NormalRuleFormatter
-            end
+  equals : (number, rule, token) ->
+    @generate_replacement(quotient, rule, token)
 
-            const.new(rule_set, rule_group, locale)
-          end
+  generate_replacement : (number, rule, token) ->
+    if (rule_set_name = token.rule_set_reference)?
+      TwitterCldr.RBNFRuleFormatter.format(
+        number,
+        rule_group.rule_set_for(rule_set_name),
+        rule_group,
+        locale
+      )
+    else if (decimal_format = token.decimal_format)?
+      @data_reader ||= new TwitterCldr.NumberDataReader(locale)
+      @decimal_tokenizer ||= new TwitterCldr.NumberTokenizer(@data_reader)
+      decimal_tokens = @decimal_tokenizer.tokenize(decimal_format)
+      @decimal_formatter ||= new TwitterCldr.NumberFormatter(@data_reader)
+      @decimal_formatter.format(decimal_tokens, number, {"type" : "decimal"})
+    else
+      TwitterCldr.RBNFRuleFormatter.format(number, rule_set, rule_group, locale)
 
-          private
+  open_bracket : (number, rule, token) ->
+    @omit = rule.is_even_multiple_of(number)
+    ""
+  close_bracket : (number, rule, token) ->
+    @omit = false
+    ""
+  plaintext : (number, rule, token) ->
+    token.value
 
-          def remove_soft_hyphens(result)
-            result.gsub([173].pack("U*"), "")
-          end
+  semicolon : (number, rule, token) ->
+    ""
 
-        end
+  throw_invalid_token_error : (token) ->
+    throw "'" + token.value + "' not allowed in negative number rules."
 
-        self.keep_soft_hyphens = true  # default value
-      end
+  fractional_part : (number) ->
+    parseFloat((number + "").split(".")[1] || 0)
 
-      class NormalRuleFormatter
-        attr_reader :rule_set, :rule_group, :omit, :is_fractional, :locale
+  integral_part : (number) ->
+    parseInt((number + "").split(".")[0])
 
-        def initialize(rule_set, rule_group, locale)
-          @rule_set = rule_set
-          @rule_group = rule_group
-          @is_fractional = false
-          @locale = locale
-        end
 
-        def format(number, rule)
-          rule.tokens.map do |token|
-            result = send(token.type, number, rule, token)
-            @omit ? "" : result
-          end.join
-        end
+class TwitterCldr.RBNFNegativeRuleFormatter extends TwitterCldr.RBNFNormalRuleFormatter
+  right_arrow : (number, rule, token) ->
+    generate_replacement(Math.abs(number), rule, token)
 
-        def right_arrow(number, rule, token)
-          # this seems to break things even though the docs require it:
-          # rule = rule_set.previous_rule_for(rule) if token.length == 3
-          remainder = number.abs % rule.divisor
-          generate_replacement(remainder, rule, token)
-        end
+  left_arrow : (number, rule, token) ->
+    @throw_invalid_token_error(token)
 
-        def left_arrow(number, rule, token)
-          quotient = number.abs / rule.divisor
-          generate_replacement(quotient, rule, token)
-        end
+  open_bracket : (number, rule, token) ->
+    @throw_invalid_token_error(token)
 
-        def equals(number, rule, token)
-          generate_replacement(number, rule, token)
-        end
+  close_bracket : (number, rule, token) ->
+    @throw_invalid_token_error(token)
 
-        def generate_replacement(number, rule, token)
-          if rule_set_name = token.rule_set_reference
-            RuleFormatter.format(
-              number,
-              rule_group.rule_set_for(rule_set_name),
-              rule_group,
-              locale
-            )
-          elsif decimal_format = token.decimal_format
-            @data_reader ||= TwitterCldr::DataReaders::NumberDataReader.new(locale)
-            @decimal_tokenizer ||= TwitterCldr::Tokenizers::NumberTokenizer.new(@data_reader)
-            decimal_tokens = @decimal_tokenizer.tokenize(decimal_format)
-            @decimal_formatter ||= TwitterCldr::Formatters::NumberFormatter.new(@data_reader)
-            @decimal_formatter.format(decimal_tokens, number, :type => :decimal)
-          else
-            RuleFormatter.format(number, rule_set, rule_group, locale)
-          end
-        end
 
-        def open_bracket(number, rule, token)
-          @omit = rule.even_multiple_of?(number)
-          ""
-        end
 
-        def close_bracket(number, rule, token)
-          @omit = false
-          ""
-        end
 
-        def plaintext(number, rule, token)
-          token.value
-        end
 
-        def semicolon(number, rule, token)
-          ""
-        end
 
-        protected
 
-        def invalid_token_error(token)
-          InvalidRbnfTokenError.new("'#{token.value}' not allowed in negative number rules.")
-        end
-
-        def fractional_part(number)
-          ".#{number.to_s.split(".")[1] || 0}".to_f
-        end
-
-        def integral_part(number)
-          number.to_s.split(".").first.to_i
-        end
-      end
-
-      class NegativeRuleFormatter < NormalRuleFormatter
-        def right_arrow(number, rule, token)
-          generate_replacement(number.abs, rule, token)
-        end
-
-        def left_arrow(number, rule, token)
-          raise invalid_token_error(token)
-        end
-
-        def open_bracket(number, rule, token)
-          raise invalid_token_error(token)
-        end
-
-        def close_bracket(number, rule, token)
-          raise invalid_token_error(token)
-        end
-      end
 
       class MasterRuleFormatter < NormalRuleFormatter
         def right_arrow(number, rule, token)

@@ -10,6 +10,7 @@ class TwitterCldr.RBNFRule
     # if result is too big, subtract one from exponent and try again
     @divisor = if div > val then Math.pow((radix || 10), exp - 1) else div
     @substitution_types = ["equals", "left_arrow", "right_arrow"]
+
     @master = "x.0"
     @improper_fraction = "x.x"
     @proper_fraction = "0.x"

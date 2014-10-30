@@ -88,7 +88,7 @@ class TwitterCldr.RBNFNormalRuleFormatter
 
 class TwitterCldr.RBNFNegativeRuleFormatter extends TwitterCldr.RBNFNormalRuleFormatter
   right_arrow : (number, rule, token) ->
-    generate_replacement(Math.abs(number), rule, token)
+    @generate_replacement(Math.abs(number), rule, token)
 
   left_arrow : (number, rule, token) ->
     @throw_invalid_token_error(token)
@@ -99,79 +99,45 @@ class TwitterCldr.RBNFNegativeRuleFormatter extends TwitterCldr.RBNFNormalRuleFo
   close_bracket : (number, rule, token) ->
     @throw_invalid_token_error(token)
 
+class TwitterCldr.RBNFMasterRuleFormatter extends TwitterCldr.RBNFNormalRuleFormatter
+  right_arrow : (number, rule, token) ->
+    # Format by digits. This is not explained in the main doc. See:
+    # http://grepcode.com/file/repo1.maven.org/maven2/com.ibm.icu/icu4j/51.2/com/ibm/icu/text/NFSubstitution.java#FractionalPartSubstitution.%3Cinit%3E%28int%2Ccom.ibm.icu.text.NFRuleSet%2Ccom.ibm.icu.text.RuleBasedNumberFormat%2Cjava.lang.String%29
 
+    # doesn't seem to matter if the descriptor is two or three arrows, although three seems to indicate
+    # we should or should not be inserting spaces somewhere (not sure where)
+    @is_fractional = true
+    fractional_part = @fractional_part(number)
+    (TwitterCldr.RBNFRuleFormatter.format(
+      parseInt(digit), @rule_set, @rule_group, @locale
+    ) for digit in fractional_part.split("")).join(" ")
 
+  left_arrow : (number, rule, token) ->
+    if @is_fractional
+      # is this necessary?
+      TwitterCldr.RBNFRuleFormatter.format(parseInt(digit), @rule_set, @rule_group, @locale)
+    else
+      @generate_replacement(@integral_part(number), rule, token)
 
+  open_bracket : (number, rule, token) ->
+    # Omit the optional text if the number is an integer (same as specifying both an x.x rule and an x.0 rule)
+    @omit = if @is_fractional then (number * @get_fractional_rule(number).base_value) is 1 else (number+"").indexOf('.') is -1
 
+  close_bracket : (number, rule, token) ->
+    @omit = false
+    ""
+  get_fractional_rule : (number) ->
+    @fractional_rule ||= @rule_set.rule_for(number, true)
 
+class TwitterCldr.RBNFProperFractionRuleFormatter
+  open_bracket : (number, rule, token) ->
+    @throw_invalid_token_error(token)
 
+  close_bracket : (number, rule, token) ->
+    @throw_invalid_token_error(token)
 
-      class MasterRuleFormatter < NormalRuleFormatter
-        def right_arrow(number, rule, token)
-          # Format by digits. This is not explained in the main doc. See:
-          # http://grepcode.com/file/repo1.maven.org/maven2/com.ibm.icu/icu4j/51.2/com/ibm/icu/text/NFSubstitution.java#FractionalPartSubstitution.%3Cinit%3E%28int%2Ccom.ibm.icu.text.NFRuleSet%2Ccom.ibm.icu.text.RuleBasedNumberFormat%2Cjava.lang.String%29
-
-          # doesn't seem to matter if the descriptor is two or three arrows, although three seems to indicate
-          # we should or should not be inserting spaces somewhere (not sure where)
-          is_fractional = true
-          number.to_s.split(".")[1].each_char.map do |digit|
-            RuleFormatter.format(digit.to_i, rule_set, rule_group, locale)
-          end.join(" ")
-        end
-
-        def left_arrow(number, rule, token)
-          if is_fractional
-            # is this necessary?
-            RuleFormatter.format(
-              (number * fractional_rule(number).base_value).to_i,
-              rule_set, rule_group, locale
-            )
-          else
-            generate_replacement(integral_part(number), rule, token)
-          end
-        end
-
-        def open_bracket(number, rule, token)
-          @omit = if is_fractional
-            # is this necessary?
-            (number * fractional_rule(number).base_value) == 1
-          else
-            # Omit the optional text if the number is an integer (same as specifying both an x.x rule and an x.0 rule)
-            @omit = number.is_a?(Integer)
-          end
-          ""
-        end
-
-        def close_bracket(number, rule, token)
-          @omit = false
-          ""
-        end
-
-        protected
-
-        def fractional_rule(number)
-          @fractional_rule ||= rule_set.rule_for(number, true)
-        end
-      end
-
-      class ProperFractionRuleFormatter < MasterRuleFormatter
-        def open_bracket(number, rule, token)
-          raise invalid_token_error(token)
-        end
-
-        def close_bracket(number, rule, token)
-          raise invalid_token_error(token)
-        end
-      end
-
-      class ImproperFractionRuleFormatter < MasterRuleFormatter
-        def open_bracket(number, rule, token)
-          # Omit the optional text if the number is between 0 and 1 (same as specifying both an x.x rule and a 0.x rule)
-          @omit = number > 0 && number < 1
-          ""
-        end
-      end
-
-    end
-  end
-end
+class TwitterCldr.RBNFImproperFractionRuleFormatter
+  open_bracket(number, rule, token) ->
+    # Omit the optional text if the number is between 0 and 1 (same as specifying both an x.x rule and a 0.x rule)
+    @omit = number > 0 and number < 1
+    ""

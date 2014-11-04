@@ -2,6 +2,11 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.RBNFRule
+  @master = "x.0"
+  @improper_fraction = "x.x"
+  @proper_fraction = "0.x"
+  @negative = "-x"
+
   constructor : (@base_value, @rule_text, @radix) ->
     val = parseInt(base_value)
     exp = if val > 0 then Math.ceil(Math.log(val) / Math.log(radix || 10)) else 1
@@ -11,10 +16,10 @@ class TwitterCldr.RBNFRule
     @divisor = if div > val then Math.pow((radix || 10), exp - 1) else div
     @substitution_types = ["equals", "left_arrow", "right_arrow"]
 
-    @master = "x.0"
-    @improper_fraction = "x.x"
-    @proper_fraction = "0.x"
-    @negative = "-x"
+    @master = TwitterCldr.RBNFRule.master
+    @improper_fraction = TwitterCldr.RBNFRule.improper_fraction
+    @proper_fraction = TwitterCldr.RBNFRule.proper_fraction
+    @negative = TwitterCldr.RBNFRule.negative
 
     @parser = new TwitterCldr.RBNFRuleParser
     @tokenizer = new Twitter.RBNFTokenizer

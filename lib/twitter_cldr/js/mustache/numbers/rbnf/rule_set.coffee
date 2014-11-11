@@ -181,7 +181,6 @@ class TwitterCldr.RBNFRuleSet
       else
         if mid > 0 then mid - 1 else mid
 
-
   special_rule_index_for : base_value ->
     for i in [0...@get_search_start_index] by 1
       if @rules[i].base_value is base_value

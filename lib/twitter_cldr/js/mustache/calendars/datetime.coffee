@@ -42,10 +42,7 @@ class TwitterCldr.DateTimeFormatter
         when "pattern"
           this.result_for_token(token, obj)
         else
-          if token.value.length > 0 && token.value[0] == "'" && token.value[token.value.length - 1] == "'"
-            token.value.substring(1, token.value.length - 1)
-          else
-            token.value
+          token.value.replace(/'([^']+)'/g, '$1')
 
     tokens = this.get_tokens(obj, options)
     (format_token(token) for token in tokens).join("")

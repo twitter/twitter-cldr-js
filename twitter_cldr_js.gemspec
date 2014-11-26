@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.summary  = "Text formatting using data from Unicode's Common Locale Data Repository (CLDR)."
 
   s.add_dependency 'json'
-  s.add_dependency 'railties', '~> 3.1'
+  s.add_dependency 'railties', '>= 3.0', '< 5.0'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'mustache',      '~> 0.99.4'

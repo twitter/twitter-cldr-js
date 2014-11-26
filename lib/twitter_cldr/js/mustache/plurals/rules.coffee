@@ -6,10 +6,10 @@ class TwitterCldr.PluralRules
   @runtime = `{{{runtime}}}`
   @names = {{{names}}}
 
-  @all: (type = 'plurals') ->
+  @all: (type = 'cardinal') ->
     return @names[type]
 
-  @rule_for: (number, type = 'plurals') ->
+  @rule_for: (number, type = 'cardinal') ->
     try
       return @rules[type](number.toString(), @runtime)
     catch error

@@ -19,16 +19,23 @@ module TwitterCldr
                     (DataReaders::NumberDataReader::ABBREVIATED_MIN_POWER..DataReaders::NumberDataReader::ABBREVIATED_MAX_POWER).inject({}) do |formats, i|
                       exponent = 10 ** i
                       data_reader = DataReaders::NumberDataReader.new(@locale, :type => type, :format => exponent)
-                      pattern = data_reader.pattern(exponent)
-                      if pattern.is_a?(String)
-                        tokens = data_reader.tokenizer.tokenize(pattern).map(&:value)
-                        # abbreviation doesn't work for negative numbers in the Ruby version, so we have to fix it here
-                        formats[exponent] = sign == :positive ? tokens : ["-"] + tokens[1..-1]
-                      elsif pattern == 0
-                        # there's no specific formatting pattern for these options, skipping them
-                      else
-                        puts "Invalid number pattern for locale=#{locale}, type=#{type}, sign=#{sign}, i=#{i}: #{pattern.inspect}"
+
+                      patterns = data_reader.pattern(exponent).inject({}) do |memo, (plural, pattern)|
+                        if pattern.is_a?(String)
+                          tokens = data_reader.tokenizer.tokenize(pattern).map(&:value)
+                          # abbreviation doesn't work for negative numbers in the Ruby version, so we have to fix it here
+                          memo[plural] = sign == :positive ? tokens : ["-"] + tokens[1..-1]
+                        elsif pattern == 0
+                          # there's no specific formatting pattern for these options, skipping them
+                        else
+                          puts "Invalid number pattern for locale=#{locale}, type=#{type}, sign=#{sign}, i=#{i}: #{pattern.inspect}"
+                        end
+
+                        memo
                       end
+
+                      formats[exponent] = patterns unless patterns.empty?
+
                       formats
                     end
                   else

@@ -10,7 +10,7 @@ describe("PluralRules", function() {
     });
 
     it("returns an array of the plural rules for the given type", function() {
-      var actual_rules = TwitterCldr.PluralRules.all('ordinals');
+      var actual_rules = TwitterCldr.PluralRules.all('ordinal');
       var expected_rules = ["one", "two", "few", "other"];
 
       expect(actual_rules.length).toEqual(expected_rules.length);
@@ -37,13 +37,13 @@ describe("PluralRules", function() {
     });
 
     it("returns correct ordinal plurals", function() {
-      expect(TwitterCldr.PluralRules.rule_for(1, 'ordinals')).toEqual("one");
-      expect(TwitterCldr.PluralRules.rule_for(2, 'ordinals')).toEqual("two");
-      expect(TwitterCldr.PluralRules.rule_for(3, 'ordinals')).toEqual("few");
-      expect(TwitterCldr.PluralRules.rule_for(4, 'ordinals')).toEqual("other");
-      expect(TwitterCldr.PluralRules.rule_for(11, 'ordinals')).toEqual("other");
-      expect(TwitterCldr.PluralRules.rule_for(12, 'ordinals')).toEqual("other");
-      expect(TwitterCldr.PluralRules.rule_for(22, 'ordinals')).toEqual("two");
+      expect(TwitterCldr.PluralRules.rule_for(1, 'ordinal')).toEqual("one");
+      expect(TwitterCldr.PluralRules.rule_for(2, 'ordinal')).toEqual("two");
+      expect(TwitterCldr.PluralRules.rule_for(3, 'ordinal')).toEqual("few");
+      expect(TwitterCldr.PluralRules.rule_for(4, 'ordinal')).toEqual("other");
+      expect(TwitterCldr.PluralRules.rule_for(11, 'ordinal')).toEqual("other");
+      expect(TwitterCldr.PluralRules.rule_for(12, 'ordinal')).toEqual("other");
+      expect(TwitterCldr.PluralRules.rule_for(22, 'ordinal')).toEqual("two");
     });
   });
 });

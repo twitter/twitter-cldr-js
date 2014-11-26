@@ -22,8 +22,14 @@ class TwitterCldr.NumberFormatter
     tokens = this.get_tokens(number, opts)
 
     if tokens?
+      if tokens not instanceof Array
+        tokens_sample = tokens[Object.keys(tokens)[0]]
+        truncated_number = @truncate_number(number, tokens_sample[1].length)
+        truncated_number = Math.floor(truncated_number) if opts.precision == 0
+        tokens = tokens[TwitterCldr.PluralRules.rule_for(truncated_number)]
+
       [prefix, suffix, integer_format, fraction_format] = this.partition_tokens(tokens)
-      number = this.truncate_number(number, integer_format)
+      number = this.truncate_number(number, integer_format.format.length)
       [intg, fraction] = this.parse_number(number, opts)
       result = integer_format.apply(parseFloat(intg), opts)
       result += fraction_format.apply(fraction, opts) if fraction
@@ -33,7 +39,7 @@ class TwitterCldr.NumberFormatter
       # there's no specific formatting pattern for this number in current locale
       number.toString()
 
-  truncate_number: (number, integer_format) ->
+  truncate_number: (number, decimal_digits) ->
     number  # noop for base class
 
   partition_tokens: (tokens) ->
@@ -149,9 +155,9 @@ class TwitterCldr.AbbreviatedNumberFormatter extends TwitterCldr.NumberFormatter
     tokens = tokens[format] if format?
     tokens
 
-  truncate_number: (number, integer_format) ->
+  truncate_number: (number, decimal_digits) ->
     if @NUMBER_MIN <= number and number < @NUMBER_MAX
-      factor = Math.max(0, Math.floor(number).toString().length - integer_format.format.length)
+      factor = Math.max(0, Math.floor(number).toString().length - decimal_digits)
       number / Math.pow(10, factor)
     else
       number

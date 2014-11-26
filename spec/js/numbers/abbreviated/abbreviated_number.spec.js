@@ -11,11 +11,11 @@ describe("AbbreviatedNumberFormatter", function() {
 
   describe("#transform_number", function() {
     it("truncates the number based on the integer format string", function() {
-      expect(formatter.truncate_number(number, { format: "0" })).toEqual(1.234);
-      expect(formatter.truncate_number(number, { format: "00" })).toEqual(12.34);
-      expect(formatter.truncate_number(number, { format: "000" })).toEqual(123.4);
-      expect(formatter.truncate_number(number, { format: "0000" })).toEqual(1234);
-      expect(formatter.truncate_number(number, { format: "00000" })).toEqual(1234);
+      expect(formatter.truncate_number(number, 1)).toEqual(1.234);
+      expect(formatter.truncate_number(number, 2)).toEqual(12.34);
+      expect(formatter.truncate_number(number, 3)).toEqual(123.4);
+      expect(formatter.truncate_number(number, 4)).toEqual(1234);
+      expect(formatter.truncate_number(number, 5)).toEqual(1234);
     });
 
     it("returns the original number if greater than 10^15", function() {

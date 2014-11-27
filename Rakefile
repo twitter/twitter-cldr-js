@@ -58,13 +58,4 @@ task "spec:js" do
   end
 end
 
-if RUBY_VERSION < '1.9.0'
-  desc 'Run all examples with RCov'
-  RSpec::Core::RakeTask.new('spec:rcov') do |t|
-    t.rcov      = true
-    t.pattern   = './spec/**/*_spec.rb'
-    t.rcov_opts = %w(-T --sort coverage --exclude gems/,spec/)
-  end
-end
-
 load "./lib/twitter_cldr/js/tasks/tasks.rake"

@@ -11,7 +11,7 @@ describe("DateTimeFormatter", function() {
   describe("#format", function() {
     it("correctly formats Russian additional formats", function() {
       date = new Date(2012, 1, 1);
-      expect(formatter.format(date, {format: "additional", type: "GyMMMd"})).toEqual("1 февр. 2012 г. н.э.");
+      expect(formatter.format(date, {format: "additional", type: "GyMMMd"})).toEqual("1 февр. 2012 г. н. э.");
     });
   });
 });

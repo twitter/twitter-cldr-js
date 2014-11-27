@@ -3,12 +3,14 @@
 
 class TwitterCldr.PluralRules
   @rules = `{{{rules}}}`
+  @runtime = `{{{runtime}}}`
+  @names = {{{names}}}
 
-  @all: ->
-    return @rules.keys
+  @all: (type = 'cardinal') ->
+    return @names[type]
 
-  @rule_for: (number) ->
+  @rule_for: (number, type = 'cardinal') ->
     try
-      return @rules.rule(number)
+      return @rules[type](number.toString(), @runtime)
     catch error
       return "other"

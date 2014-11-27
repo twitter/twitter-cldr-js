@@ -15,7 +15,7 @@ describe("CurrencyFormatter", function() {
 
     it("handles negative numbers", function() {
       // yes, negative numbers (at least for accounting) are represented using parentheses without a minus sign
-      expect(formatter.format(-12)).toEqual("($12.00)");
+      expect(formatter.format(-12)).toEqual("-$12.00");
     });
 
     it("should use the specified currency symbol when specified", function() {

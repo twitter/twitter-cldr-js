@@ -3,6 +3,9 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
+require 'cldr-plurals'
+require 'cldr-plurals/javascript_runtime'
+
 module TwitterCldr
   module Js
     module Renderers
@@ -11,43 +14,39 @@ module TwitterCldr
         class PluralRulesRenderer < TwitterCldr::Js::Renderers::Base
           set_template "mustache/plurals/rules.coffee"
 
-          RESOURCES_DIR = File.expand_path(File.join(File.dirname(__FILE__), "../../../../../../resources/locales"))
-
-          # The representation of the pluralization rules in the latest version of twitter-cldr-rb is too complicated
-          # for parsing and converting it into JavaScript. For now we're gonna use older pluralization data that was
-          # generated using twitter-cldr-rb v2.1.0 (branch kl_plural_rules_for_js),
-          # ruby-cldr from https://github.com/kl-7/ruby-cldr/tree/kl_old_plurals_format, and CLDR v22.1.
-          #
-          # TODO: In the future we should try to parse raw CLDR data right here and generate JavaScript version from
-          # this data rather than from the Ruby lambdas in twitter-cldr-rb.
           def rules
-            rule_str = pluralization_rules.scan(/lambda\s*\{\s*\|n\|(.*?)\}/).first.first.strip
-            js_str = PluralRulesCompiler.rule_to_js(rule_str)
-            hash = eval(pluralization_rules)
-            %Q({"keys": #{hash[@locale][:i18n][:plural][:keys].to_json}, "rule": #{js_str}})
+            plurals = resource.map do |plural_type, plural_data|
+              rule_list = CldrPlurals::Compiler::RuleList.new(locale)
+
+              plural_data.each_pair do |name, rule_text|
+                unless name == :other
+                  rule_list.add_rule(name, rule_text)
+                end
+              end
+
+              "#{plural_type}: #{rule_list.to_code(:javascript)}"
+            end
+
+            "{#{plurals.join(', ')}}"
+          end
+
+          def runtime
+            CldrPlurals::JavascriptRuntime.source
+          end
+
+          def names
+            names = resource.map do |plural_type, plural_data|
+              sub_names = plural_data.keys.map(&:to_s).inspect
+              "#{plural_type}: #{sub_names}"
+            end
+
+            "{#{names.join(', ')}}"
           end
 
           private
 
-          def pluralization_rules
-            @pluralization_rules ||= load_pluralization_rules(@locale)
-          end
-
-          def load_pluralization_rules(locale)
-            load_data(locale) || load_data(locale_fallback(locale))
-          end
-
-          def locale_fallback(locale)
-            locale.split('-').first
-          end
-
-          def load_data(locale)
-            file_name = resource_file_name(locale)
-            YAML.load_file(file_name)[locale.to_sym] if File.file?(file_name)
-          end
-
-          def resource_file_name(locale)
-            File.join(RESOURCES_DIR, "#{locale}/plurals.yml")
+          def resource
+            TwitterCldr.get_locale_resource(locale, "plural_rules")[locale]
           end
         end
 

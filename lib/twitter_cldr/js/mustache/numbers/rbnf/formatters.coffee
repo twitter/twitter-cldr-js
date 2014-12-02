@@ -3,9 +3,10 @@
 
 class TwitterCldr.RBNFRuleFormatter
   @keep_soft_hyphens = true # default value
+
   @format : (number, rule_set, rule_group, locale) ->
     rule = rule_set.rule_for(number)
-    formatter = formatter.formatter_for(rule, rule_set, rule_group, locale)
+    formatter = @formatter_for(rule, rule_set, rule_group, locale)
     result = formatter.format(number, rule)
     if @keep_soft_hyphens then result else remove_soft_hyphens(result)
 
@@ -29,9 +30,9 @@ class TwitterCldr.RBNFNormalRuleFormatter
 
   format : (number, rule) ->
     results = []
-    for token in tokens
+    for token in rule.get_tokens()
       result = @[token.type](number, rule, token)
-      results = results.append(if @omit then "" else result)
+      results.push(if (@omit? and @omit) then "" else result)
     results.join("")
 
   right_arrow : (number, rule, token) ->
@@ -45,24 +46,24 @@ class TwitterCldr.RBNFNormalRuleFormatter
     @generate_replacement(quotient, rule, token)
 
   equals : (number, rule, token) ->
-    @generate_replacement(quotient, rule, token)
+    @generate_replacement(number, rule, token)
 
   generate_replacement : (number, rule, token) ->
-    if (rule_set_name = token.rule_set_reference)?
+    if (rule_set_name = token.rule_set_reference())?
       TwitterCldr.RBNFRuleFormatter.format(
         number,
-        rule_group.rule_set_for(rule_set_name),
-        rule_group,
-        locale
+        @rule_group.rule_set_for(rule_set_name),
+        @rule_group,
+        @locale
       )
-    else if (decimal_format = token.decimal_format)?
-      @data_reader ||= new TwitterCldr.NumberDataReader(locale)
+    else if (decimal_format = token.decimal_format())?
+      @data_reader ||= new TwitterCldr.NumberDataReader(@locale)
       @decimal_tokenizer ||= new TwitterCldr.NumberTokenizer(@data_reader)
       decimal_tokens = @decimal_tokenizer.tokenize(decimal_format)
-      @decimal_formatter ||= new TwitterCldr.NumberFormatter(@data_reader)
+      @decimal_formatter ||= new TwitterCldr.DecimalFormatter(@data_reader)
       @decimal_formatter.format(decimal_tokens, number, {"type" : "decimal"})
     else
-      TwitterCldr.RBNFRuleFormatter.format(number, rule_set, rule_group, locale)
+      TwitterCldr.RBNFRuleFormatter.format(number, @rule_set, @rule_group, @locale)
 
   open_bracket : (number, rule, token) ->
     @omit = rule.is_even_multiple_of(number)
@@ -129,15 +130,15 @@ class TwitterCldr.RBNFMasterRuleFormatter extends TwitterCldr.RBNFNormalRuleForm
   get_fractional_rule : (number) ->
     @fractional_rule ||= @rule_set.rule_for(number, true)
 
-class TwitterCldr.RBNFProperFractionRuleFormatter
+class TwitterCldr.RBNFProperFractionRuleFormatter extends TwitterCldr.RBNFMasterRuleFormatter
   open_bracket : (number, rule, token) ->
     @throw_invalid_token_error(token)
 
   close_bracket : (number, rule, token) ->
     @throw_invalid_token_error(token)
 
-class TwitterCldr.RBNFImproperFractionRuleFormatter
-  open_bracket(number, rule, token) ->
+class TwitterCldr.RBNFImproperFractionRuleFormatter extends TwitterCldr.RBNFMasterRuleFormatter
+  open_bracket : (number, rule, token) ->
     # Omit the optional text if the number is between 0 and 1 (same as specifying both an x.x rule and a 0.x rule)
     @omit = number > 0 and number < 1
     ""

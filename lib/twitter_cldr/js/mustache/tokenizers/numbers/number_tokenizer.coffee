@@ -1,7 +1,7 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-class TwitterCldr.RBNFTokenizer
+class TwitterCldr.NumberTokenizer
   constructor : (@data_reader) ->
     @special_symbols_map = {
       '.' : '{DOT}',
@@ -22,11 +22,11 @@ class TwitterCldr.RBNFTokenizer
 
     recognizers = [
       new TwitterCldr.TokenRecognizer("pattern", new RegExp(/[0?#,\.]+/)),
-      new TwitterCldr.TokenRecognizer("plaintext", new RegExp(//)),
+      new TwitterCldr.TokenRecognizer("plaintext", new RegExp(/[\s\S]/)),
     ]
     @tokenizer = new TwitterCldr.Tokenizer(recognizers, new RegExp(/([^0*#,\.]*)([0#,\.]+)([^0*#,\.]*)$/), false)
 
-    splitter_source = (r.regex().source() for r in recognizers).join("|")
+    splitter_source = (r.regex.source for r in recognizers).join("|")
     splitter = new RegExp(splitter_source)
 
   tokenize : (pattern) ->
@@ -34,7 +34,7 @@ class TwitterCldr.RBNFTokenizer
       (match) ->
         @special_symbols_map[match].slice(1, @special_symbols_map[match].length-1)
     )
-    tokens = new TwitterCldr.PatternTokenizer(@data_reader, @tokenizer).tokenize(escaped_pattern)
+    tokens = (new TwitterCldr.PatternTokenizer(@data_reader, @tokenizer)).tokenize(escaped_pattern)
     for token in tokens
       token.value = token.value.replace(@inverse_special_symbols_regex,
         (match) ->

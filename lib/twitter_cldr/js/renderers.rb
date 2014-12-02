@@ -18,6 +18,14 @@ module TwitterCldr
 
       module Numbers
         autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/numbers/numbers_renderer'
+        autoload :RBNFRenderer,                         'twitter_cldr/js/renderers/numbers/rbnf/rbnf_renderer'
+        autoload :NumberDataReaderRenderer,             'twitter_cldr/js/renderers/numbers/rbnf/number_data_reader_renderer'
+        autoload :RBNFFormattersRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/formatters_renderer'
+        autoload :RBNFRuleRenderer,                     'twitter_cldr/js/renderers/numbers/rbnf/rule_renderer'
+        autoload :RBNFRuleSetRenderer,                  'twitter_cldr/js/renderers/numbers/rbnf/rule_set_renderer'
+        autoload :RBNFRuleGroupRenderer,                'twitter_cldr/js/renderers/numbers/rbnf/rule_group_renderer'
+        autoload :RBNFRuleParserRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/rule_parser_renderer'
+        autoload :RBNFSubstitutionRenderer,             'twitter_cldr/js/renderers/numbers/rbnf/substitution_renderer'
       end
 
       module PluralRules
@@ -59,7 +67,10 @@ module TwitterCldr
         autoload :CompositeTokenRenderer,               'twitter_cldr/js/renderers/tokenizers/composite_token'
         autoload :TokenizerRenderer,                    'twitter_cldr/js/renderers/tokenizers/tokenizer'
         autoload :SegmentationTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/segmentation_tokenizer'
+        autoload :PatternTokenizerRenderer,             'twitter_cldr/js/renderers/tokenizers/pattern_tokenizer_renderer'
         autoload :UnicodeRegexTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/unicode_regex/unicode_regex_tokenizer'
+        autoload :RBNFTokenizerRenderer,                'twitter_cldr/js/renderers/tokenizers/numbers/rbnf_renderer'
+        autoload :NumberTokenizerRenderer,              'twitter_cldr/js/renderers/tokenizers/numbers/number_tokenizer_renderer'
       end
 
       module Utils

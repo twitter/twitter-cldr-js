@@ -7,8 +7,8 @@ class TwitterCldr.RBNFRule
   @proper_fraction = "0.x"
   @negative = "-x"
 
-  constructor : (@base_value, @rule_text, @radix) ->
-    val = parseInt(base_value)
+  constructor : (@base_value = 10, @rule_text, @radix = 10) ->
+    val = parseInt(@base_value)
     exp = if val > 0 then Math.ceil(Math.log(val) / Math.log(radix || 10)) else 1
     div = if exp >= 0 then Math.pow((radix || 10), exp) else 1
 
@@ -22,7 +22,7 @@ class TwitterCldr.RBNFRule
     @negative = TwitterCldr.RBNFRule.negative
 
     @parser = new TwitterCldr.RBNFRuleParser
-    @tokenizer = new Twitter.RBNFTokenizer
+    @tokenizer = new TwitterCldr.RBNFTokenizer
 
   get_substitution_count : ->
     if @substitution_count? then @substitution_count

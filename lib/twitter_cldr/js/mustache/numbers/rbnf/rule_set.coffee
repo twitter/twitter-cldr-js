@@ -4,12 +4,12 @@
 class TwitterCldr.RBNFRuleSet
   constructor : (@rules, @name, @access) ->
 
-  rule_for_value : (rule) ->
-    if (index = rule_index_for(base_value))?
+  rule_for_value : (value) ->
+    if (index = @rule_index_for(value))?
       @rules[index]
 
   previous_rule_for : (rule) ->
-    if (index = rule_index_for(base_value))?
+    if (index = @rule_index_for(rule.base_value))?
       rules[index - 1] if index > 0
 
   master_rule : ->
@@ -31,7 +31,7 @@ class TwitterCldr.RBNFRuleSet
     @access is "public"
 
   numeric_rules : ->
-    rules[i] for rules in [@@get_get_search_start_index...rules.size] by 1
+    rule for rule in [@get_search_start_index()...rules.size] by 1
 
   # fractional: i.e. whether or not to consider the rule set a "fractional" rule set (special rules apply)
   rule_for : (number, fractional = false) ->
@@ -51,7 +51,7 @@ class TwitterCldr.RBNFRuleSet
     # and multiply this by the number being formatted.  This is
     # all the precision we need, and we can do all of the rest
     # of the math using integer arithmetic
-    index = @@get_get_search_start_index
+    index = @get_get_search_start_index()
     index += 1 while @rules[index].base_value is 0
     least_common_multiple = @rules[index].base_value
 
@@ -135,13 +135,13 @@ class TwitterCldr.RBNFRuleSet
   # If the number has a fractional part and is between 0 and 1, use the proper fraction rule.
   # Binary-search the rule list for the rule with the highest base value less than or equal to the number. If that rule has two substitutions, its base value is not an even multiple of its divisor, and the number is an even multiple of the rule's divisor, use the rule that precedes it in the rule list. Otherwise, use the rule itself.
   normal_rule_for : (number) ->
-    if (rule = @master_rule)?
+    if (rule = @master_rule())?
       rule
-    else if number < 0 and (rule = @negative_rule)?
+    else if number < 0 and (rule = @negative_rule())?
       rule
-    else if @contains_fraction(number) and number > 1 and (rule = @improper_fraction_rule)?
+    else if @contains_fraction(number) and number > 1 and (rule = @improper_fraction_rule())?
       rule
-    else if @contains_fraction(number) and number > 0 and number < 1 and (rule = @proper_fraction_rule)?
+    else if @contains_fraction(number) and number > 0 and number < 1 and (rule = @proper_fraction_rule())?
       rule
     else
       if (rule = @rule_for_value(Math.abs(number)))?
@@ -153,7 +153,7 @@ class TwitterCldr.RBNFRuleSet
         else
           rule
       else
-        @rules[@get_search_start_index] or @rules.first
+        @rules[@get_search_start_index()] or @rules[0]
 
   contains_fraction : (number) ->
     number is Math.floor(number)
@@ -162,10 +162,10 @@ class TwitterCldr.RBNFRuleSet
     if (rule_index = @special_rule_index_for(base_value))?
       rule_index
 
-    if is_numeric(base_value)
+    if @is_numeric(base_value)
       # binary search (base_value must be a number for this to work)
-      low = @get_search_start_index
-      high = @rules.size - 1
+      low = @get_search_start_index()
+      high = @rules.length - 1
 
       while low <= high
         mid = (low + high) / 2
@@ -176,13 +176,13 @@ class TwitterCldr.RBNFRuleSet
         else break
 
       # Binary-search the rule list for the rule with the highest base value less than or equal to the number.
-      if rules[mid].base_value <= base_value
+      if @rules[mid].base_value <= base_value
         mid
       else
         if mid > 0 then mid - 1 else mid
 
-  special_rule_index_for : base_value ->
-    for i in [0...@get_search_start_index] by 1
+  special_rule_index_for : (base_value) ->
+    for i in [0...@get_search_start_index()] by 1
       if @rules[i].base_value is base_value
         return i
     null
@@ -192,10 +192,10 @@ class TwitterCldr.RBNFRuleSet
       return @search_start_index
     @search_start_index = 0
     for i in [0...@rules.length] by 1
-      if is_numeric(@rules[i].base_value)
+      if @is_numeric(@rules[i].base_value)
         @search_start_index = i
 
     @search_start_index
 
   is_numeric : (val) ->
-    ((val + "").match(/^[\d]+(\.\d)+[\d]*$/))?
+    ((val + "").match(/^[\d]+(\.\d)?[\d]*$/))?

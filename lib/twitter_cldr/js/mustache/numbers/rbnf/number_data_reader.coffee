@@ -7,12 +7,12 @@ class TwitterCldr.NumberDataReader
     @abbreviated_min_power = 3
     @abbreviated_max_power = 14
 
-    @number_min = 10 ** abbreviated_min_power
-    @number_max = 10 ** (abbreviated_max_power + 1)
+    @number_min = 10 ** @abbreviated_min_power
+    @number_max = 10 ** (@abbreviated_max_power + 1)
 
     @base_path   = ["numbers", "formats"]
     @symbol_path = ["numbers", "symbols"]
-    @symbols = @traverse(symbol_path)
+    @symbols = @traverse(@symbol_path)
 
     @type_paths = {
       "default"       : ["decimal", "patterns"],
@@ -32,25 +32,35 @@ class TwitterCldr.NumberDataReader
 
     @type = options["type"] || @default_type
 
-    throw "Type " + @type + " is not supported" unless type? and @type_paths[type]?
+    if not (@type? and @type_paths[@type]?)
+      throw "Type " + @type + " is not supported"
 
     @format = options["format"] || @default_format
     @tokenizer = new TwitterCldr.NumberTokenizer(@)
     @formatter = null
     switch @type
       when "decimal"
-        @formatter = TwitterCldr.DecimalFormatter
+        @formatter = new TwitterCldr.DecimalFormatter(options)
       when "long_decimal"
-        @formatter = TwitterCldr.LongDecimalFormatter
+        @formatter = new TwitterCldr.LongDecimalFormatter(options)
       when "short_decimal"
-        @formatter = TwitterCldr.ShortDecimalFormatter
+        @formatter = new TwitterCldr.ShortDecimalFormatter(options)
       when "currency"
-        @formatter = TwitterCldr.CurrencyFormatter
+        @formatter = new TwitterCldr.CurrencyFormatter(options)
       when "percent"
-        @formatter = TwitterCldr.PercentFormatter
+        @formatter = new TwitterCldr.PercentFormatter(options)
 
     @number_data = {}
+    @resource = `{{{resource}}}`
 
+  traverse : (path, obj = @resource) ->
+    TwitterCldr.Utilities.traverse_object(obj, path)
+
+  pattern_at_path : (path) ->
+    @traverse(path)
+
+  get_resource : (locale = @locale) ->
+    @resource[locale] # TODO - there might be some locale conversion required.
 
   pattern : (number) ->
     sign = if number < 0 then "negative" else "positive"
@@ -58,8 +68,8 @@ class TwitterCldr.NumberDataReader
 
     pattern = @traverse[path]
 
-    if pattern[format]?
-      pattern = pattern[format]
+    if pattern[@format]?
+      pattern = pattern[@format]
 
     if number?
       pattern = pattern_for_number(pattern, number)
@@ -71,7 +81,7 @@ class TwitterCldr.NumberDataReader
 
   number_system_for : (type) ->
     (@traverse(@base_path.append(type)) || {})["number_system"] || @default_number_system
-
+    # TODO - Verify this `append`.
   is_abbreviated : (type) ->
     @abbreviated_types[type]?
 
@@ -82,12 +92,12 @@ class TwitterCldr.NumberDataReader
       @type_paths[type]?
 
   get_key_for : (number) ->
-    10 ** ((number+"").length - 1)
+    10 ** ((number + "").length - 1)
     # parseInt("1" + ['0' for i in [0...((number+"").length - 1)] by 1].join(""))
 
   pattern_for_number : (pattern, number) ->
     if pattern instanceof Object
-      pattern[get_key_for(number)] || [pattern]
+      pattern[@get_key_for(number)] || [pattern]
     else
       pattern
 

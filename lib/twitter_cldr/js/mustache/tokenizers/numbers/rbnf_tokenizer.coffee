@@ -11,7 +11,7 @@ class TwitterCldr.RBNFTokenizer
       new TwitterCldr.TokenRecognizer("master", new RegExp(/x\.0/)),
 
       # normal rule descriptors
-      new TwitterCldr.TokenRecognizer("equals", new RegExp(/=/)),
+      new TwitterCldr.TokenRecognizer("equals", new RegExp(/\=/)),
       new TwitterCldr.TokenRecognizer("rule", new RegExp("%%?[[:word:]\-]+")),
       new TwitterCldr.TokenRecognizer("right_arrow", new RegExp(/>/)),
       new TwitterCldr.TokenRecognizer("left_arrow", new RegExp(/</)),
@@ -22,10 +22,15 @@ class TwitterCldr.RBNFTokenizer
       # ending
       new TwitterCldr.TokenRecognizer("semicolon", new RegExp(/;/))
     ]
-    splitter_source = (r.regex().source() for r in recognizers).join("|")
+    splitter_source = (r.regex.source for r in recognizers).join("|")
     splitter = new RegExp(splitter_source)
 
-    @tokenizer = new TwitterCldr.Tokenizer(recognizers.append(new TokenRecognizer("plaintext", new RegExp(//))), splitter)
+    x = new TwitterCldr.TokenRecognizer("plaintext", new RegExp(/[\s\S]/))
+    r = recognizers.concat(x)
+    @tokenizer = new TwitterCldr.Tokenizer(
+      r,
+      splitter
+    )
 
   tokenize : (pattern) ->
     @tokenizer.tokenize(pattern)

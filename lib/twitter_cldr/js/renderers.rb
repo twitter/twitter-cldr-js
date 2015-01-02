@@ -26,6 +26,7 @@ module TwitterCldr
         autoload :RBNFRuleGroupRenderer,                'twitter_cldr/js/renderers/numbers/rbnf/rule_group_renderer'
         autoload :RBNFRuleParserRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/rule_parser_renderer'
         autoload :RBNFSubstitutionRenderer,             'twitter_cldr/js/renderers/numbers/rbnf/substitution_renderer'
+        autoload :RBNFPluralRenderer,                   'twitter_cldr/js/renderers/numbers/rbnf/plural_renderer'
       end
 
       module PluralRules

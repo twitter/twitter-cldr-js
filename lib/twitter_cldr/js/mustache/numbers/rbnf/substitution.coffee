@@ -6,7 +6,7 @@ class TwitterCldr.RBNFSubstitution
 
   rule_set_reference : ->
     if @contents? and (item = @contents[0])?
-      item.value.replace("%", "") if item.type is 'rule'
+      item.value.replace(/%/g, "") if item.type is 'rule'
 
   decimal_format : ->
     if @contents? and (item = @contents[0])?

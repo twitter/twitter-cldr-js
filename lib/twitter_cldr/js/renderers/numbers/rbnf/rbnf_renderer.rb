@@ -11,11 +11,10 @@ module TwitterCldr
         class RBNFRenderer < TwitterCldr::Js::Renderers::Base
           set_template "mustache/numbers/rbnf/rbnf.coffee"
 
-          def resource
-            TwitterCldr.supported_locales.inject({}) do |result, locale|
-              result[locale] = TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
-              result
-            end.to_json
+          def resource # TODO - optimize this be making resource[locale] = resource.
+            result = {}
+            result[locale] = TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
+            result.to_json
           end
 
         end

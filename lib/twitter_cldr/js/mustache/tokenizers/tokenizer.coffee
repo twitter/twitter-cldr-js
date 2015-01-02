@@ -27,7 +27,7 @@ class TwitterCldr.Tokenizer
 
     flag = true
     for tokenizer in tokenizers
-      if (custom_splitter? and !(@custom_splitter(tokenizer)))
+      if (@custom_splitter? and !(@custom_splitter(tokenizer)))
         flag = false
     splitter = null
     if flag
@@ -54,9 +54,11 @@ class TwitterCldr.Tokenizer
     null
 
   tokenize : (text) ->
-    pieces = text.match(new RegExp(@get_splitter().source, "g"))
+    pieces = text.split(new RegExp(@get_splitter().source, "g"))
     result = []
     for piece in pieces
+      if piece.length is 0
+        continue
       recognizer = null
       for r in @recognizers
         if r.recognizes(piece)

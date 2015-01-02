@@ -42,7 +42,7 @@ class TwitterCldr.RBNFNormalRuleFormatter
     @generate_replacement(remainder, rule, token)
 
   left_arrow : (number, rule, token) ->
-    quotient = Math.abs(number) / rule.divisor
+    quotient = Math.floor(Math.abs(number) / rule.divisor)
     @generate_replacement(quotient, rule, token)
 
   equals : (number, rule, token) ->
@@ -61,21 +61,26 @@ class TwitterCldr.RBNFNormalRuleFormatter
       @decimal_tokenizer ||= new TwitterCldr.NumberTokenizer(@data_reader)
       decimal_tokens = @decimal_tokenizer.tokenize(decimal_format)
       @decimal_formatter ||= new TwitterCldr.DecimalFormatter(@data_reader)
-      @decimal_formatter.format(decimal_tokens, number, {"type" : "decimal"})
+      @decimal_formatter.format(number, {"type" : "decimal"})
     else
       TwitterCldr.RBNFRuleFormatter.format(number, @rule_set, @rule_group, @locale)
 
   open_bracket : (number, rule, token) ->
     @omit = rule.is_even_multiple_of(number)
     ""
+
   close_bracket : (number, rule, token) ->
     @omit = false
     ""
+
   plaintext : (number, rule, token) ->
     token.value
 
   semicolon : (number, rule, token) ->
     ""
+
+  plural : (number, rule, token) ->
+    token.render(number/rule.divisor)
 
   throw_invalid_token_error : (token) ->
     throw "'" + token.value + "' not allowed in negative number rules."
@@ -85,7 +90,6 @@ class TwitterCldr.RBNFNormalRuleFormatter
 
   integral_part : (number) ->
     parseInt((number + "").split(".")[0])
-
 
 class TwitterCldr.RBNFNegativeRuleFormatter extends TwitterCldr.RBNFNormalRuleFormatter
   right_arrow : (number, rule, token) ->

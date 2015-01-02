@@ -36,10 +36,10 @@ class TwitterCldr.RBNFRule
     @substitution_count
 
   is_even_multiple_of : (num) ->
-    num % divisor == 0
+    num % @divisor == 0
 
   is_normal : ->
-    not (is_master or is_improper_fraction or is_proper_fraction or is_negative)
+    not (@is_master() or @is_improper_fraction() or @is_proper_fraction() or @is_negative())
 
   is_master : ->
     @base_value is @master

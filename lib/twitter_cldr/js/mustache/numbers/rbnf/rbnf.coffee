@@ -18,6 +18,7 @@ class TwitterCldr.RBNF
     @resource[locale]
 
   format : (number, options = {}) ->
+    # TODO - if resource = {}, return the number.
     rule_group_name = null
     rule_set_name = null
     if !options['rule_group']? and !options['rule_set']?
@@ -64,7 +65,6 @@ class TwitterCldr.RBNF
       @rule_group_from_resource(group_data)
 
   rule_set_from_resource : (rule_set_data) ->
-    # rules = []
     rules = (new TwitterCldr.RBNFRule(rule['value'], rule['rule'], (if rule['radix']? then rule['radix'] else null)) for rule in rule_set_data['rules'])
     new TwitterCldr.RBNFRuleSet(
       rules,
@@ -73,7 +73,6 @@ class TwitterCldr.RBNF
     )
 
   rule_group_from_resource : (group_data) ->
-    # rule_sets = []
     rule_sets = (@rule_set_from_resource(rule_set_data) for rule_set_data in group_data['ruleset'])
     new TwitterCldr.RBNFRuleGroup(
       rule_sets,

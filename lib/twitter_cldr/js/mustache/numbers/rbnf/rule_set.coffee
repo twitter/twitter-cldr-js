@@ -156,11 +156,11 @@ class TwitterCldr.RBNFRuleSet
         @rules[@get_search_start_index()] or @rules[0]
 
   contains_fraction : (number) ->
-    number is Math.floor(number)
+    number isnt Math.floor(number)
 
   rule_index_for : (base_value) ->
     if (rule_index = @special_rule_index_for(base_value))?
-      rule_index
+      return rule_index
 
     if @is_numeric(base_value)
       # binary search (base_value must be a number for this to work)
@@ -168,7 +168,7 @@ class TwitterCldr.RBNFRuleSet
       high = @rules.length - 1
 
       while low <= high
-        mid = (low + high) / 2
+        mid = Math.floor((low + high) / 2)
         if @rules[mid].base_value > base_value
           high = mid - 1
         else if @rules[mid].base_value < base_value
@@ -194,6 +194,7 @@ class TwitterCldr.RBNFRuleSet
     for i in [0...@rules.length] by 1
       if @is_numeric(@rules[i].base_value)
         @search_start_index = i
+        break
 
     @search_start_index
 

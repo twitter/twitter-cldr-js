@@ -22,7 +22,7 @@ class TwitterCldr.NumberTokenizer
 
     recognizers = [
       new TwitterCldr.TokenRecognizer("pattern", new RegExp(/[0?#,\.]+/)),
-      new TwitterCldr.TokenRecognizer("plaintext", new RegExp(/[\s\S]/)),
+      new TwitterCldr.TokenRecognizer("plaintext", new RegExp(/[\s\S]*/)),
     ]
     @tokenizer = new TwitterCldr.Tokenizer(recognizers, new RegExp(/([^0*#,\.]*)([0#,\.]+)([^0*#,\.]*)$/), false)
 

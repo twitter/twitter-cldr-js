@@ -3,22 +3,22 @@
 
 class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
   do_parse : (options = {}) ->
-    @exchange([])
+    @switch([])
 
-  exchange : (list) -> #TODO - This name was "switch". Figure it out.
+  switch : (list) -> #TODO - This name was "switch". Figure it out.
     @[@current_token().type](list)
 
   equals : (list) ->
     contents = @descriptor(@current_token())
     list.push(new TwitterCldr.RBNFSubstitution("equals", contents, 2))
     @next_token("equals")
-    @exchange(list)
+    @switch(list)
 
   left_arrow : (list) ->
     contents = @descriptor(@current_token())
     list.push(new TwitterCldr.RBNFSubstitution("left_arrow", contents, 2))
     @next_token("left_arrow")
-    @exchange(list)
+    @switch(list)
 
   right_arrow : (list) ->
     contents = @descriptor(@current_token())
@@ -32,7 +32,13 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
       @next_token("right_arrow")
 
     list.push(sub)
-    @exchange(list)
+    @switch(list)
+
+  plural : (list) ->
+    sub = new TwitterCldr.RBNFPlural.from_string(@current_token().value)
+    list.push(sub)
+    @next_token("plural")
+    @switch(list)
 
   plaintext : (list) ->
     @add_and_advance(list)
@@ -49,7 +55,7 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
   add_and_advance : (list) ->
     list.push(@current_token())
     @next_token(@current_token().type)
-    @exchange(list)
+    @switch(list)
 
   descriptor : (token) ->
     @next_token(token.type)

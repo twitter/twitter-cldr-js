@@ -14,5 +14,10 @@ namespace :twitter_cldr do
     task :compile do
       TwitterCldr::Js::Tasks.compile
     end
+
+    desc 'Compile JavaScript files for testing'
+    task :update_for_test do
+      TwitterCldr::Js::Tasks.update_for_test
+    end
   end
 end

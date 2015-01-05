@@ -35,19 +35,19 @@ describe("Utilities", function() {
       expect(clone).toEqual(obj);
       expect(clone).not.toBe(obj);
       expect(clone["a"]).toEqual(obj["a"]);
-      expect(clone["c"]).toEqual(obj["c"]);  
+      expect(clone["c"]).toEqual(obj["c"]);
     });
   });
 
   describe("#compute_cache_key", function() {
     it("creates a cache key for an array of pieces", function() {
-      expect(TwitterCldr.Utilities.compute_cache_key(["a", "b"])).toEqual("a|b");  
+      expect(TwitterCldr.Utilities.compute_cache_key(["a", "b"])).toEqual("a|b");
     });
     it("returns null for empty arrays", function() {
-      expect(TwitterCldr.Utilities.compute_cache_key([])).toBe(null);  
+      expect(TwitterCldr.Utilities.compute_cache_key([])).toBe(null);
     });
     it("returns null if no parameters are passed", function() {
-      expect(TwitterCldr.Utilities.compute_cache_key()).toBe(null);  
+      expect(TwitterCldr.Utilities.compute_cache_key()).toBe(null);
     });
   });
 

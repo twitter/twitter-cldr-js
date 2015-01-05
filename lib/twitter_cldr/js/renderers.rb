@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       autoload :Base,                                   'twitter_cldr/js/renderers/base'
       autoload :Bundle,                                 'twitter_cldr/js/renderers/bundle'
-      autoload :DataBundle,                             'twitter_cldr/js/renderers/data_bundle'
+      autoload :TestBundle,                             'twitter_cldr/js/renderers/test_bundle'
 
       module Calendars
         autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/calendars/datetime_renderer'
@@ -78,6 +78,10 @@ module TwitterCldr
         autoload :RangeRenderer,                        'twitter_cldr/js/renderers/utils/range'
         autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/utils/range_set'
         autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/utils/code_points'
+      end
+
+      module TestHelpers
+        autoload :RBNFTestHelperRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/rbnf_test_helper_renderer'
       end
     end
   end

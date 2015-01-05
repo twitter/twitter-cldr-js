@@ -24,6 +24,15 @@ module TwitterCldr
           )
         end
 
+        def update_for_test()
+          build(
+            :begin_msg          => "Updating build... ",
+            :output_dir         => File.expand_path(File.join(File.dirname(__FILE__), "../../../assets/javascripts/twitter_cldr")),
+            :files              => { "%s.js" => false },
+            :render_test_files  => true
+          )
+        end
+
         private
 
         def build(options = {})
@@ -56,8 +65,17 @@ module TwitterCldr
                 end
               end
             end
-          end
 
+            if options[:render_test_files]
+              file_contents = compiler.compile_test()
+              out_file = File.join(output_dir, 'test_resources.js')
+              FileUtils.mkdir_p(File.dirname(out_file))
+              File.open(out_file, "w+") do |f|
+                f.write(file_contents)
+              end
+            end
+
+          end
           puts "done"
           puts build_summary(
             :locale_count => compiler.locales.size,

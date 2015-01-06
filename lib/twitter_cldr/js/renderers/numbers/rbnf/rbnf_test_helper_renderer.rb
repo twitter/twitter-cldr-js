@@ -11,7 +11,7 @@ module TwitterCldr
         class RBNFTestHelperRenderer < TwitterCldr::Js::Renderers::Base
           set_template "mustache/numbers/rbnf/rbnf_test_helper.coffee"
 
-          def global_resource # TODO - optimize this be making resource[locale] = resource.
+          def global_resource
             result = {}
             TwitterCldr.supported_locales.each do |locale|
               result[locale] = TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]

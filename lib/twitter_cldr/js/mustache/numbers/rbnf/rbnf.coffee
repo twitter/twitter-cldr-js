@@ -26,13 +26,10 @@ class TwitterCldr.RBNF
     else
       [rule_group_name, rule_set_name] = [options['rule_group'], options['rule_set']]
 
-    console.log('yolo')
     if (rule_group = @rule_group_by_name(rule_group_name))?
       if (rule_set = rule_group.rule_set_for(rule_set_name))?
         if rule_set.is_public()
-          r = TwitterCldr.RBNFRuleFormatter.format(number, rule_set, rule_group, @locale)
-          console.log(r);
-          r
+          TwitterCldr.RBNFRuleFormatter.format(number, rule_set, rule_group, @locale)
         else
           throw rule_set_name + " is a private rule set and cannot be used directly."
 

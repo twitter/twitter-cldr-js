@@ -12,13 +12,13 @@ class TwitterCldr.RBNFRuleFormatter
 
   @formatter_for : (rule, rule_set, rule_group, locale) ->
     if rule.is_master()
-      new TwitterCldr.RBNFMasterRuleFormatter(rule_set, rule_group, locale)
+      return new TwitterCldr.RBNFMasterRuleFormatter(rule_set, rule_group, locale)
     if rule.is_improper_fraction()
-      new TwitterCldr.RBNFImproperFractionRuleFormatter(rule_set, rule_group, locale)
+      return new TwitterCldr.RBNFImproperFractionRuleFormatter(rule_set, rule_group, locale)
     if rule.is_proper_fraction()
-      new TwitterCldr.RBNFProperFractionRuleFormatter(rule_set, rule_group, locale)
+      return new TwitterCldr.RBNFProperFractionRuleFormatter(rule_set, rule_group, locale)
     if rule.is_negative()
-      new TwitterCldr.RBNFNegativeRuleFormatter(rule_set, rule_group, locale)
+      return new TwitterCldr.RBNFNegativeRuleFormatter(rule_set, rule_group, locale)
     new TwitterCldr.RBNFNormalRuleFormatter(rule_set, rule_group, locale)
 
   @remove_soft_hyphens : (result) ->

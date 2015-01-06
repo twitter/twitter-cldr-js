@@ -141,7 +141,7 @@ module TwitterCldr
 
       def test_helper_renderers
         @test_helper_renderers ||= {
-          :rbnf => TwitterCldr::Js::Renderers::TestHelpers::RBNFTestHelperRenderer
+          :rbnf                            => TwitterCldr::Js::Renderers::TestHelpers::RBNFTestHelperRenderer
         }
       end
 

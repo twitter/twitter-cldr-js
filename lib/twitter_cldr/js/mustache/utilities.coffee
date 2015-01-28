@@ -135,8 +135,10 @@ class TwitterCldr.Utilities
     value = obj
     if path.length is 0
       return null
+
     for key in path
       if value? and value.hasOwnProperty(key)
         value = value[key]
-      else return null
+      else
+        return null
     value

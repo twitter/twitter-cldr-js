@@ -126,7 +126,11 @@ class TwitterCldr.RBNFMasterRuleFormatter extends TwitterCldr.RBNFNormalRuleForm
 
   open_bracket : (number, rule, token) ->
     # Omit the optional text if the number is an integer (same as specifying both an x.x rule and an x.0 rule)
-    @omit = if @is_fractional then (number * @get_fractional_rule(number).base_value) is 1 else (number+"").indexOf('.') is -1
+    @omit = (if @is_fractional
+        (number * @get_fractional_rule(number).base_value) is 1
+      else
+        (number+"").indexOf('.') is -1
+    )
 
   close_bracket : (number, rule, token) ->
     @omit = false

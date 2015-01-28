@@ -5,7 +5,7 @@ class TwitterCldr.RBNFRuleParser extends TwitterCldr.Parser
   do_parse : (options = {}) ->
     @switch([])
 
-  switch : (list) -> #TODO - This name was "switch". Figure it out.
+  switch : (list) ->
     @[@current_token().type](list)
 
   equals : (list) ->

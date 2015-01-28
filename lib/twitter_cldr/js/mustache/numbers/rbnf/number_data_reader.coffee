@@ -93,7 +93,6 @@ class TwitterCldr.NumberDataReader
 
   get_key_for : (number) ->
     10 ** ((number + "").length - 1)
-    # parseInt("1" + ['0' for i in [0...((number+"").length - 1)] by 1].join(""))
 
   pattern_for_number : (pattern, number) ->
     if pattern instanceof Object

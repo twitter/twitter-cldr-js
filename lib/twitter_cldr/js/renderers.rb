@@ -18,15 +18,7 @@ module TwitterCldr
 
       module Numbers
         autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/numbers/numbers_renderer'
-        autoload :RBNFRenderer,                         'twitter_cldr/js/renderers/numbers/rbnf/rbnf_renderer'
-        autoload :NumberDataReaderRenderer,             'twitter_cldr/js/renderers/numbers/rbnf/number_data_reader_renderer'
-        autoload :RBNFFormattersRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/formatters_renderer'
-        autoload :RBNFRuleRenderer,                     'twitter_cldr/js/renderers/numbers/rbnf/rule_renderer'
-        autoload :RBNFRuleSetRenderer,                  'twitter_cldr/js/renderers/numbers/rbnf/rule_set_renderer'
-        autoload :RBNFRuleGroupRenderer,                'twitter_cldr/js/renderers/numbers/rbnf/rule_group_renderer'
-        autoload :RBNFRuleParserRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/rule_parser_renderer'
-        autoload :RBNFSubstitutionRenderer,             'twitter_cldr/js/renderers/numbers/rbnf/substitution_renderer'
-        autoload :RBNFPluralRenderer,                   'twitter_cldr/js/renderers/numbers/rbnf/plural_renderer'
+        autoload :RBNF,                                 'twitter_cldr/js/renderers/numbers/rbnf'
       end
 
       module PluralRules
@@ -81,7 +73,7 @@ module TwitterCldr
       end
 
       module TestHelpers
-        autoload :RBNFTestHelperRenderer,               'twitter_cldr/js/renderers/numbers/rbnf/rbnf_test_helper_renderer'
+        autoload :RBNFHelperRenderer,                   'twitter_cldr/js/renderers/test_helpers/rbnf_helper_renderer'
       end
     end
   end

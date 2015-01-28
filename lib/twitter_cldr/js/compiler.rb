@@ -56,6 +56,7 @@ module TwitterCldr
           yield file, TwitterCldr.twitter_locale(locale)
         end
       end
+
       def compile_test(options = {})
         options[:minify] = true unless options.include?(:minify)
 
@@ -82,7 +83,8 @@ module TwitterCldr
         # required alias definition that adds twitter_cldr to Twitter's static build process
         file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
         file.source = Uglifier.compile(file.source) if options[:minify]
-        return file.source
+
+        file.source
       end
 
       private
@@ -124,15 +126,15 @@ module TwitterCldr
           :number_tokenizer                => TwitterCldr::Js::Renderers::Tokenizers::NumberTokenizerRenderer,
           :pattern_tokenizer               => TwitterCldr::Js::Renderers::Tokenizers::PatternTokenizerRenderer,
           :numbers                         => TwitterCldr::Js::Renderers::Numbers::NumbersRenderer,
-          :rbnf                            => TwitterCldr::Js::Renderers::Numbers::RBNFRenderer,
-          :number_data_reader              => TwitterCldr::Js::Renderers::Numbers::NumberDataReaderRenderer,
-          :rbnf_formatters                 => TwitterCldr::Js::Renderers::Numbers::RBNFFormattersRenderer,
-          :rbnf_rule                       => TwitterCldr::Js::Renderers::Numbers::RBNFRuleRenderer,
-          :rbnf_rule_group                 => TwitterCldr::Js::Renderers::Numbers::RBNFRuleGroupRenderer,
-          :rbnf_rule_set                   => TwitterCldr::Js::Renderers::Numbers::RBNFRuleSetRenderer,
-          :rbnf_substitution               => TwitterCldr::Js::Renderers::Numbers::RBNFSubstitutionRenderer,
-          :rbnf_rule_parser                => TwitterCldr::Js::Renderers::Numbers::RBNFRuleParserRenderer,
-          :plural                          => TwitterCldr::Js::Renderers::Numbers::RBNFPluralRenderer,
+          :rbnf                            => TwitterCldr::Js::Renderers::Numbers::RBNF::RBNFRenderer,
+          :number_data_reader              => TwitterCldr::Js::Renderers::Numbers::RBNF::NumberDataReaderRenderer,
+          :rbnf_formatters                 => TwitterCldr::Js::Renderers::Numbers::RBNF::FormattersRenderer,
+          :rbnf_rule                       => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleRenderer,
+          :rbnf_rule_group                 => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleGroupRenderer,
+          :rbnf_rule_set                   => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleSetRenderer,
+          :rbnf_substitution               => TwitterCldr::Js::Renderers::Numbers::RBNF::SubstitutionRenderer,
+          :rbnf_rule_parser                => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleParserRenderer,
+          :plural                          => TwitterCldr::Js::Renderers::Numbers::RBNF::PluralRenderer,
           :range                           => TwitterCldr::Js::Renderers::Utils::RangeRenderer,
           :range_set                       => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer,
           :code_points                     => TwitterCldr::Js::Renderers::Utils::CodePointsRenderer
@@ -141,7 +143,7 @@ module TwitterCldr
 
       def test_helper_renderers
         @test_helper_renderers ||= {
-          :rbnf                            => TwitterCldr::Js::Renderers::TestHelpers::RBNFTestHelperRenderer
+          :rbnf                            => TwitterCldr::Js::Renderers::TestHelpers::RBNFHelperRenderer
         }
       end
 

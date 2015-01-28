@@ -17,14 +17,23 @@ class TwitterCldr.NumberTokenizer
     for k, v of @special_symbols_map
       @inverse_special_symbols_map[v] = k
 
-    @special_symbols_regex = new RegExp("'(?:" + [TwitterCldr.Utilities.regex_escape(k) for k, v of @special_symbols_map].join('|') + ")'")
-    @inverse_special_symbols_regex = new RegExp([TwitterCldr.Utilities.regex_escape(k) for k, v of @inverse_special_symbols_map].join('|'))
+    @special_symbols_regex = new RegExp("'(?:" + (
+        [(TwitterCldr.Utilities.regex_escape(k)) for k, v of @special_symbols_map]
+      ).join('|') + ")'")
+    @inverse_special_symbols_regex = new RegExp(
+      (
+        [TwitterCldr.Utilities.regex_escape(k) for k, v of @inverse_special_symbols_map]
+      ).join('|'))
 
     recognizers = [
       new TwitterCldr.TokenRecognizer("pattern", new RegExp(/[0?#,\.]+/)),
       new TwitterCldr.TokenRecognizer("plaintext", new RegExp(/[\s\S]*/)),
     ]
-    @tokenizer = new TwitterCldr.Tokenizer(recognizers, new RegExp(/([^0*#,\.]*)([0#,\.]+)([^0*#,\.]*)$/), false)
+    @tokenizer = new TwitterCldr.Tokenizer(
+      recognizers,
+      new RegExp(/([^0*#,\.]*)([0#,\.]+)([^0*#,\.]*)$/),
+      false
+    )
 
     splitter_source = (r.regex.source for r in recognizers).join("|")
     splitter = new RegExp(splitter_source)
@@ -34,7 +43,9 @@ class TwitterCldr.NumberTokenizer
       (match) ->
         @special_symbols_map[match].slice(1, @special_symbols_map[match].length-1)
     )
-    tokens = (new TwitterCldr.PatternTokenizer(@data_reader, @tokenizer)).tokenize(escaped_pattern)
+    tokens = (
+      new TwitterCldr.PatternTokenizer(@data_reader, @tokenizer)
+    ).tokenize(escaped_pattern)
     for token in tokens
       token.value = token.value.replace(@inverse_special_symbols_regex,
         (match) ->

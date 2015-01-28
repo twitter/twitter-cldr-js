@@ -51,7 +51,7 @@ class TwitterCldr.RBNFRuleSet
     # and multiply this by the number being formatted.  This is
     # all the precision we need, and we can do all of the rest
     # of the math using integer arithmetic
-    index = @get_get_search_start_index()
+    index = @get_search_start_index()
     index += 1 while @rules[index].base_value is 0
     least_common_multiple = @rules[index].base_value
 
@@ -86,7 +86,7 @@ class TwitterCldr.RBNFRuleSet
         difference = temp_difference
         winner = i
 
-        break if difference if 0
+        break if difference is 0
 
     # if we have two successive rules that both have the winning base
     # value, then the first one (the one we found above) is used if

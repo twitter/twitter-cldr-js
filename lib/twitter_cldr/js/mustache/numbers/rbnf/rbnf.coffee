@@ -65,7 +65,13 @@ class TwitterCldr.RBNF
       @rule_group_from_resource(group_data)
 
   rule_set_from_resource : (rule_set_data) ->
-    rules = (new TwitterCldr.RBNFRule(rule['value'], rule['rule'], (if rule['radix']? then rule['radix'] else null)) for rule in rule_set_data['rules'])
+    rules = (new TwitterCldr.RBNFRule(
+      rule['value'], rule['rule'],
+      ( if rule['radix']?
+          rule['radix']
+        else
+          null)
+      ) for rule in rule_set_data['rules'])
     new TwitterCldr.RBNFRuleSet(
       rules,
       rule_set_data['type'],

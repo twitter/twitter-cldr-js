@@ -22,6 +22,7 @@ module TwitterCldr
             TwitterCldr.supported_locales.inject({}) do |result, locale|
               file_path = File.join(File.dirname(TwitterCldr::RESOURCES_DIR), '/spec/formatters/numbers/rbnf/locales/' + locale.to_s + '/rbnf_test.yml')
               result[locale] = YAML.load_file(file_path)
+              result
             end.to_json
           end
 

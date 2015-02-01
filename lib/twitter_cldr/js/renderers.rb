@@ -74,6 +74,8 @@ module TwitterCldr
 
       module TestHelpers
         autoload :RBNFHelperRenderer,                   'twitter_cldr/js/renderers/test_helpers/rbnf_helper_renderer'
+        autoload :PluralRulesHelperRenderer,            'twitter_cldr/js/renderers/test_helpers/plural_rules_helper_renderer'
+        autoload :NumbersHelperRenderer,                'twitter_cldr/js/renderers/test_helpers/numbers_helper_renderer'
       end
     end
   end

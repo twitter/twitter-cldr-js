@@ -3,15 +3,22 @@
 
 class TwitterCldr.NumberFormatter
   constructor: ->
-    @all_tokens = `{{{tokens}}}`
     @tokens = []
-    @symbols = `{{{symbols}}}`
 
     @default_symbols =
       'group': ','
       'decimal': '.'
       'plus_sign': '+'
       'minus_sign': '-'
+
+  @all_tokens = `{{{tokens}}}`
+  @symbols = `{{{symbols}}}`
+
+  all_tokens : ->
+    TwitterCldr.NumberFormatter.all_tokens
+
+  symbols : ->
+    TwitterCldr.NumberFormatter.symbols
 
   format: (number, options = {}) ->
     opts = this.default_format_options_for(number)
@@ -33,7 +40,7 @@ class TwitterCldr.NumberFormatter
       [intg, fraction] = this.parse_number(number, opts)
       result = integer_format.apply(parseFloat(intg), opts)
       result += fraction_format.apply(fraction, opts) if fraction
-      sign = if number < 0 && prefix != "-" then @symbols.minus_sign || @default_symbols.minus_sign else ""
+      sign = if number < 0 && prefix != "-" then @symbols().minus_sign || @default_symbols.minus_sign else ""
       "#{prefix}#{result}#{suffix}"
     else
       # there's no specific formatting pattern for this number in current locale
@@ -46,8 +53,8 @@ class TwitterCldr.NumberFormatter
     [
       tokens[0] || "",
       tokens[2] || "",
-      new TwitterCldr.NumberFormatter.IntegerHelper(tokens[1], @symbols),
-      new TwitterCldr.NumberFormatter.FractionHelper(tokens[1], @symbols)
+      new TwitterCldr.NumberFormatter.IntegerHelper(tokens[1], @symbols()),
+      new TwitterCldr.NumberFormatter.FractionHelper(tokens[1], @symbols())
     ]
 
   parse_number: (number, options = {}) ->
@@ -76,13 +83,13 @@ class TwitterCldr.PercentFormatter extends TwitterCldr.NumberFormatter
     super
 
   format: (number, options = {}) ->
-    super(number, options).replace('¤', @symbols.percent_sign || @default_percent_sign)
+    super(number, options).replace('¤', @symbols().percent_sign || @default_percent_sign)
 
   default_format_options_for: (number) ->
     precision: 0
 
   get_tokens: (number, options) ->
-    if number < 0 then @all_tokens.percent.negative else @all_tokens.percent.positive
+    if number < 0 then @all_tokens().percent.negative else @all_tokens().percent.positive
 
 class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
   format: (number, options = {}) ->
@@ -95,7 +102,7 @@ class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
     precision: this.precision_from(number)
 
   get_tokens: (number, options = {}) ->
-    if number < 0 then @all_tokens.decimal.negative else @all_tokens.decimal.positive
+    if number < 0 then @all_tokens().decimal.negative else @all_tokens().decimal.positive
 
 class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
   constructor: (options = {}) ->
@@ -127,7 +134,7 @@ class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
     precision: precision
 
   get_tokens: (number, options = {}) ->
-    if number < 0 then @all_tokens.currency.negative else @all_tokens.currency.positive
+    if number < 0 then @all_tokens().currency.negative else @all_tokens().currency.positive
 
   defaults_for_currency: (currency) ->
     @currencies_data[currency] || @currencies_data.DEFAULT
@@ -150,7 +157,7 @@ class TwitterCldr.AbbreviatedNumberFormatter extends TwitterCldr.NumberFormatter
     # TODO: should this work for negative numbers?
     type = if (number < @NUMBER_MAX) && (number >= @NUMBER_MIN) then this.get_type() else "decimal"
     format = if type == this.get_type() then this.get_key(number) else null
-    tokens = @all_tokens[type]
+    tokens = @all_tokens()[type]
     tokens = if number < 0 then tokens.negative else tokens.positive
     tokens = tokens[format] if format?
     tokens

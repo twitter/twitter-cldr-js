@@ -14,7 +14,7 @@ module TwitterCldr
 
             def resource
               {
-                :locale => TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
+                locale.to_sym => TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
               }.to_json
             end
           end

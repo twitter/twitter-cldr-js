@@ -10,15 +10,15 @@ describe("LongDecimalFormatter", function() {
 
   describe("#get_tokens", function() {
     it("gets tokens for a valid number (between 10^3 and 10^15)", function() {
-      expect(formatter.get_tokens(12345)).toEqual(formatter.all_tokens.long_decimal.positive[10000]);
+      expect(formatter.get_tokens(12345)).toEqual(formatter.all_tokens().long_decimal.positive[10000]);
     });
 
     it("returns tokens for decimals if the number is too large", function() {
-      expect(formatter.get_tokens(1234567891011122)).toEqual(formatter.all_tokens.decimal.positive);
+      expect(formatter.get_tokens(1234567891011122)).toEqual(formatter.all_tokens().decimal.positive);
     });
 
     it("returns tokens for decimals if the number is too small", function() {
-      expect(formatter.get_tokens(123)).toEqual(formatter.all_tokens.decimal.positive);
+      expect(formatter.get_tokens(123)).toEqual(formatter.all_tokens().decimal.positive);
     });
   });
 

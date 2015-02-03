@@ -1,3 +1,11 @@
+== 2.4.0
+
+* Ported text segmentation and Unicode regex parser from twitter-cldr-rb.
+* Updated plurals and other resources to twitter-cldr-rb v3.1.0 and CLDR v26.
+* Added support for ordinal plurals.
+* Fixed and issue with single quotes appearing in formatted dates.
+* Removed restriction that prevented twitter-cldr-js from being used with Rails 4.
+
 == 2.3.2
 
 * Fixed issue with additional date/time formats where incorrect resolution of aliases in the data caused incorrect formatting.

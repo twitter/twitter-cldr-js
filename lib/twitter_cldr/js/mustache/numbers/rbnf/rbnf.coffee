@@ -32,8 +32,14 @@ class TwitterCldr.RBNF
           TwitterCldr.RBNFRuleFormatter.format(number, rule_set, rule_group, @locale)
         else
           throw rule_set_name + " is a private rule set and cannot be used directly."
+      else
+        throw "rule set - #{rule_set_name} - not implemented"
+    else
+      throw "rule group - #{rule_group_name} - not implemented"
 
-  group_names = {}
+
+  group_names : ->
+    [group['type'] for group in @get_resource_for_locale()]
 
   rule_set_names_for_group : (group_name) ->
     cache_key = TwitterCldr.Utilities.compute_cache_key([@locale, group_name])

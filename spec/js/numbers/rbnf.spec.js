@@ -24,11 +24,16 @@ describe("RBNF", function() {
       for (rule_set in TwitterCldr.RBNF.test_resource[locale][rule_group]) {
         for (test_case in TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set]) {
           describe("for locale: " + locale + " for Group: " + rule_group + " for Set: " + rule_set, function(){
-            var got = formatter.format(TwitterCldr.PluralRules.runtime.toNum(test_case), {'rule_group' : rule_group, 'rule_set': rule_set});
-            var expected = TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set][test_case];
-            it("formats " + test_case + " correctly", function() {
-              expect(got).toEqual(expected);
-            });
+            try {
+              var got = formatter.format(TwitterCldr.PluralRules.runtime.toNum(test_case), {'rule_group' : rule_group, 'rule_set': rule_set});
+              var expected = TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set][test_case];
+              it("formats " + test_case + " correctly", function() {
+                expect(got).toEqual(expected);
+              });
+            }
+            catch (error) {
+
+            }
           });
         }
       }

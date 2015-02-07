@@ -92,9 +92,19 @@ class TwitterCldr.PercentFormatter extends TwitterCldr.NumberFormatter
     if number < 0 then @all_tokens().percent.negative else @all_tokens().percent.positive
 
 class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
+  constructor: (@data_reader) ->
+    super
+
   format: (number, options = {}) ->
     try
-      super(number, options)
+      result = super(number, options)
+      if @data_reader? and options["type"]?
+        transliterator = TwitterCldr.NumberingSystems.for_name(
+          @data_reader.number_system_for(options["type"])
+        )
+        if transliterator?
+          result = transliterator.transliterate(result)
+      result
     catch error
       number
 
@@ -103,6 +113,7 @@ class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
 
   get_tokens: (number, options = {}) ->
     if number < 0 then @all_tokens().decimal.negative else @all_tokens().decimal.positive
+
 
 class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
   constructor: (options = {}) ->

@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coffee-script',           '~> 2.2.0'
   s.add_development_dependency 'coffee-script-source',    '~> 1.8.0'
   s.add_development_dependency 'cldr-plurals',            '~> 1.0.0'
-  s.add_development_dependency 'cldr-plurals-runtime-js', '~> 1.0.0'
+  s.add_development_dependency 'cldr-plurals-runtime-js', '~> 1.1.0'
 
   s.require_path = 'lib'
 

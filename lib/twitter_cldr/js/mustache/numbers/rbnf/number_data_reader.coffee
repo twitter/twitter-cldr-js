@@ -10,8 +10,8 @@ class TwitterCldr.NumberDataReader
     @number_min = 10 ** @abbreviated_min_power
     @number_max = 10 ** (@abbreviated_max_power + 1)
 
-    @base_path   = ["numbers", "formats"]
-    @symbol_path = ["numbers", "symbols"]
+    @base_path   = [@locale, @locale, "numbers", "formats"]
+    @symbol_path = [@locale, @locale, "numbers", "symbols"]
     @symbols = @traverse(@symbol_path)
 
     @type_paths = {
@@ -80,8 +80,9 @@ class TwitterCldr.NumberDataReader
       pattern
 
   number_system_for : (type) ->
-    (@traverse(@base_path.append(type)) || {})["number_system"] || @default_number_system
+    (@traverse(@base_path.concat(type)) || {})["number_system"] || @default_number_system
     # TODO - Verify this `append`.
+
   is_abbreviated : (type) ->
     @abbreviated_types[type]?
 

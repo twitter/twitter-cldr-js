@@ -18,7 +18,6 @@ class TwitterCldr.RBNF
     @resource[locale]
 
   format : (number, options = {}) ->
-    # TODO - if resource = {}, return the number.
     rule_group_name = null
     rule_set_name = null
     if !options['rule_group']? and !options['rule_set']?

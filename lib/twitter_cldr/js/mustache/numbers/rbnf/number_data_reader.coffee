@@ -60,7 +60,7 @@ class TwitterCldr.NumberDataReader
     @traverse(path)
 
   get_resource : (locale = @locale) ->
-    @resource[locale] # TODO - there might be some locale conversion required.
+    @resource[locale]
 
   pattern : (number) ->
     sign = if number < 0 then "negative" else "positive"
@@ -81,7 +81,6 @@ class TwitterCldr.NumberDataReader
 
   number_system_for : (type) ->
     (@traverse(@base_path.concat(type)) || {})["number_system"] || @default_number_system
-    # TODO - Verify this `append`.
 
   is_abbreviated : (type) ->
     @abbreviated_types[type]?

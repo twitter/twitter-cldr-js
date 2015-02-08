@@ -80,7 +80,7 @@ class TwitterCldr.RBNFNormalRuleFormatter
     ""
 
   plural : (number, rule, token) ->
-    token.render(number/rule.divisor)
+    token.render(Math.floor(number / rule.divisor))
 
   throw_invalid_token_error : (token) ->
     throw "'" + token.value + "' not allowed in negative number rules."

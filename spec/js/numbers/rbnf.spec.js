@@ -8,9 +8,8 @@ var failures = {};
 describe("RBNF", function() {
   formatter.resource = TwitterCldr.RBNF.global_resource;
   for (locale in TwitterCldr.RBNF.test_resource) {
-    if (locale !== "en" && locale !== "pt" && locale !== "es")
+    if (["ar", "ja", "ko", "zh", "ja", "zh-Hant", "ja", "hi", "ta"].indexOf(locale) !== -1)
       continue;
-
     TwitterCldr.PluralRules.rules = TwitterCldr.PluralRules.global_rules[locale]
     TwitterCldr.PluralRules.names = TwitterCldr.PluralRules.global_names[locale]
     TwitterCldr.NumberFormatter.all_tokens = TwitterCldr.NumberFormatter.global_tokens[locale]

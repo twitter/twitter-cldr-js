@@ -37,7 +37,6 @@ for (locale in TwitterCldr.RBNF.test_resource) {
             }
             catch (error) {
               // Ignore `Not implemented` errors.
-              console.log(error)
             }
           });
         }

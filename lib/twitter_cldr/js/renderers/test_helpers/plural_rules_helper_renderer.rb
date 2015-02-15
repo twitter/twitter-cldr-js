@@ -14,7 +14,7 @@ module TwitterCldr
         class PluralRulesHelperRenderer < TwitterCldr::Js::Renderers::Base
           set_template "mustache/test_helpers/plural_rules_helper.coffee"
           def global_rules
-            all_plurals = [:en, :ar, :es, :ko, :ru, :pt].map do |locale|
+            all_plurals = TwitterCldr.supported_locales.map do |locale|
               plurals = resource(locale).map do |plural_type, plural_data|
 
                 rule_list = CldrPlurals::Compiler::RuleList.new(locale)
@@ -28,19 +28,19 @@ module TwitterCldr
                 "#{plural_type}: #{rule_list.to_code(:javascript)}"
               end
 
-              "#{locale}: {#{plurals.join(', ')}}"
+              "'#{locale}': {#{plurals.join(', ')}}"
             end
             "{#{all_plurals.join(', ')}}"
           end
 
           def global_names
-            all_names = [:en, :ar, :es, :ko, :ru, :pt].map do |locale|
+            all_names = TwitterCldr.supported_locales.map do |locale|
               names = resource(locale).map do |plural_type, plural_data|
                 sub_names = plural_data.keys.map(&:to_s).inspect
                 "#{plural_type}: #{sub_names}"
               end
 
-              "#{locale}: {#{names.join(', ')}}"
+              "'#{locale}': {#{names.join(', ')}}"
             end
             "{#{all_names.join(', ')}}"
           end

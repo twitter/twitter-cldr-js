@@ -25,11 +25,11 @@ class TwitterCldr.RBNFRule
     @tokenizer = new TwitterCldr.RBNFTokenizer
 
   get_substitution_count : ->
-    if @substitution_count? then @substitution_count
+    if @substitution_count? then return @substitution_count
 
     @substitution_count = 0
 
-    for token in @tokens
+    for token in @get_tokens()
       if token instanceof TwitterCldr.RBNFSubstitution
         @substitution_count += 1
 

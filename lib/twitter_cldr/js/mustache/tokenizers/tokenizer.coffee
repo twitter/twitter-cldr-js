@@ -57,7 +57,7 @@ class TwitterCldr.Tokenizer
     pieces = text.split(new RegExp(@get_splitter().source, "g"))
     result = []
     for piece in pieces
-      if piece.length is 0
+      if !piece? or piece.length is 0
         continue
       recognizer = null
       for r in @recognizers

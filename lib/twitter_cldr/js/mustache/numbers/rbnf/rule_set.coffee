@@ -10,7 +10,7 @@ class TwitterCldr.RBNFRuleSet
 
   previous_rule_for : (rule) ->
     if (index = @rule_index_for(rule.base_value))?
-      rules[index - 1] if index > 0
+      @rules[index - 1] if index > 0
 
   master_rule : ->
     @rule_for_value(TwitterCldr.RBNFRule.master)
@@ -145,7 +145,7 @@ class TwitterCldr.RBNFRuleSet
       rule
     else
       if (rule = @rule_for_value(Math.abs(number)))?
-        use_prev_rule = rule.substitution_count is 2 and
+        use_prev_rule = rule.get_substitution_count() is 2 and
             not rule.is_even_multiple_of(rule.base_value) and
             rule.is_even_multiple_of(number)
         if use_prev_rule

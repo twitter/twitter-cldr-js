@@ -17,13 +17,9 @@ class TwitterCldr.RBNF
   get_resource_for_locale : (locale = @locale)->
     @resource[locale]
 
-  format : (number, options = {}) ->
-    rule_group_name = null
-    rule_set_name = null
-    if !options['rule_group']? and !options['rule_set']?
+  format : (number, rule_group_name, rule_set_name) ->
+    if !rule_group_name? and !rule_set_name?
       [rule_group_name, rule_set_name] = [default_cardinal_options['rule_group'], default_cardinal_options['rule_set']]
-    else
-      [rule_group_name, rule_set_name] = [options['rule_group'], options['rule_set']]
 
     if (rule_group = @rule_group_by_name(rule_group_name))?
       if (rule_set = rule_group.rule_set_for(rule_set_name))?
@@ -36,9 +32,8 @@ class TwitterCldr.RBNF
     else
       throw "rule group - #{rule_group_name} - not implemented"
 
-
   group_names : ->
-    [group['type'] for group in @get_resource_for_locale()]
+    group['type'] for group in @get_resource_for_locale()
 
   rule_set_names_for_group : (group_name) ->
     cache_key = TwitterCldr.Utilities.compute_cache_key([@locale, group_name])

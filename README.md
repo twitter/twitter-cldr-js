@@ -11,6 +11,7 @@ Currently, twitter-cldr-js supports the following:
 4. Long/short decimals
 5. Plural rules
 6. Bidirectional reordering
+7. Text Segmentation
 
 ## Installation
 
@@ -207,6 +208,50 @@ Get all the rules for your language:
 
 ```javascript
 TwitterCldr.PluralRules.all();            // ["one", "few", "many", "other"]
+```
+
+### Rule Based Number Formatting
+
+The available rule-based number formats defined by the CLDR data set vary by language. Some languages support ordinal and cardinal numbers, occasionally with an additional masculine/feminine option, while others do not. You'll need to consult the list of available formats for your language.
+
+Rule-based number formats are categorized by groups, and within groups by rulesets. You'll need to specify both to make use of all the available formats for your language.
+
+To get a list of supported groups for the current locale, use the `group_names` method:
+
+```javascript
+// include twitter_cldr/en.js for the English RBNF Formatter
+var formatter = new TwitterCldr.RBNF()
+formatter.group_names()
+```
+
+To get a list of supported rulesets for a group name, use the `rule_set_names_for_group` method:
+
+```javascript
+formatter.rule_set_names_for_group('SpelloutRules')
+// [ '2d-year', 'spellout-numbering-year', 'spellout-numbering', ..., 'spellout-ordinal-verbose' ]
+
+formatter.rule_set_names_for_group('OrdinalRules')
+// [ 'digits-ordinal' ]
+```
+
+Once you've chosen a group and ruleset, you can pass them to the `format` method:
+```javascript
+formatter.format(123, 'OrdinalRules', 'digits-ordinal')
+// '123rd'
+```
+
+In comparision, here is what the Spanish formatting looks like
+```javascript
+// include twitter_cldr/es.js for the Spanish RBNF Formatter
+var formatter = new TwitterCldr.RBNF()
+format.format(123, 'OrdinalRules', 'digits-ordinal-masculine') // '123º'
+format.format(123, 'OrdinalRules', 'digits-ordinal-feminine')  // '123ª'
+```
+
+For languages that have support for SpelloutRules, like English (and other languages), you can also specify an ordinal spellout:
+```javascript
+formatter.format(1024, "SpelloutRules", "spellout-ordinal")
+// 'one thousand twenty-fourth'
 ```
 
 ### Handling Bidirectional Text

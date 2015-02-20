@@ -22,6 +22,14 @@ gem 'twitter_cldr_js', :require => 'twitter_cldr/js'
 
 If you're not using bundler, run `gem install twitter_cldr_js` and then require `twitter_cldr/js` somewhere in your project.  Note that twitter-cldr-js isn't really designed to run outside of Rails.  If you need the JavaScript functionality it provides but aren't using Rails, consider copying the compiled JavaScript files (lib/assets/javascripts/twitter_cldr/*.js) into your project by hand instead of using this gem directly.
 
+You can also get twitter-cldr-js in a form of an NPM package:
+
+```bash
+npm install twitter_cldr
+```
+
+Check out [twitter/twitter-cldr-npm](https://github.com/twitter/twitter-cldr-npm) repository for details.
+
 ## Usage with Rails
 
 twitter-cldr-js provides a single `.js` file per locale.  You can include a locale-specific version (eg. Spanish) in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:

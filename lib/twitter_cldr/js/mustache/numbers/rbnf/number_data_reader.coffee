@@ -105,7 +105,7 @@ class TwitterCldr.NumberDataReader
       positive = pattern.split(';')[0]
       negative = pattern.split(';')[1]
       if sign is "positive"
-        return "positive"
+        return positive
       else
         return negative
     else

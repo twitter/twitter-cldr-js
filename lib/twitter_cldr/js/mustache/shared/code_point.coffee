@@ -58,7 +58,7 @@ class TwitterCldr.CodePoint
     if property_data?
       property_data[value]
     else
-          throw "Couldn't find property " + property_name
+      throw "Couldn't find property " + property_name
 
   # Search for code points wherein at least one property value contains prop_value.
   # For example, if prop_value is set to "Zs", this method will return all code

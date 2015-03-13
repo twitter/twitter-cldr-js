@@ -36,7 +36,6 @@ describe("RBNF", function() {
                     var expected = TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set][test_case];
 
                     expect(got).toEqual(expected);
-
                   }
                   catch (error) {
                     // Ignore `Not implemented` errors.

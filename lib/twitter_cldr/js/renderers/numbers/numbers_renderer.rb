@@ -10,7 +10,7 @@ module TwitterCldr
         class NumbersRenderer < TwitterCldr::Js::Renderers::Base
           set_template "mustache/numbers/numbers.coffee"
 
-          def tokens
+          def tokens_for_locale(locale)
             DataReaders::NumberDataReader.types.inject({}) do |ret, type|
               ret[type] = {}
               [:positive, :negative].each do |sign|
@@ -18,7 +18,7 @@ module TwitterCldr
                   when :short_decimal, :long_decimal
                     (DataReaders::NumberDataReader::ABBREVIATED_MIN_POWER..DataReaders::NumberDataReader::ABBREVIATED_MAX_POWER).inject({}) do |formats, i|
                       exponent = 10 ** i
-                      data_reader = DataReaders::NumberDataReader.new(@locale, :type => type, :format => exponent)
+                      data_reader = DataReaders::NumberDataReader.new(locale, :type => type, :format => exponent)
 
                       patterns = data_reader.pattern(exponent).inject({}) do |memo, (plural, pattern)|
                         if pattern.is_a?(String)
@@ -39,14 +39,18 @@ module TwitterCldr
                       formats
                     end
                   else
-                    data_reader = DataReaders::NumberDataReader.new(@locale, :type => type)
+                    data_reader = DataReaders::NumberDataReader.new(locale, :type => type)
                     number = sign == :positive ? 1 : -1
                     pattern = data_reader.pattern(number)
                     data_reader.tokenizer.tokenize(pattern).map(&:value)
                 end
               end
               ret
-            end.to_json
+            end
+          end
+
+          def tokens
+            tokens_for_locale(@locale).to_json
           end
 
           def symbols

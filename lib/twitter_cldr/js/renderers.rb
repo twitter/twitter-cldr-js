@@ -8,7 +8,7 @@ module TwitterCldr
     module Renderers
       autoload :Base,                                   'twitter_cldr/js/renderers/base'
       autoload :Bundle,                                 'twitter_cldr/js/renderers/bundle'
-      autoload :DataBundle,                             'twitter_cldr/js/renderers/data_bundle'
+      autoload :TestBundle,                             'twitter_cldr/js/renderers/test_bundle'
 
       module Calendars
         autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/calendars/datetime_renderer'
@@ -18,6 +18,7 @@ module TwitterCldr
 
       module Numbers
         autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/numbers/numbers_renderer'
+        autoload :RBNF,                                 'twitter_cldr/js/renderers/numbers/rbnf'
       end
 
       module PluralRules
@@ -27,16 +28,17 @@ module TwitterCldr
 
       module Shared
         autoload :BidiRenderer,                         'twitter_cldr/js/renderers/shared/bidi_renderer'
+        autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/shared/break_iterator_renderer'
         autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/shared/code_point_renderer'
         autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/shared/calendar_renderer'
         autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/shared/currencies_renderer'
         autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
         autoload :ListRenderer,                         'twitter_cldr/js/renderers/shared/list_renderer'
+        autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/shared/numbering_systems_renderer'
         autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/shared/phone_codes_renderer'
         autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/shared/postal_codes_renderer'
         autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/shared/languages_renderer'
         autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/shared/unicode_regex_renderer'
-        autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/shared/break_iterator_renderer'
         autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/shared/territories_containment_renderer'
       end
 
@@ -59,13 +61,22 @@ module TwitterCldr
         autoload :CompositeTokenRenderer,               'twitter_cldr/js/renderers/tokenizers/composite_token'
         autoload :TokenizerRenderer,                    'twitter_cldr/js/renderers/tokenizers/tokenizer'
         autoload :SegmentationTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/segmentation_tokenizer'
+        autoload :PatternTokenizerRenderer,             'twitter_cldr/js/renderers/tokenizers/pattern_tokenizer_renderer'
         autoload :UnicodeRegexTokenizerRenderer,        'twitter_cldr/js/renderers/tokenizers/unicode_regex/unicode_regex_tokenizer'
+        autoload :RBNFTokenizerRenderer,                'twitter_cldr/js/renderers/tokenizers/numbers/rbnf_renderer'
+        autoload :NumberTokenizerRenderer,              'twitter_cldr/js/renderers/tokenizers/numbers/number_tokenizer_renderer'
       end
 
       module Utils
         autoload :RangeRenderer,                        'twitter_cldr/js/renderers/utils/range'
         autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/utils/range_set'
         autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/utils/code_points'
+      end
+
+      module TestHelpers
+        autoload :RBNFHelperRenderer,                   'twitter_cldr/js/renderers/test_helpers/rbnf_helper_renderer'
+        autoload :PluralRulesHelperRenderer,            'twitter_cldr/js/renderers/test_helpers/plural_rules_helper_renderer'
+        autoload :NumbersHelperRenderer,                'twitter_cldr/js/renderers/test_helpers/numbers_helper_renderer'
       end
     end
   end

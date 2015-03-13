@@ -109,7 +109,7 @@ class TwitterCldr.Utilities
       return obj
 
     if obj instanceof Date
-      return new Date(obj.getTime()) 
+      return new Date(obj.getTime())
 
     if obj instanceof RegExp
       flags = ''
@@ -117,7 +117,7 @@ class TwitterCldr.Utilities
       flags += 'i' if obj.ignoreCase?
       flags += 'm' if obj.multiline?
       flags += 'y' if obj.sticky?
-      return new RegExp(obj.source, flags) 
+      return new RegExp(obj.source, flags)
 
     newInstance = new obj.constructor()
 
@@ -130,3 +130,15 @@ class TwitterCldr.Utilities
     if pieces? and pieces.length > 0
       return pieces.join("|")
     return null
+
+  @traverse_object : (obj, path) ->
+    value = obj
+    if path.length is 0
+      return null
+
+    for key in path
+      if value? and value.hasOwnProperty(key)
+        value = value[key]
+      else
+        return null
+    value

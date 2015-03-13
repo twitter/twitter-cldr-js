@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.Languages
-  
+
   @all = `{{{language_data}}}`
 
   rtl_data = `{{{rtl_data}}}`

@@ -26,7 +26,10 @@ class TwitterCldr.Component
     if range.first instanceof Array
       @array_to_regex(range)
     else
-      "[" + @to_utf8(range.first) + "-" + @to_utf8(range.last) + "]"
+      if range.size is 1
+        "[" + @to_utf8(range.first) + "]"
+      else
+        "[" + @to_utf8(range.first) + "-" + @to_utf8(range.last) + "]"
 
   array_to_regex : (arr) ->
     ("(?:" + @to_utf8(c) + ")" for c in arr).join("")

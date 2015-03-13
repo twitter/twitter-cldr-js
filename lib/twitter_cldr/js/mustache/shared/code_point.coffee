@@ -31,7 +31,6 @@ class TwitterCldr.CodePoint
       unless field is "decomposition"
         @[field] = @fields[i]
 
-
   decomposition : ->
     decomp = @fields[decomposition_data_index]
     match = decomp.match(decomposition_regex)
@@ -58,7 +57,7 @@ class TwitterCldr.CodePoint
     if property_data?
       property_data[value]
     else
-          throw "Couldn't find property " + property_name
+      throw "Couldn't find property " + property_name
 
   # Search for code points wherein at least one property value contains prop_value.
   # For example, if prop_value is set to "Zs", this method will return all code
@@ -94,6 +93,15 @@ class TwitterCldr.CodePoint
 
     @index_cache[index_name] = index_data_formatted
 
+  @get_regex_for_index_group : (index_name, group_name) ->
+    group_data = @get_index(index_name)[group_name]
+    regex = ""
+    component = new TwitterCldr.Component()
+    for group in group_data
+      regex = regex + "|" + component.range_to_regex(group)
+
+    regex.slice(1) # get rid of the initial '|'
+
   @property_data = `{{{property_data}}}`
 
   @get_property_data : (property_name) ->
@@ -106,6 +114,7 @@ class TwitterCldr.CodePoint
         property_data_formatted[k].push(new TwitterCldr.Range(range[0], range[1]))
 
     @property_data_cache[property_name] = property_data_formatted
+
 
   @index_cache = {}
 

@@ -52,7 +52,7 @@ module TwitterCldr
             options[:files].each_pair do |file_pattern, minify|
               compiler.compile_each(:minify => minify) do |bundle, locale|
                 out_file_path = [output_dir, file_pattern % locale]
-                write_bundle(out_file_path, bundle.source)
+                write_file(out_file_path, bundle.source)
 
                 if bundle.source_map
                   ext = File.extname(out_file)
@@ -63,7 +63,7 @@ module TwitterCldr
 
             if options[:render_test_files]
               file_contents = compiler.compile_test()
-              write_bundle([output_dir, 'test_resources.js'], file_contents)
+              write_file([output_dir, 'test_resources.js'], file_contents)
             end
 
           end
@@ -75,20 +75,8 @@ module TwitterCldr
           )
         end
 
-        def write_bundle(file_path, file_contents)
-          out_file = file_path
-
-          if file_path.is_a?(Array)
-            out_file = File.join(file_path)
-          end
-
-          write_file(out_file, file_contents)
-        end
-
-        def write_file(file_name, file_contents)
-          File.open(file_name, "w+") do |f|
-            f.write(file_contents)
-          end
+        def write_file(file_path, file_contents)
+          File.write(File.join(file_path), file_contents)
         end
 
         def build_summary(options = {})

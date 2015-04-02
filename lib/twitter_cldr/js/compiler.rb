@@ -27,8 +27,7 @@ module TwitterCldr
 
         contents = ""
         bundle_elements.each do |bundle_element|
-          renderer_const = bundle_hash[bundle_element]
-          if renderer_const
+          if renderer_const = bundle_hash[bundle_element]
             if bundle[:locale]
               contents << renderer_const.new(:locale => bundle[:locale], :prerender => @prerender).render
             else
@@ -60,7 +59,6 @@ module TwitterCldr
 
       def compile_each(options = {})
         @locales.each do |locale|
-          contents = ""
           bundle = TwitterCldr::Js::Renderers::Bundle.new
           bundle[:locale] = locale
           file = compile_bundle(bundle, @features, implementation_renderers, options)

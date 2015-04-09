@@ -448,6 +448,6 @@ twitter-cldr-js requires Rails 3.1 or later.  To run the JavaScript test suite, 
 
 ## License
 
-Copyright 2012 Twitter, Inc.
+Copyright 2015 Twitter, Inc.
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0

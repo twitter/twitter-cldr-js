@@ -22,50 +22,20 @@ module TwitterCldr
         @source_map = options[:source_map]
       end
 
-      def compile_each(options = {})
-        options[:minify] = true unless options.include?(:minify)
-
-        @locales.each do |locale|
-          contents = ""
-
-          @features.each do |feature|
-            renderer_const = implementation_renderers[feature]
-            contents << renderer_const.new(:locale => locale, :prerender => @prerender).render if renderer_const
-          end
-
-          bundle = TwitterCldr::Js::Renderers::Bundle.new
-          bundle[:locale] = locale
-          bundle[:contents] = contents
-          bundle[:source_map] = @source_map
-
-          result = CoffeeScript.compile(bundle.render, {
-            :bare => false,
-            :sourceMap => @source_map
-          })
-
-          file = if @source_map
-            CompiledFile.new(result["js"], result["sourceMap"])
-          else
-            CompiledFile.new(result)
-          end
-
-          # required alias definition that adds twitter_cldr to Twitter's static build process
-          file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
-          file.source = Uglifier.compile(file.source) if options[:minify]
-
-          yield file, TwitterCldr.twitter_locale(locale)
-        end
-      end
-
-      def compile_test(options = {})
+      def compile_bundle(bundle, bundle_elements, bundle_hash, options = {})
         options[:minify] = true unless options.include?(:minify)
 
         contents = ""
-        @test_helpers.each do |test_helper|
-          renderer_const = test_helper_renderers[test_helper]
-          contents << renderer_const.new(:prerender => @prerender).render if renderer_const
+        bundle_elements.each do |bundle_element|
+          if renderer_const = bundle_hash[bundle_element]
+            if bundle[:locale]
+              contents << renderer_const.new(:locale => bundle[:locale], :prerender => @prerender).render
+            else
+              contents << renderer_const.new(:prerender => @prerender).render
+            end
+          end
         end
-        bundle = TwitterCldr::Js::Renderers::TestBundle.new
+
         bundle[:contents] = contents
         bundle[:source_map] = @source_map
 
@@ -84,6 +54,22 @@ module TwitterCldr
         file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
         file.source = Uglifier.compile(file.source) if options[:minify]
 
+        file
+      end
+
+      def compile_each(options = {})
+        @locales.each do |locale|
+          bundle = TwitterCldr::Js::Renderers::Bundle.new
+          bundle[:locale] = locale
+          file = compile_bundle(bundle, @features, implementation_renderers, options)
+
+          yield file, TwitterCldr.twitter_locale(locale)
+        end
+      end
+
+      def compile_test(options = {})
+        bundle = TwitterCldr::Js::Renderers::TestBundle.new
+        file = compile_bundle(bundle, @test_helpers, test_helper_renderers, options)
         file.source
       end
 

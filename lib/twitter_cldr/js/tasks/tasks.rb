@@ -51,28 +51,19 @@ module TwitterCldr
           build_duration = time_operation do
             options[:files].each_pair do |file_pattern, minify|
               compiler.compile_each(:minify => minify) do |bundle, locale|
-                out_file = File.join(output_dir, file_pattern % locale)
-                FileUtils.mkdir_p(File.dirname(out_file))
-                File.open(out_file, "w+") do |f|
-                  f.write(bundle.source)
-                end
+                out_file_path = [output_dir, file_pattern % locale]
+                write_file(out_file_path, bundle.source)
 
                 if bundle.source_map
                   ext = File.extname(out_file)
-                  File.open("#{out_file.chomp(ext)}.map", "w+") do |f|
-                    f.write(bundle.source_map)
-                  end
+                  write_file("#{out_file.chomp(ext)}.map", bundle.source_map)
                 end
               end
             end
 
             if options[:render_test_files]
               file_contents = compiler.compile_test()
-              out_file = File.join(output_dir, 'test_resources.js')
-              FileUtils.mkdir_p(File.dirname(out_file))
-              File.open(out_file, "w+") do |f|
-                f.write(file_contents)
-              end
+              write_file([output_dir, 'test_resources.js'], file_contents)
             end
 
           end
@@ -82,6 +73,10 @@ module TwitterCldr
             :build_duration => build_duration,
             :dir => output_dir
           )
+        end
+
+        def write_file(file_path, file_contents)
+          File.write(File.join(file_path), file_contents)
         end
 
         def build_summary(options = {})

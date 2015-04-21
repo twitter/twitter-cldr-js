@@ -6,12 +6,14 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Shared
-        class TerritoriesContainmentRenderer < TwitterCldr::Js::Renderers::Base
-          set_template 'mustache/shared/territories_containment.coffee'
+      module DataRenderers
+        module Shared
+          class TerritoriesContainmentRenderer < TwitterCldr::Js::Renderers::Base
+            set_template 'mustache/shared/territories_containment.coffee'
 
-          def territories_data
-            TwitterCldr::Shared::TerritoriesContainment.containment_map.to_json
+            def territories_data
+              TwitterCldr::Shared::TerritoriesContainment.containment_map.to_json
+            end
           end
         end
       end

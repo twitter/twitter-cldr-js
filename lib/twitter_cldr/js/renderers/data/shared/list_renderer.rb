@@ -6,16 +6,18 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Shared
+      module DataRenderers
+        module Shared
 
-        class ListRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/shared/lists.coffee"
+          class ListRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/shared/lists.coffee"
 
-          def formats
-            TwitterCldr.get_locale_resource(@locale, :lists)[@locale][:lists][:default].to_json
+            def formats
+              TwitterCldr.get_locale_resource(@locale, :lists)[@locale][:lists][:default].to_json
+            end
           end
-        end
 
+        end
       end
     end
   end

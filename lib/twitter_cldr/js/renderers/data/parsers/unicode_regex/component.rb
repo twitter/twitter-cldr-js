@@ -6,12 +6,14 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Parsers
+      module DataRenderers
+        module Parsers
 
-        class ComponentRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/parsers/unicode_regex/component.coffee"
+          class ComponentRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/parsers/unicode_regex/component.coffee"
+          end
+
         end
-
       end
     end
   end

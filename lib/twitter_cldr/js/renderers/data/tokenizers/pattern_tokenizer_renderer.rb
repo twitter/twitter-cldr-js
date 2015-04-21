@@ -6,13 +6,15 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Tokenizers
+    	module DataRenderers
+	      module Tokenizers
 
-        class PatternTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/tokenizers/pattern_tokenizer.coffee"
-        end
+	        class PatternTokenizerRenderer < TwitterCldr::Js::Renderers::Base
+	          set_template "mustache/tokenizers/pattern_tokenizer.coffee"
+	        end
 
-      end
-    end
-  end
+	      end
+	    end
+	  end
+	end
 end

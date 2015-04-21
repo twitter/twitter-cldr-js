@@ -6,13 +6,15 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Tokenizers
+    	module DataRenderers
+	      module Tokenizers
 
-        class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/tokenizers/numbers/number_tokenizer.coffee"
-        end
+	        class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base
+	          set_template "mustache/tokenizers/numbers/number_tokenizer.coffee"
+	        end
 
-      end
-    end
-  end
+	      end
+	    end
+	  end
+	end
 end

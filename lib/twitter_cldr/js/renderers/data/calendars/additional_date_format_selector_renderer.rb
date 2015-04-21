@@ -6,12 +6,14 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Calendars
+      module DataRenderers
+        module Calendars
 
-        class AdditionalDateFormatSelectorRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/calendars/additional_date_format_selector.coffee"
+          class AdditionalDateFormatSelectorRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/calendars/additional_date_format_selector.coffee"
+          end
+
         end
-
       end
     end
   end

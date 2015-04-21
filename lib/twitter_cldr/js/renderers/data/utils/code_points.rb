@@ -6,13 +6,15 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Utils
+    	module DataRenderers
+	      module Utils
 
-        class CodePointsRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/utils/code_points.coffee"
-        end
+	        class CodePointsRenderer < TwitterCldr::Js::Renderers::Base
+	          set_template "mustache/utils/code_points.coffee"
+	        end
 
-      end
-    end
-  end
+	      end
+	    end
+	  end
+	end
 end

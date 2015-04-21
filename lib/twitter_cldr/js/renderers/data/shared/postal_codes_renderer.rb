@@ -6,15 +6,17 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Shared
-        class PostalCodesRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/shared/postal_codes.coffee"
+      module DataRenderers
+        module Shared
+          class PostalCodesRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/shared/postal_codes.coffee"
 
-          def postal_codes
-            TwitterCldr::Shared::PostalCodes.territories.inject({}) do |ret, country_code|
-              ret[country_code] = TwitterCldr::Shared::PostalCodes.for_territory(country_code).regexp.source
-              ret
-            end.to_json
+            def postal_codes
+              TwitterCldr::Shared::PostalCodes.territories.inject({}) do |ret, country_code|
+                ret[country_code] = TwitterCldr::Shared::PostalCodes.for_territory(country_code).regexp.source
+                ret
+              end.to_json
+            end
           end
         end
       end

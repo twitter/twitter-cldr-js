@@ -49,6 +49,9 @@ module TwitterCldr
           output_dir = File.expand_path(options[:output_dir] || get_output_dir)
 
           build_duration = time_operation do
+            implementation_file_contents = compiler.compile_implementation(:minify => false) # TODO - figure out the minification logic
+            write_file([output_dir, 'twitter_cldr.js'], implementation_file_contents)
+
             options[:files].each_pair do |file_pattern, minify|
               compiler.compile_each(:minify => minify) do |bundle, locale|
                 out_file_path = [output_dir, file_pattern % locale]

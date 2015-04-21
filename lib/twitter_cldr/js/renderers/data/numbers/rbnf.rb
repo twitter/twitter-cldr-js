@@ -6,48 +6,50 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Numbers
-        module RBNF
+      module DataRenderers
+        module Numbers
+          module RBNF
 
-          class RBNFRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/rbnf.coffee"
+            class RBNFRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/rbnf.coffee"
 
-            def resource
-              {
-                locale.to_sym => TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
-              }.to_json
+              def resource
+                {
+                  locale.to_sym => TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
+                }.to_json
+              end
             end
-          end
 
-          class FormattersRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/formatters.coffee"
-          end
+            class FormattersRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/formatters.coffee"
+            end
 
-          class RuleRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/rule.coffee"
-          end
+            class RuleRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/rule.coffee"
+            end
 
-          class RuleSetRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/rule_set.coffee"
-          end
+            class RuleSetRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/rule_set.coffee"
+            end
 
-          class RuleGroupRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/rule_group.coffee"
-          end
+            class RuleGroupRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/rule_group.coffee"
+            end
 
-          class RuleParserRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/rule_parser.coffee"
-          end
+            class RuleParserRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/rule_parser.coffee"
+            end
 
-          class SubstitutionRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/substitution.coffee"
-          end
+            class SubstitutionRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/substitution.coffee"
+            end
 
-          class PluralRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/rbnf/plural.coffee"
-          end
+            class PluralRenderer < TwitterCldr::Js::Renderers::Base
+              set_template "mustache/numbers/rbnf/plural.coffee"
+            end
 
-          autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/data/numbers/rbnf/number_data_reader_renderer'
+            autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/data/numbers/rbnf/number_data_reader_renderer'
+          end
         end
       end
     end

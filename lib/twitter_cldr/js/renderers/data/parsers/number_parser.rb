@@ -6,26 +6,28 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Parsers
+      module DataRenderers
+        module Parsers
 
-        class NumberParser < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/parsers/number_parser.coffee"
+          class NumberParser < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/parsers/number_parser.coffee"
 
-          def group_separator
-            Regexp.escape(parser.send(:group_separator))
+            def group_separator
+              Regexp.escape(parser.send(:group_separator))
+            end
+
+            def decimal_separator
+              Regexp.escape(parser.send(:decimal_separator))
+            end
+
+            private
+
+            def parser
+              @parser = TwitterCldr::Parsers::NumberParser.new(locale)
+            end
           end
 
-          def decimal_separator
-            Regexp.escape(parser.send(:decimal_separator))
-          end
-
-          private
-
-          def parser
-            @parser = TwitterCldr::Parsers::NumberParser.new(locale)
-          end
         end
-
       end
     end
   end

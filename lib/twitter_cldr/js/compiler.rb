@@ -67,6 +67,14 @@ module TwitterCldr
         end
       end
 
+      def compile_implementation(options = {})
+        bundle = TwitterCldr::Js::Renderers::Bundle.new
+        bundle[:locale] = :en # setting a default locale.
+        file = compile_bundle(bundle, @features, implementation_renderers, options)
+
+        file.source
+      end
+
       def compile_test(options = {})
         bundle = TwitterCldr::Js::Renderers::TestBundle.new
         file = compile_bundle(bundle, @test_helpers, test_helper_renderers, options)
@@ -77,62 +85,115 @@ module TwitterCldr
 
       def implementation_renderers
         @implementation_renderers ||= {
-          :plural_rules                    => TwitterCldr::Js::Renderers::PluralRules::PluralRulesRenderer,
-          :timespan                        => TwitterCldr::Js::Renderers::Calendars::TimespanRenderer,
-          :datetime                        => TwitterCldr::Js::Renderers::Calendars::DateTimeRenderer,
-          :additional_date_format_selector => TwitterCldr::Js::Renderers::Calendars::AdditionalDateFormatSelectorRenderer,
-          :currencies                      => TwitterCldr::Js::Renderers::Shared::CurrenciesRenderer,
-          :lists                           => TwitterCldr::Js::Renderers::Shared::ListRenderer,
-          :bidi                            => TwitterCldr::Js::Renderers::Shared::BidiRenderer,
-          :break_iterator                  => TwitterCldr::Js::Renderers::Shared::BreakIteratorRenderer,
-          :calendar                        => TwitterCldr::Js::Renderers::Shared::CalendarRenderer,
-          :code_point                      => TwitterCldr::Js::Renderers::Shared::CodePointRenderer,
-          :numbering_systems               => TwitterCldr::Js::Renderers::Shared::NumberingSystemsRenderer,
-          :phone_codes                     => TwitterCldr::Js::Renderers::Shared::PhoneCodesRenderer,
-          :postal_codes                    => TwitterCldr::Js::Renderers::Shared::PostalCodesRenderer,
-          :languages                       => TwitterCldr::Js::Renderers::Shared::LanguagesRenderer,
-          :unicode_regex                   => TwitterCldr::Js::Renderers::Shared::UnicodeRegexRenderer,
-          :territories_containment         => TwitterCldr::Js::Renderers::Shared::TerritoriesContainmentRenderer,
-          :number_parser                   => TwitterCldr::Js::Renderers::Parsers::NumberParser,
-          :component                       => TwitterCldr::Js::Renderers::Parsers::ComponentRenderer,
-          :literal                         => TwitterCldr::Js::Renderers::Parsers::LiteralRenderer,
-          :unicode_string                  => TwitterCldr::Js::Renderers::Parsers::UnicodeStringRenderer,
-          :character_class                 => TwitterCldr::Js::Renderers::Parsers::CharacterClassRenderer,
-          :character_range                 => TwitterCldr::Js::Renderers::Parsers::CharacterRangeRenderer,
-          :character_set                   => TwitterCldr::Js::Renderers::Parsers::CharacterSetRenderer,
-          :symbol_table                    => TwitterCldr::Js::Renderers::Parsers::SymbolTableRenderer,
-          :parser                          => TwitterCldr::Js::Renderers::Parsers::ParserRenderer,
-          :segmentation_parser             => TwitterCldr::Js::Renderers::Parsers::SegmentationParserRenderer,
-          :unicode_regex_parser            => TwitterCldr::Js::Renderers::Parsers::UnicodeRegexParserRenderer,
-          :token                           => TwitterCldr::Js::Renderers::Tokenizers::TokenRenderer,
-          :composite_token                 => TwitterCldr::Js::Renderers::Tokenizers::CompositeTokenRenderer,
-          :tokenizer                       => TwitterCldr::Js::Renderers::Tokenizers::TokenizerRenderer,
-          :segmentation_tokenizer          => TwitterCldr::Js::Renderers::Tokenizers::SegmentationTokenizerRenderer,
-          :unicode_regex_tokenizer         => TwitterCldr::Js::Renderers::Tokenizers::UnicodeRegexTokenizerRenderer,
-          :rbnf_tokenizer                  => TwitterCldr::Js::Renderers::Tokenizers::RBNFTokenizerRenderer,
-          :number_tokenizer                => TwitterCldr::Js::Renderers::Tokenizers::NumberTokenizerRenderer,
-          :pattern_tokenizer               => TwitterCldr::Js::Renderers::Tokenizers::PatternTokenizerRenderer,
-          :numbers                         => TwitterCldr::Js::Renderers::Numbers::NumbersRenderer,
-          :rbnf                            => TwitterCldr::Js::Renderers::Numbers::RBNF::RBNFRenderer,
-          :number_data_reader              => TwitterCldr::Js::Renderers::Numbers::RBNF::NumberDataReaderRenderer,
-          :rbnf_formatters                 => TwitterCldr::Js::Renderers::Numbers::RBNF::FormattersRenderer,
-          :rbnf_rule                       => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleRenderer,
-          :rbnf_rule_group                 => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleGroupRenderer,
-          :rbnf_rule_set                   => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleSetRenderer,
-          :rbnf_substitution               => TwitterCldr::Js::Renderers::Numbers::RBNF::SubstitutionRenderer,
-          :rbnf_rule_parser                => TwitterCldr::Js::Renderers::Numbers::RBNF::RuleParserRenderer,
-          :plural                          => TwitterCldr::Js::Renderers::Numbers::RBNF::PluralRenderer,
-          :range                           => TwitterCldr::Js::Renderers::Utils::RangeRenderer,
-          :range_set                       => TwitterCldr::Js::Renderers::Utils::RangeSetRenderer,
-          :code_points                     => TwitterCldr::Js::Renderers::Utils::CodePointsRenderer
+          :plural_rules                    => TwitterCldr::Js::Renderers::DataRenderers::PluralRules::PluralRulesRenderer,
+          :timespan                        => TwitterCldr::Js::Renderers::DataRenderers::Calendars::TimespanRenderer,
+          :datetime                        => TwitterCldr::Js::Renderers::DataRenderers::Calendars::DateTimeRenderer,
+          :additional_date_format_selector => TwitterCldr::Js::Renderers::DataRenderers::Calendars::AdditionalDateFormatSelectorRenderer,
+          :currencies                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CurrenciesRenderer,
+          :lists                           => TwitterCldr::Js::Renderers::DataRenderers::Shared::ListRenderer,
+          :bidi                            => TwitterCldr::Js::Renderers::DataRenderers::Shared::BidiRenderer,
+          :break_iterator                  => TwitterCldr::Js::Renderers::DataRenderers::Shared::BreakIteratorRenderer,
+          :calendar                        => TwitterCldr::Js::Renderers::DataRenderers::Shared::CalendarRenderer,
+          :code_point                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CodePointRenderer,
+          :numbering_systems               => TwitterCldr::Js::Renderers::DataRenderers::Shared::NumberingSystemsRenderer,
+          :phone_codes                     => TwitterCldr::Js::Renderers::DataRenderers::Shared::PhoneCodesRenderer,
+          :postal_codes                    => TwitterCldr::Js::Renderers::DataRenderers::Shared::PostalCodesRenderer,
+          :languages                       => TwitterCldr::Js::Renderers::DataRenderers::Shared::LanguagesRenderer,
+          :unicode_regex                   => TwitterCldr::Js::Renderers::DataRenderers::Shared::UnicodeRegexRenderer,
+          :territories_containment         => TwitterCldr::Js::Renderers::DataRenderers::Shared::TerritoriesContainmentRenderer,
+          :number_parser                   => TwitterCldr::Js::Renderers::DataRenderers::Parsers::NumberParser,
+          :component                       => TwitterCldr::Js::Renderers::DataRenderers::Parsers::ComponentRenderer,
+          :literal                         => TwitterCldr::Js::Renderers::DataRenderers::Parsers::LiteralRenderer,
+          :unicode_string                  => TwitterCldr::Js::Renderers::DataRenderers::Parsers::UnicodeStringRenderer,
+          :character_class                 => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterClassRenderer,
+          :character_range                 => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterRangeRenderer,
+          :character_set                   => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterSetRenderer,
+          :symbol_table                    => TwitterCldr::Js::Renderers::DataRenderers::Parsers::SymbolTableRenderer,
+          :parser                          => TwitterCldr::Js::Renderers::DataRenderers::Parsers::ParserRenderer,
+          :segmentation_parser             => TwitterCldr::Js::Renderers::DataRenderers::Parsers::SegmentationParserRenderer,
+          :unicode_regex_parser            => TwitterCldr::Js::Renderers::DataRenderers::Parsers::UnicodeRegexParserRenderer,
+          :token                           => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::TokenRenderer,
+          :composite_token                 => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::CompositeTokenRenderer,
+          :tokenizer                       => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::TokenizerRenderer,
+          :segmentation_tokenizer          => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::SegmentationTokenizerRenderer,
+          :unicode_regex_tokenizer         => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::UnicodeRegexTokenizerRenderer,
+          :rbnf_tokenizer                  => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::RBNFTokenizerRenderer,
+          :number_tokenizer                => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::NumberTokenizerRenderer,
+          :pattern_tokenizer               => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::PatternTokenizerRenderer,
+          :numbers                         => TwitterCldr::Js::Renderers::DataRenderers::Numbers::NumbersRenderer,
+          :rbnf                            => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RBNFRenderer,
+          :number_data_reader              => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::NumberDataReaderRenderer,
+          :rbnf_formatters                 => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::FormattersRenderer,
+          :rbnf_rule                       => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleRenderer,
+          :rbnf_rule_group                 => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleGroupRenderer,
+          :rbnf_rule_set                   => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleSetRenderer,
+          :rbnf_substitution               => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::SubstitutionRenderer,
+          :rbnf_rule_parser                => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleParserRenderer,
+          :plural                          => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::PluralRenderer,
+          :range                           => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeRenderer,
+          :range_set                       => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeSetRenderer,
+          :code_points                     => TwitterCldr::Js::Renderers::DataRenderers::Utils::CodePointsRenderer
+        }
+      end
+
+      def data_renderers
+        @data_renderers ||= {
+          :plural_rules                    => TwitterCldr::Js::Renderers::DataRenderers::PluralRules::PluralRulesRenderer,
+          :timespan                        => TwitterCldr::Js::Renderers::DataRenderers::Calendars::TimespanRenderer,
+          :datetime                        => TwitterCldr::Js::Renderers::DataRenderers::Calendars::DateTimeRenderer,
+          :additional_date_format_selector => TwitterCldr::Js::Renderers::DataRenderers::Calendars::AdditionalDateFormatSelectorRenderer,
+          :currencies                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CurrenciesRenderer,
+          :lists                           => TwitterCldr::Js::Renderers::DataRenderers::Shared::ListRenderer,
+          :bidi                            => TwitterCldr::Js::Renderers::DataRenderers::Shared::BidiRenderer,
+          :break_iterator                  => TwitterCldr::Js::Renderers::DataRenderers::Shared::BreakIteratorRenderer,
+          :calendar                        => TwitterCldr::Js::Renderers::DataRenderers::Shared::CalendarRenderer,
+          :code_point                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CodePointRenderer,
+          :numbering_systems               => TwitterCldr::Js::Renderers::DataRenderers::Shared::NumberingSystemsRenderer,
+          :phone_codes                     => TwitterCldr::Js::Renderers::DataRenderers::Shared::PhoneCodesRenderer,
+          :postal_codes                    => TwitterCldr::Js::Renderers::DataRenderers::Shared::PostalCodesRenderer,
+          :languages                       => TwitterCldr::Js::Renderers::DataRenderers::Shared::LanguagesRenderer,
+          :unicode_regex                   => TwitterCldr::Js::Renderers::DataRenderers::Shared::UnicodeRegexRenderer,
+          :territories_containment         => TwitterCldr::Js::Renderers::DataRenderers::Shared::TerritoriesContainmentRenderer,
+          :number_parser                   => TwitterCldr::Js::Renderers::DataRenderers::Parsers::NumberParser,
+          :component                       => TwitterCldr::Js::Renderers::DataRenderers::Parsers::ComponentRenderer,
+          :literal                         => TwitterCldr::Js::Renderers::DataRenderers::Parsers::LiteralRenderer,
+          :unicode_string                  => TwitterCldr::Js::Renderers::DataRenderers::Parsers::UnicodeStringRenderer,
+          :character_class                 => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterClassRenderer,
+          :character_range                 => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterRangeRenderer,
+          :character_set                   => TwitterCldr::Js::Renderers::DataRenderers::Parsers::CharacterSetRenderer,
+          :symbol_table                    => TwitterCldr::Js::Renderers::DataRenderers::Parsers::SymbolTableRenderer,
+          :parser                          => TwitterCldr::Js::Renderers::DataRenderers::Parsers::ParserRenderer,
+          :segmentation_parser             => TwitterCldr::Js::Renderers::DataRenderers::Parsers::SegmentationParserRenderer,
+          :unicode_regex_parser            => TwitterCldr::Js::Renderers::DataRenderers::Parsers::UnicodeRegexParserRenderer,
+          :token                           => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::TokenRenderer,
+          :composite_token                 => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::CompositeTokenRenderer,
+          :tokenizer                       => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::TokenizerRenderer,
+          :segmentation_tokenizer          => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::SegmentationTokenizerRenderer,
+          :unicode_regex_tokenizer         => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::UnicodeRegexTokenizerRenderer,
+          :rbnf_tokenizer                  => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::RBNFTokenizerRenderer,
+          :number_tokenizer                => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::NumberTokenizerRenderer,
+          :pattern_tokenizer               => TwitterCldr::Js::Renderers::DataRenderers::Tokenizers::PatternTokenizerRenderer,
+          :numbers                         => TwitterCldr::Js::Renderers::DataRenderers::Numbers::NumbersRenderer,
+          :rbnf                            => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RBNFRenderer,
+          :number_data_reader              => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::NumberDataReaderRenderer,
+          :rbnf_formatters                 => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::FormattersRenderer,
+          :rbnf_rule                       => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleRenderer,
+          :rbnf_rule_group                 => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleGroupRenderer,
+          :rbnf_rule_set                   => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleSetRenderer,
+          :rbnf_substitution               => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::SubstitutionRenderer,
+          :rbnf_rule_parser                => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleParserRenderer,
+          :plural                          => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::PluralRenderer,
+          :range                           => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeRenderer,
+          :range_set                       => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeSetRenderer,
+          :code_points                     => TwitterCldr::Js::Renderers::DataRenderers::Utils::CodePointsRenderer
         }
       end
 
       def test_helper_renderers
         @test_helper_renderers ||= {
-          :rbnf                            => TwitterCldr::Js::Renderers::TestHelpers::RBNFHelperRenderer,
-          :plural_rules                    => TwitterCldr::Js::Renderers::TestHelpers::PluralRulesHelperRenderer,
-          :numbers                         => TwitterCldr::Js::Renderers::TestHelpers::NumbersHelperRenderer
+          :rbnf                            => TwitterCldr::Js::Renderers::TestRenderers::TestHelpers::RBNFHelperRenderer,
+          :plural_rules                    => TwitterCldr::Js::Renderers::TestRenderers::TestHelpers::PluralRulesHelperRenderer,
+          :numbers                         => TwitterCldr::Js::Renderers::TestRenderers::TestHelpers::NumbersHelperRenderer
         }
       end
 

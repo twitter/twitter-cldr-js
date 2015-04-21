@@ -6,19 +6,21 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Shared
-        class LanguagesRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/shared/languages.coffee"
+      module DataRenderers
+        module Shared
+          class LanguagesRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/shared/languages.coffee"
 
-          def language_data
-            TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages].to_json
-          end
+            def language_data
+              TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages].to_json
+            end
 
-          def rtl_data
-            TwitterCldr.supported_locales.inject({}) do |ret, locale|
-              ret[locale] = TwitterCldr.get_locale_resource(locale, :layout)[locale][:layout][:orientation][:character_order] == "right-to-left"
-              ret
-            end.to_json
+            def rtl_data
+              TwitterCldr.supported_locales.inject({}) do |ret, locale|
+                ret[locale] = TwitterCldr.get_locale_resource(locale, :layout)[locale][:layout][:orientation][:character_order] == "right-to-left"
+                ret
+              end.to_json
+            end
           end
         end
       end

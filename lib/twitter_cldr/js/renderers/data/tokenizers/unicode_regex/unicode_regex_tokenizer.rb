@@ -6,13 +6,15 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Tokenizers
+    	module DataRenderers
+	      module Tokenizers
 
-        class UnicodeRegexTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
-        end
+	        class UnicodeRegexTokenizerRenderer < TwitterCldr::Js::Renderers::Base
+	          set_template "mustache/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
+	        end
 
-      end
-    end
-  end
+	      end
+	    end
+	  end
+	end
 end

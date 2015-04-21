@@ -6,13 +6,15 @@
 module TwitterCldr
   module Js
     module Renderers
-      module Tokenizers
+    	module DataRenderers
+	      module Tokenizers
 
-        class CompositeTokenRenderer < TwitterCldr::Js::Renderers::Base
-          set_template "mustache/tokenizers/composite_token.coffee"
-        end
+	        class CompositeTokenRenderer < TwitterCldr::Js::Renderers::Base
+	          set_template "mustache/tokenizers/composite_token.coffee"
+	        end
 
-      end
-    end
-  end
+	      end
+	    end
+	  end
+	end
 end

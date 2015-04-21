@@ -47,7 +47,7 @@ module TwitterCldr
             set_template "mustache/numbers/rbnf/plural.coffee"
           end
 
-          autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/numbers/rbnf/number_data_reader_renderer'
+          autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/data/numbers/rbnf/number_data_reader_renderer'
         end
       end
     end

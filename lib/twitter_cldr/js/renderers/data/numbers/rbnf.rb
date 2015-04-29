@@ -11,7 +11,7 @@ module TwitterCldr
           module RBNF
 
             class RBNFRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/rbnf.coffee"
+              set_template "mustache/data/numbers/rbnf/rbnf.coffee"
 
               def resource
                 {
@@ -21,31 +21,31 @@ module TwitterCldr
             end
 
             class FormattersRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/formatters.coffee"
+              set_template "mustache/data/numbers/rbnf/formatters.coffee"
             end
 
             class RuleRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/rule.coffee"
+              set_template "mustache/data/numbers/rbnf/rule.coffee"
             end
 
             class RuleSetRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/rule_set.coffee"
+              set_template "mustache/data/numbers/rbnf/rule_set.coffee"
             end
 
             class RuleGroupRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/rule_group.coffee"
+              set_template "mustache/data/numbers/rbnf/rule_group.coffee"
             end
 
             class RuleParserRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/rule_parser.coffee"
+              set_template "mustache/data/numbers/rbnf/rule_parser.coffee"
             end
 
             class SubstitutionRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/substitution.coffee"
+              set_template "mustache/data/numbers/rbnf/substitution.coffee"
             end
 
             class PluralRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/numbers/rbnf/plural.coffee"
+              set_template "mustache/data/numbers/rbnf/plural.coffee"
             end
 
             autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/data/numbers/rbnf/number_data_reader_renderer'

@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class CurrenciesRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/currencies.coffee"
+            set_template "mustache/data/shared/currencies.coffee"
 
             def currencies
               TwitterCldr::Shared::Currencies.currency_codes.inject({}) do |ret, currency_code|

@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Numbers
           class NumbersRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/numbers/numbers.coffee"
+            set_template "mustache/data/numbers/numbers.coffee"
 
             def tokens_for_locale(locale)
               DataReaders::NumberDataReader.types.inject({}) do |ret, type|

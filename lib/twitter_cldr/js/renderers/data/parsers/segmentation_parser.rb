@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Parsers
 
 	        class SegmentationParserRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/parsers/segmentation_parser.coffee"
+	          set_template "mustache/data/parsers/segmentation_parser.coffee"
 	        end
 
 	      end

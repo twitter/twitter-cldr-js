@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Parsers
 
 	        class ParserRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/parsers/parser.coffee"
+	          set_template "mustache/data/parsers/parser.coffee"
 	        end
 
 	      end

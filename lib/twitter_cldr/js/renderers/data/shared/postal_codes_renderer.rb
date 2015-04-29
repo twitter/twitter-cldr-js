@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class PostalCodesRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/postal_codes.coffee"
+            set_template "mustache/data/shared/postal_codes.coffee"
 
             def postal_codes
               TwitterCldr::Shared::PostalCodes.territories.inject({}) do |ret, country_code|

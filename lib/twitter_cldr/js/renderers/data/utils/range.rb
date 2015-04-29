@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Utils
 
 	        class RangeRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/utils/range.coffee"
+	          set_template "mustache/data/utils/range.coffee"
 	        end
 
 	      end

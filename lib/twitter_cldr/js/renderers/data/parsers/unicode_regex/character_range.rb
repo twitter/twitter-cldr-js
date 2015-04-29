@@ -10,7 +10,7 @@ module TwitterCldr
         module Parsers
 
           class CharacterRangeRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/parsers/unicode_regex/character_range.coffee"
+            set_template "mustache/data/parsers/unicode_regex/character_range.coffee"
           end
 
         end

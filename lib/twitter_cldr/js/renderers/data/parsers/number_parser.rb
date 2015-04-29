@@ -10,7 +10,7 @@ module TwitterCldr
         module Parsers
 
           class NumberParser < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/parsers/number_parser.coffee"
+            set_template "mustache/data/parsers/number_parser.coffee"
 
             def group_separator
               Regexp.escape(parser.send(:group_separator))

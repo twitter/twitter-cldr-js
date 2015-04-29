@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Parsers
 
 	        class SymbolTableRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/parsers/symbol_table.coffee"
+	          set_template "mustache/data/parsers/symbol_table.coffee"
 	        end
 
 	      end

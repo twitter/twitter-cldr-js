@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Calendars
           class DateTimeRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/calendars/datetime.coffee"
+            set_template "mustache/data/calendars/datetime.coffee"
 
             def tokens
               {

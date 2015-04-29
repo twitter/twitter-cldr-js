@@ -10,7 +10,7 @@ module TwitterCldr
         module Parsers
 
           class LiteralRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/parsers/unicode_regex/literal.coffee"
+            set_template "mustache/data/parsers/unicode_regex/literal.coffee"
           end
 
         end

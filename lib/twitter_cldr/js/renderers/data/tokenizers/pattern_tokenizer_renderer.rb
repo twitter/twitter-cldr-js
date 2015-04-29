@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Tokenizers
 
 	        class PatternTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/tokenizers/pattern_tokenizer.coffee"
+	          set_template "mustache/data/tokenizers/pattern_tokenizer.coffee"
 	        end
 
 	      end

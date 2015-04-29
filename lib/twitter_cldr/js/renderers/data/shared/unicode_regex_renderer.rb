@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Shared
 
 	        class UnicodeRegexRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/shared/unicode_regex.coffee"
+	          set_template "mustache/data/shared/unicode_regex.coffee"
 	        end
 
 	      end

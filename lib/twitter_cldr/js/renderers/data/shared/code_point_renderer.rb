@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class CodePointRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/code_point.coffee"
+            set_template "mustache/data/shared/code_point.coffee"
 
             def blocks
               block_data = TwitterCldr.get_resource(:unicode_data, :blocks)

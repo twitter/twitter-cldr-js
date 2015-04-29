@@ -10,7 +10,7 @@ module TwitterCldr
         module Parsers
 
           class CharacterClassRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/parsers/unicode_regex/character_class.coffee"
+            set_template "mustache/data/parsers/unicode_regex/character_class.coffee"
           end
 
         end

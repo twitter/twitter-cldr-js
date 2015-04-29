@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Tokenizers
 
 	        class SegmentationTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/tokenizers/segmentation_tokenizer.coffee"
+	          set_template "mustache/data/tokenizers/segmentation_tokenizer.coffee"
 	        end
 
 	      end

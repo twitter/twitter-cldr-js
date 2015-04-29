@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class CalendarRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/calendar.coffee"
+            set_template "mustache/data/shared/calendar.coffee"
 
             def calendar
               TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data.to_json

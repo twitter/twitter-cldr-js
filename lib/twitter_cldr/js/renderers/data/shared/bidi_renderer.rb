@@ -10,7 +10,7 @@ module TwitterCldr
         module Shared
 
           class BidiRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/bidi.coffee"
+            set_template "mustache/data/shared/bidi.coffee"
 
             def initialize(options = {})
               super
@@ -19,7 +19,7 @@ module TwitterCldr
 
             def bidi_classes
               @@bidi_classes ||= if @prerender
-                File.read(File.expand_path(File.join(File.dirname(__FILE__), "../../..", "mustache/shared/prerender/bidi_classes.json")))
+                File.read(File.expand_path(File.join(File.dirname(__FILE__), "../../..", "mustache/data/shared/prerender/bidi_classes.json")))
               else
                 categories = rangify_code_points(code_points_by_category)
 

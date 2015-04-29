@@ -10,7 +10,7 @@ module TwitterCldr
         module Parsers
 
           class ComponentRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/parsers/unicode_regex/component.coffee"
+            set_template "mustache/data/parsers/unicode_regex/component.coffee"
           end
 
         end

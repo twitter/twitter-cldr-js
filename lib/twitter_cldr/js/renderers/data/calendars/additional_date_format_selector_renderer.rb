@@ -10,7 +10,7 @@ module TwitterCldr
         module Calendars
 
           class AdditionalDateFormatSelectorRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/calendars/additional_date_format_selector.coffee"
+            set_template "mustache/data/calendars/additional_date_format_selector.coffee"
           end
 
         end

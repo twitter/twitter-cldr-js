@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class NumberingSystemsRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/shared/numbering_systems.coffee"
+            set_template "mustache/data/shared/numbering_systems.coffee"
 
             def resource
               TwitterCldr.get_resource(:shared, :numbering_systems)[:numbering_systems].to_json

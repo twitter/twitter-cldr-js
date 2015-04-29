@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Tokenizers
 
 	        class CompositeTokenRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/tokenizers/composite_token.coffee"
+	          set_template "mustache/data/tokenizers/composite_token.coffee"
 	        end
 
 	      end

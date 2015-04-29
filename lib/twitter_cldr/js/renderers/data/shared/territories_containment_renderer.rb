@@ -9,7 +9,7 @@ module TwitterCldr
       module DataRenderers
         module Shared
           class TerritoriesContainmentRenderer < TwitterCldr::Js::Renderers::Base
-            set_template 'mustache/shared/territories_containment.coffee'
+            set_template 'mustache/data/shared/territories_containment.coffee'
 
             def territories_data
               TwitterCldr::Shared::TerritoriesContainment.containment_map.to_json

@@ -10,7 +10,7 @@ module TwitterCldr
 	      module Tokenizers
 
 	        class UnicodeRegexTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-	          set_template "mustache/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
+	          set_template "mustache/data/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
 	        end
 
 	      end

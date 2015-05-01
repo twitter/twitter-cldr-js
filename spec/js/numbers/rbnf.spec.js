@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/test_resources.js', 'utf8'));
 formatter = new TwitterCldr.RBNF();
 

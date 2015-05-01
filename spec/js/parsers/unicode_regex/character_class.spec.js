@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("Character Class", function() {
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
@@ -30,7 +30,7 @@ describe("Character Class", function() {
     });
     it("finds symmetric differences correctly", function() {
       var char_class = char_class_from(parse(tokenize("[[a-m]-[g-z]]")));
-      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 102), new TwitterCldr.Range(110, 122)]));      
+      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 102), new TwitterCldr.Range(110, 122)]));
     });
     it("computes sets for nested expressions", function() {
       // (97..109) U (104..106)
@@ -83,7 +83,7 @@ describe("Character Class", function() {
     });
     it("supports literal and excaped characters", function() {
       var char_class = char_class_from(parse(tokenize("[abc\\edf\\g]")));
-      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 103)]));      
+      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 103)]));
     });
     it("supports special switch characters", function() {
       var char_class = char_class_from(parse(tokenize("[\\w]"))); // a-z, A-Z, 0-9, _

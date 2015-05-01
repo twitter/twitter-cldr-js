@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 var fs = require('fs');
 
 var BIDI_TEST_PATH = __dirname + '/classpath_bidi_test.txt';

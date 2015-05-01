@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("UnicodeRegexParser", function() {
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
@@ -42,7 +42,7 @@ describe("UnicodeRegexParser", function() {
 
       element = elements[2];
       expect(element instanceof TwitterCldr.CharacterClass).toBe(true);
-      expect(element.root.child.property_value).toEqual("L");      
+      expect(element.root.child.property_value).toEqual("L");
 
       element = elements[3];
       expect(element instanceof TwitterCldr.CharacterSet).toBe(true);

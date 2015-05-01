@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("Parser", function() {
   var FakeParser,
@@ -50,7 +50,7 @@ describe("Parser", function() {
       expect(parser.current_token().type).toEqual("a");
     });
   });
-  
+
   describe("next_token", function() {
     it("should advance to the next token", function() {
       parser.parse(tokens);

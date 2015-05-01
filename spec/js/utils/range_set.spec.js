@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 beforeEach(function() {
   var arrayEqual = function(a, b) {
     if (a.length !== b.length)
@@ -9,7 +9,7 @@ beforeEach(function() {
     for (var i = 0; i < a.length; i++) {
        if (a[i] !== b[i])
         return false;
-    }; 
+    };
     return true;
   };
   var equals = function (a,b) {
@@ -19,15 +19,15 @@ beforeEach(function() {
       return false;
     if (!(a instanceof Array) && b instanceof Array)
       return false;
-    else 
+    else
       return (a === b);
   };
   var areRangesEqual = function (range1, range2) {
-    if (range1 instanceof TwitterCldr.Range && range2 instanceof TwitterCldr.Range) 
+    if (range1 instanceof TwitterCldr.Range && range2 instanceof TwitterCldr.Range)
       return (equals(range1.first, range2.first) && equals(range1.last, range2.last));
     else if (!(range1 instanceof TwitterCldr.Range) && !(range2 instanceof TwitterCldr.Range))
       return equals(range1, range2);
-    else 
+    else
       return false;
   };
   var toEqualRange = function (expected) {
@@ -51,7 +51,7 @@ beforeEach(function() {
     if (!(this.actual instanceof TwitterCldr.RangeSet) || !(expected instanceof TwitterCldr.RangeSet))
       return false;
     return areRangeArraysEqual (this.actual.ranges, expected.ranges);
-    
+
   };
   this.addMatchers({
     toEqualRange : toEqualRange,
@@ -64,10 +64,10 @@ describe("RangeSet", function() {
   describe("#rangify", function() {
     it("should identify runs in an array of integers and return an array of ranges", function() {
       expect(TwitterCldr.RangeSet.rangify([1, 2, 3, 6, 7, 8, 11, 14, 17, 18, 19])).toEqualRangeArray(
-        [ new TwitterCldr.Range(1, 3), 
-          new TwitterCldr.Range(6, 8), 
+        [ new TwitterCldr.Range(1, 3),
+          new TwitterCldr.Range(6, 8),
           new TwitterCldr.Range(11, 11),
-          new TwitterCldr.Range(14, 14), 
+          new TwitterCldr.Range(14, 14),
           new TwitterCldr.Range(17, 19)
         ]);
     });
@@ -82,7 +82,7 @@ describe("RangeSet", function() {
   });
 
   describe("#to_array", function() {
-    it("should return a copy of the ranges in the set", function() {      
+    it("should return a copy of the ranges in the set", function() {
       set = new TwitterCldr.RangeSet([new TwitterCldr.Range (1, 10)]);
       expect(set.to_array()).not.toBe(set.ranges);
       r = new TwitterCldr.Range([1,2,3], [1,2,3]);
@@ -226,10 +226,10 @@ describe("RangeSet", function() {
           new TwitterCldr.RangeSet([new TwitterCldr.Range(3,8)])
         );
       expect(set).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(1, 2), new TwitterCldr.Range (6, 8)]));
-    }); 
+    });
   });
   describe("#includes", function() {
-    var set; 
+    var set;
     beforeEach(function() {
       set = new TwitterCldr.RangeSet([new TwitterCldr.Range(1,5), new TwitterCldr.Range(9,16)]);
     });

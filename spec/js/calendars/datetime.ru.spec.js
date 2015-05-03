@@ -1,10 +1,11 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/ru.js');
 
 describe("DateTimeFormatter", function() {
   beforeEach(function() {
+		TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/ru.js', 'utf8'));
     formatter = new TwitterCldr.DateTimeFormatter();
   });
 

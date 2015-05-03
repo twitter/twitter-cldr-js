@@ -1,10 +1,12 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("AdditionalDateFormatSelector", function() {
   beforeEach(function() {
+    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
+
     selector = new TwitterCldr.AdditionalDateFormatSelector(
       TwitterCldr.Calendar.calendar.additional_formats
     )

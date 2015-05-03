@@ -31,10 +31,6 @@ module TwitterCldr
               "{#{plurals.join(', ')}}"
             end
 
-            def runtime
-              CldrPlurals::JavascriptRuntime.source
-            end
-
             def names
               names = resource.map do |plural_type, plural_data|
                 sub_names = plural_data.keys.map(&:to_s).inspect

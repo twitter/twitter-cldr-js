@@ -8,6 +8,7 @@ module TwitterCldr
     module Renderers
       module DataRenderers
         module Calendars
+
           class DateTimeRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/data/calendars/datetime.coffee"
 
@@ -43,6 +44,7 @@ module TwitterCldr
               end.to_json
             end
           end
+
         end
       end
     end

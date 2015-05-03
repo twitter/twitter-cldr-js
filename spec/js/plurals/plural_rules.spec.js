@@ -1,9 +1,14 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-
 describe("PluralRules", function() {
+
+  beforeEach(function() {
+    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
+    formatter = new TwitterCldr.TimespanFormatter();
+  });
+
   describe("#all", function() {
     it("returns an array of all English plural rules", function() {
       expect(TwitterCldr.PluralRules.all()).toEqual(["one", "other"]);

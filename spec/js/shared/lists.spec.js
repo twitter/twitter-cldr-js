@@ -1,8 +1,8 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr    = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-var TwitterCldrRTL = require('../../../lib/assets/javascripts/twitter_cldr/ar.js');
+var TwitterCldr    = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var TwitterCldrRTL = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("ListFormatter", function() {
   beforeEach(function() {

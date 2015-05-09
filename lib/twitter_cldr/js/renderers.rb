@@ -21,7 +21,7 @@ module TwitterCldr
         end
 
         module Shared
-          autoload :BidiRenderer,                         'twitter_cldr/js/renderers/data/shared/bidi_renderer'
+          autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
           autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/data/shared/break_iterator_renderer'
           autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
           autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/implementation/shared'

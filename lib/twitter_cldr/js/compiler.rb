@@ -92,7 +92,7 @@ module TwitterCldr
           :additional_date_format_selector => TwitterCldr::Js::Renderers::ImplementationRenderers::Calendars::AdditionalDateFormatSelectorRenderer,
           :currencies                      => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::CurrenciesRenderer,
           :lists                           => TwitterCldr::Js::Renderers::DataRenderers::Shared::ListRenderer,
-          :bidi                            => TwitterCldr::Js::Renderers::DataRenderers::Shared::BidiRenderer,
+          :bidi                            => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::BidiRenderer,
           :break_iterator                  => TwitterCldr::Js::Renderers::DataRenderers::Shared::BreakIteratorRenderer,
           :calendar                        => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::CalendarRenderer,
           :code_point                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CodePointRenderer,

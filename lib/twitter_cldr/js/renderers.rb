@@ -31,7 +31,7 @@ module TwitterCldr
           autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
           autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
-          autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/data/shared/unicode_regex_renderer'
+          autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/implementation/shared'
           autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/implementation/shared/territories_containment_renderer'
         end
 

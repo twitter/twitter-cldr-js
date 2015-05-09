@@ -100,7 +100,7 @@ module TwitterCldr
           :phone_codes                     => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::PhoneCodesRenderer,
           :postal_codes                    => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::PostalCodesRenderer,
           :languages                       => TwitterCldr::Js::Renderers::DataRenderers::Shared::LanguagesRenderer,
-          :unicode_regex                   => TwitterCldr::Js::Renderers::DataRenderers::Shared::UnicodeRegexRenderer,
+          :unicode_regex                   => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::UnicodeRegexRenderer,
           :territories_containment         => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::TerritoriesContainmentRenderer,
           :number_parser                   => TwitterCldr::Js::Renderers::ImplementationRenderers::Parsers::NumberParser,
           :component                       => TwitterCldr::Js::Renderers::ImplementationRenderers::Parsers::UnicodeRegex::ComponentRenderer,

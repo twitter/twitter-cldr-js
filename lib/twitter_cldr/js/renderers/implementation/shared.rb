@@ -17,6 +17,10 @@ module TwitterCldr
             set_template "mustache/implementation/shared/break_iterator.coffee"
           end
 
+          class UnicodeRegexRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/implementation/shared/unicode_regex.coffee"
+          end
+
           autoload :BidiRenderer, 'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
           autoload :CurrenciesRenderer, 'twitter_cldr/js/renderers/implementation/shared/currencies'
           autoload :PhoneCodesRenderer, 'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'

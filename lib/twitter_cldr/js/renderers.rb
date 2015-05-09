@@ -15,13 +15,9 @@ module TwitterCldr
         autoload :Calendars,                              'twitter_cldr/js/renderers/implementation/calendars'
         autoload :PluralRules,                            'twitter_cldr/js/renderers/implementation/plurals'
         autoload :Utils,                                  'twitter_cldr/js/renderers/implementation/utils'
+        autoload :Numbers,                                  'twitter_cldr/js/renderers/implementation/numbers'
 
-        module Numbers
-          autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/data/numbers/numbers_renderer'
-          autoload :RBNF,                                 'twitter_cldr/js/renderers/data/numbers/rbnf'
-        end
-
-        module Shared
+      module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
           autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/data/shared/break_iterator_renderer'
           autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
@@ -61,7 +57,6 @@ module TwitterCldr
           autoload :RBNFTokenizerRenderer,                'twitter_cldr/js/renderers/data/tokenizers/numbers/rbnf_renderer'
           autoload :NumberTokenizerRenderer,              'twitter_cldr/js/renderers/data/tokenizers/numbers/number_tokenizer_renderer'
         end
-
       end
 
       module DataRenderers

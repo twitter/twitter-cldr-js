@@ -131,9 +131,9 @@ module TwitterCldr
           :rbnf_substitution               => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::SubstitutionRenderer,
           :rbnf_rule_parser                => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::RuleParserRenderer,
           :plural                          => TwitterCldr::Js::Renderers::DataRenderers::Numbers::RBNF::PluralRenderer,
-          :range                           => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeRenderer,
-          :range_set                       => TwitterCldr::Js::Renderers::DataRenderers::Utils::RangeSetRenderer,
-          :code_points                     => TwitterCldr::Js::Renderers::DataRenderers::Utils::CodePointsRenderer
+          :range                           => TwitterCldr::Js::Renderers::ImplementationRenderers::Utils::RangeRenderer,
+          :range_set                       => TwitterCldr::Js::Renderers::ImplementationRenderers::Utils::RangeSetRenderer,
+          :code_points                     => TwitterCldr::Js::Renderers::ImplementationRenderers::Utils::CodePointsRenderer
         }
       end
 

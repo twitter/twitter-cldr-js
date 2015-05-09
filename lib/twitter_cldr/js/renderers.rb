@@ -14,6 +14,7 @@ module TwitterCldr
       module ImplementationRenderers
         autoload :Calendars,                              'twitter_cldr/js/renderers/implementation/calendars'
         autoload :PluralRules,                            'twitter_cldr/js/renderers/implementation/plurals'
+        autoload :Utils,                                  'twitter_cldr/js/renderers/implementation/utils'
 
         module Numbers
           autoload :NumbersRenderer,                      'twitter_cldr/js/renderers/data/numbers/numbers_renderer'
@@ -61,11 +62,6 @@ module TwitterCldr
           autoload :NumberTokenizerRenderer,              'twitter_cldr/js/renderers/data/tokenizers/numbers/number_tokenizer_renderer'
         end
 
-        module Utils
-          autoload :RangeRenderer,                        'twitter_cldr/js/renderers/data/utils/range'
-          autoload :RangeSetRenderer,                     'twitter_cldr/js/renderers/data/utils/range_set'
-          autoload :CodePointsRenderer,                   'twitter_cldr/js/renderers/data/utils/code_points'
-        end
       end
 
       module DataRenderers

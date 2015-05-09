@@ -20,7 +20,6 @@ module TwitterCldr
           autoload :RBNF,                                 'twitter_cldr/js/renderers/data/numbers/rbnf'
         end
 
-
         module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/data/shared/bidi_renderer'
           autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/data/shared/break_iterator_renderer'
@@ -30,8 +29,8 @@ module TwitterCldr
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
           autoload :ListRenderer,                         'twitter_cldr/js/renderers/data/shared/list_renderer'
           autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/data/shared/numbering_systems_renderer'
-          autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/data/shared/phone_codes_renderer'
-          autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/data/shared/postal_codes_renderer'
+          autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
+          autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
           autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/data/shared/unicode_regex_renderer'
           autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/data/shared/territories_containment_renderer'

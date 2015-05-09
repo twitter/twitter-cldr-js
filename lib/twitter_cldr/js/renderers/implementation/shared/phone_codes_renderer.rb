@@ -6,10 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module ImplementationRenderers
         module Shared
           class PhoneCodesRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/shared/phone_codes.coffee"
+            set_template "mustache/implementation/shared/phone_codes.coffee"
 
             def phone_codes
               TwitterCldr::Shared::PhoneCodes.territories.inject({}) do |ret, country_code|

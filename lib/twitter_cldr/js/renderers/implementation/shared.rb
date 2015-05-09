@@ -13,6 +13,9 @@ module TwitterCldr
             set_template "mustache/implementation/shared/calendar.coffee"
           end
 
+          autoload :PhoneCodesRenderer, 'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
+          autoload :PostalCodesRenderer, 'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
+
         end
       end
     end

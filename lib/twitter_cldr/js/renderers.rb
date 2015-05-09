@@ -17,6 +17,7 @@ module TwitterCldr
         autoload :Utils,                                  'twitter_cldr/js/renderers/implementation/utils'
         autoload :Numbers,                                'twitter_cldr/js/renderers/implementation/numbers'
         autoload :Parsers,                                'twitter_cldr/js/renderers/implementation/parsers'
+        autoload :Tokenizers,                             'twitter_cldr/js/renderers/implementation/tokenizers'
 
       module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
@@ -34,16 +35,6 @@ module TwitterCldr
           autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/implementation/shared/territories_containment_renderer'
         end
 
-        module Tokenizers
-          autoload :TokenRenderer,                        'twitter_cldr/js/renderers/data/tokenizers/token'
-          autoload :CompositeTokenRenderer,               'twitter_cldr/js/renderers/data/tokenizers/composite_token'
-          autoload :TokenizerRenderer,                    'twitter_cldr/js/renderers/data/tokenizers/tokenizer'
-          autoload :SegmentationTokenizerRenderer,        'twitter_cldr/js/renderers/data/tokenizers/segmentation_tokenizer'
-          autoload :PatternTokenizerRenderer,             'twitter_cldr/js/renderers/data/tokenizers/pattern_tokenizer_renderer'
-          autoload :UnicodeRegexTokenizerRenderer,        'twitter_cldr/js/renderers/data/tokenizers/unicode_regex/unicode_regex_tokenizer'
-          autoload :RBNFTokenizerRenderer,                'twitter_cldr/js/renderers/data/tokenizers/numbers/rbnf_renderer'
-          autoload :NumberTokenizerRenderer,              'twitter_cldr/js/renderers/data/tokenizers/numbers/number_tokenizer_renderer'
-        end
       end
 
       module DataRenderers

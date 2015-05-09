@@ -90,7 +90,7 @@ module TwitterCldr
           :timespan                        => TwitterCldr::Js::Renderers::ImplementationRenderers::Calendars::TimespanRenderer,
           :datetime                        => TwitterCldr::Js::Renderers::ImplementationRenderers::Calendars::DateTimeRenderer,
           :additional_date_format_selector => TwitterCldr::Js::Renderers::ImplementationRenderers::Calendars::AdditionalDateFormatSelectorRenderer,
-          :currencies                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CurrenciesRenderer,
+          :currencies                      => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::CurrenciesRenderer,
           :lists                           => TwitterCldr::Js::Renderers::DataRenderers::Shared::ListRenderer,
           :bidi                            => TwitterCldr::Js::Renderers::DataRenderers::Shared::BidiRenderer,
           :break_iterator                  => TwitterCldr::Js::Renderers::DataRenderers::Shared::BreakIteratorRenderer,

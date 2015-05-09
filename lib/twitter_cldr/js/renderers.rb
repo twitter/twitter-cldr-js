@@ -25,7 +25,7 @@ module TwitterCldr
           autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/data/shared/break_iterator_renderer'
           autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
           autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/implementation/shared'
-          autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/data/shared/currencies_renderer'
+          autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/currencies_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
           autoload :ListRenderer,                         'twitter_cldr/js/renderers/data/shared/list_renderer'
           autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/data/shared/numbering_systems_renderer'

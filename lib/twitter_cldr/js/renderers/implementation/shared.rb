@@ -13,6 +13,7 @@ module TwitterCldr
             set_template "mustache/implementation/shared/calendar.coffee"
           end
 
+          autoload :CurrenciesRenderer, 'twitter_cldr/js/renderers/implementation/shared/currencies'
           autoload :PhoneCodesRenderer, 'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
           autoload :PostalCodesRenderer, 'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
           autoload :TerritoriesContainmentRenderer, 'twitter_cldr/js/renderers/implementation/shared/territories_containment_renderer'

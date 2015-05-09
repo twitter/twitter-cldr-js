@@ -6,10 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      autoload :Base,                                   'twitter_cldr/js/renderers/base'
-      autoload :Bundle,                                 'twitter_cldr/js/renderers/bundle'
-      autoload :DataBundle,                             'twitter_cldr/js/renderers/data_bundle'
-      autoload :TestBundle,                             'twitter_cldr/js/renderers/test_bundle'
+      autoload :Base,                                     'twitter_cldr/js/renderers/base'
+      autoload :Bundle,                                   'twitter_cldr/js/renderers/bundle'
+      autoload :DataBundle,                               'twitter_cldr/js/renderers/data_bundle'
+      autoload :TestBundle,                               'twitter_cldr/js/renderers/test_bundle'
 
       module ImplementationRenderers
         autoload :Calendars,                              'twitter_cldr/js/renderers/implementation/calendars'
@@ -21,7 +21,7 @@ module TwitterCldr
 
       module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
-          autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/data/shared/break_iterator_renderer'
+          autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/implementation/shared'
           autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
           autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/implementation/shared'
           autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/currencies_renderer'

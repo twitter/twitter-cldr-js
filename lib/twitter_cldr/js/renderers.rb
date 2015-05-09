@@ -28,7 +28,7 @@ module TwitterCldr
           autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/currencies_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
           autoload :ListRenderer,                         'twitter_cldr/js/renderers/data/shared/list_renderer'
-          autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/data/shared/numbering_systems_renderer'
+          autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/implementation/shared/numbering_systems_renderer'
           autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
           autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'

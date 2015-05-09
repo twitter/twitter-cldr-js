@@ -96,7 +96,7 @@ module TwitterCldr
           :break_iterator                  => TwitterCldr::Js::Renderers::DataRenderers::Shared::BreakIteratorRenderer,
           :calendar                        => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::CalendarRenderer,
           :code_point                      => TwitterCldr::Js::Renderers::DataRenderers::Shared::CodePointRenderer,
-          :numbering_systems               => TwitterCldr::Js::Renderers::DataRenderers::Shared::NumberingSystemsRenderer,
+          :numbering_systems               => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::NumberingSystemsRenderer,
           :phone_codes                     => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::PhoneCodesRenderer,
           :postal_codes                    => TwitterCldr::Js::Renderers::ImplementationRenderers::Shared::PostalCodesRenderer,
           :languages                       => TwitterCldr::Js::Renderers::DataRenderers::Shared::LanguagesRenderer,

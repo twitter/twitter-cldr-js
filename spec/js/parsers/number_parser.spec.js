@@ -1,23 +1,25 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+// var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 
 describe("NumberParser", function() {
   beforeEach(function() {
+    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
     separators = [",", "\\."]
     parser = new TwitterCldr.NumberParser();
   });
 
-  describe("#group_separator", function() {
+  describe("#get_group_separator()", function() {
     it("returns the correct group separator", function() {
-      expect(parser.group_separator).toEqual(",");
+      expect(parser.get_group_separator()).toEqual(",");
     });
   });
 
-  describe("#decimal_separator", function() {
+  describe("#get_decimal_separator()", function() {
     it("returns the correct decimal separator", function() {
-      expect(parser.decimal_separator).toEqual("\\\.");
+      expect(parser.get_decimal_separator()).toEqual("\\\.");
     });
   });
 

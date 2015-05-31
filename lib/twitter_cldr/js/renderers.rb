@@ -12,6 +12,7 @@ module TwitterCldr
       autoload :TestBundle,                               'twitter_cldr/js/renderers/test_bundle'
 
       module ImplementationRenderers
+        autoload :Settings,                               'twitter_cldr/js/renderers/implementation/settings'
         autoload :Calendars,                              'twitter_cldr/js/renderers/implementation/calendars'
         autoload :PluralRules,                            'twitter_cldr/js/renderers/implementation/plurals'
         autoload :Utils,                                  'twitter_cldr/js/renderers/implementation/utils'
@@ -25,8 +26,8 @@ module TwitterCldr
           autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
           autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/implementation/shared'
           autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/currencies_renderer'
-          autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
-          autoload :ListRenderer,                         'twitter_cldr/js/renderers/data/shared/list_renderer'
+          autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/implementation/shared/languages_renderer'
+          autoload :ListRenderer,                         'twitter_cldr/js/renderers/implementation/shared'
           autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/implementation/shared/numbering_systems_renderer'
           autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
           autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
@@ -38,6 +39,9 @@ module TwitterCldr
       end
 
       module DataRenderers
+
+       autoload :Settings,                     'twitter_cldr/js/renderers/data/settings'
+
         module Calendars
           autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/data/calendars/datetime_renderer'
           autoload :TimespanRenderer,                     'twitter_cldr/js/renderers/data/calendars/timespan_renderer'

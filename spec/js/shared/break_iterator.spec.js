@@ -1,17 +1,13 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
+
 describe("BreakIterator", function() {
-  beforeEach(function() {
-    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
-  });
-
+  var iterator = new TwitterCldr.BreakIterator("en", {"use_uli_exceptions" : true});
   describe("#each_sentence", function() {
-    beforeEach(function() {
-      iterator = new TwitterCldr.BreakIterator("en", {"use_uli_exceptions" : true});
-    });
-
     it("should return an array", function() {
       expect(iterator.each_sentence("foo bar") instanceof Array).toBe(true);
     });
@@ -58,10 +54,7 @@ describe("BreakIterator", function() {
     });
 
     describe("without ULI exceptions", function() {
-      beforeEach(function() {
-        iterator = new TwitterCldr.BreakIterator("en", {"use_uli_exceptions" : false});
-      });
-
+      var iterator = new TwitterCldr.BreakIterator("en", {"use_uli_exceptions" : false});
       it("splits on certain abbreviations like Mr. and Mrs. (use ULI rules to avoid this behavior)", function() {
         var str = "I really like Mrs. Patterson. She's nice.";
         expect(iterator.each_sentence(str)).toEqual([

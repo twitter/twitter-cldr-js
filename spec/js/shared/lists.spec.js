@@ -1,20 +1,28 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr    = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-var TwitterCldrRTL = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+// var TwitterCldr, formatter;
+
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
+var formatter;
 
 describe("ListFormatter", function() {
   beforeEach(function() {
     formatter = new TwitterCldr.ListFormatter();
-    formatter_rtl = new TwitterCldrRTL.ListFormatter();
   });
 
   describe("with an initialized list formatter", function() {
     describe("#compose", function() {
       it("should reorder rtl lists", function() {
         var list = ["larry", "curly"];
-        expect(formatter_rtl.compose("{0} \u0648 {1}", list)).toEqual("curly \u0648 larry");
+        var data = require('../../../lib/assets/javascripts/twitter_cldr/ar.js');
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
+        expect(formatter.compose("{0} \u0648 {1}", list)).toEqual("curly \u0648 larry");
+        data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+        TwitterCldr.set_data(data);
       });
 
       it("should format a variable number of elements correctly", function() {
@@ -36,12 +44,18 @@ describe("ListFormatter", function() {
 
     describe("with a standard resource", function() {
       beforeEach(function() {
-        formatter.formats = {
-          2        : "{0} $ {1}",
-          "middle" : "{0}; {1}",
-          "start"  : "{0}< {1}",
-          "end"    : "{0}> {1}"
-        }
+        data = {
+          ListFormatter: {
+            formats : {
+              2        : "{0} $ {1}",
+              "middle" : "{0}; {1}",
+              "start"  : "{0}< {1}",
+              "end"    : "{0}> {1}"
+            }
+          }
+        };
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
       });
 
       describe("#compose_list", function() {
@@ -82,6 +96,11 @@ describe("ListFormatter", function() {
     });
 
     describe("with standard English resource", function() {
+      beforeEach(function() {
+        data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
+      });
       describe("#format", function() {
         it("should format correctly using the integer index if it exists", function() {
           expect(formatter.format(["larry", "curly"])).toEqual("larry and curly");
@@ -103,7 +122,13 @@ describe("ListFormatter", function() {
 
     describe("with a resource that doesn't contain a start or end", function() {
       beforeEach(function() {
-        formatter.formats = { "middle": "{0}; {1}" };
+        data = {
+          ListFormatter: {
+            formats : { "middle": "{0}; {1}" }
+          }
+        };
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
       });
 
       describe("#compose_list", function() {
@@ -115,7 +140,13 @@ describe("ListFormatter", function() {
 
     describe("with an empty resource", function() {
       beforeEach(function() {
-        formatter.formats = {}
+        data = {
+          ListFormatter: {
+            formats : {}
+          }
+        };
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
       });
 
       describe("#compose_list", function() {

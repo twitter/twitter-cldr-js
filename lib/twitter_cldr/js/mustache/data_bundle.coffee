@@ -19,25 +19,13 @@
 ###<<module_def>>###
 
 
-this.TwitterCldr = if !this.TwitterCldr?
-  {}
-else
-  this.TwitterCldr
+TwitterCldrDataBundle =
+{{{contents}}}
 
 root = if exports?
   exports
 else
-  this.TwitterCldr = {}
-  this.TwitterCldr
+  this.TwitterCldrDataBundle = {}
+  this.TwitterCldrDataBundle
 
-root[key] = obj for key, obj of TwitterCldr
-
-{{#is_rtl?}}
-TwitterCldr.is_rtl = true;
-{{/is_rtl?}}
-{{^is_rtl?}}
-TwitterCldr.is_rtl = false;
-{{/is_rtl?}}
-TwitterCldr.locale = "{{current_locale}}";
-
-{{{contents}}}
+root[key] = obj for key, obj of TwitterCldrDataBundle

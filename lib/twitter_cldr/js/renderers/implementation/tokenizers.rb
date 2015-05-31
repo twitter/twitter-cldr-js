@@ -10,35 +10,35 @@ module TwitterCldr
         module Tokenizers
 
         	class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/numbers/number_tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/numbers/number_tokenizer.coffee"
           end
 
           class RBNFTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/numbers/rbnf_tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/numbers/rbnf_tokenizer.coffee"
           end
 
           class UnicodeRegexTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/unicode_regex/unicode_regex_tokenizer.coffee"
           end
 
           class CompositeTokenRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/composite_token.coffee"
+            set_template "mustache/implementation/tokenizers/composite_token.coffee"
           end
 
           class PatternTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/pattern_tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/pattern_tokenizer.coffee"
           end
 
           class SegmentationTokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/segmentation_tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/segmentation_tokenizer.coffee"
           end
 
           class TokenRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/token.coffee"
+            set_template "mustache/implementation/tokenizers/token.coffee"
           end
 
           class TokenizerRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/tokenizers/tokenizer.coffee"
+            set_template "mustache/implementation/tokenizers/tokenizer.coffee"
           end
 
         end

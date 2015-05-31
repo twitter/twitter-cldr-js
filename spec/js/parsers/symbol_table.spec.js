@@ -2,9 +2,11 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("SymbolTable", function() {
   beforeEach(function() {
+    TwitterCldr.set_data(data);
     table = new TwitterCldr.SymbolTable ({"a":"b", "c":"d"});
   });
   describe("#fetch", function() {

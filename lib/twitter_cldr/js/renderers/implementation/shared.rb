@@ -9,12 +9,24 @@ module TwitterCldr
       module ImplementationRenderers
         module Shared
 
+          class BreakIteratorRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/implementation/shared/break_iterator.coffee"
+          end
+
           class CalendarRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/implementation/shared/calendar.coffee"
           end
 
-          class BreakIteratorRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/implementation/shared/break_iterator.coffee"
+          class CodePointRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/implementation/shared/code_point.coffee"
+          end
+
+          class ListRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/implementation/shared/lists.coffee"
+          end
+
+          class LanguagesRenderer < TwitterCldr::Js::Renderers::Base
+            set_template "mustache/implementation/shared/languages.coffee"
           end
 
           class UnicodeRegexRenderer < TwitterCldr::Js::Renderers::Base

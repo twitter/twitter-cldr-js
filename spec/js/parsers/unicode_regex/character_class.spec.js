@@ -2,8 +2,10 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Character Class", function() {
+  TwitterCldr.set_data(data);
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
   var parser = new TwitterCldr.UnicodeRegexParser();
   var tokenize = function (text) {

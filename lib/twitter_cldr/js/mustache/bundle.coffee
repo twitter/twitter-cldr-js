@@ -30,6 +30,15 @@ TwitterCldr.locale = "{{current_locale}}";
 {{> utilities}}
 {{{contents}}}
 
+TwitterCldr.set_data = (bundle) ->
+  for key, sub_bundle of bundle
+    if typeof sub_bundle isnt 'object'
+      @[key] = sub_bundle
+    else
+      for bundle_key, bundle_value of sub_bundle
+        @[key][bundle_key] = bundle_value
+  null
+
 root = if exports?
   exports
 else

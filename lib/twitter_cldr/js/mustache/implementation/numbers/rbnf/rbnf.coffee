@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.RBNF
-  constructor : (@locale = TwitterCldr.locale) ->
+  constructor : (@locale = TwitterCldr.Settings.locale) ->
     @default_spellout_options = {
       'rule_group' : "SpelloutRules",
       'rule_set' : "spellout-numbering"

@@ -1,13 +1,14 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/ru.js');
+
 describe("TimespanFormatter", function() {
   beforeEach(function() {
-    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/ru.js', 'utf8'));
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.TimespanFormatter();
   });
-
   describe("#format", function() {
     it("works for Russian", function() {
       var options = {direction: "none", approximate: true};

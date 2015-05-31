@@ -1,4 +1,7 @@
 # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
-TwitterCldr.TimespanFormatter.patterns = `{{{patterns}}}`
+# TwitterCldr.TimespanFormatter.patterns = `{{{patterns}}}`
+
+  TimespanFormatter :
+    patterns : `{{{patterns}}}`

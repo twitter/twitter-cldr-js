@@ -72,7 +72,7 @@ describe("CodePoint", function() {
     });
   });
   describe("#code_points_for_property", function() {
-    it("reutrns code points for the given unicode property and value", function() {
+    it("returns code points for the given unicode property and value", function() {
       cps = TwitterCldr.CodePoint.code_points_for_property("line_break", "CM");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(0, 8));

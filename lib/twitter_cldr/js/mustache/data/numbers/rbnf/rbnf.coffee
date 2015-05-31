@@ -1,4 +1,5 @@
-# Copyright 2012 Twitter, Inc
-# http://www.apache.org/licenses/LICENSE-2.0
+  # Copyright 2012 Twitter, Inc
+  # http://www.apache.org/licenses/LICENSE-2.0
 
-TwitterCldr.RBNF.resource = `{{{resource}}}`
+  RBNF:
+    resource : `{{{resource}}}`

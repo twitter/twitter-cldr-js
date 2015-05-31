@@ -129,7 +129,7 @@ class TwitterCldr.Utilities
   @compute_cache_key : (pieces) ->
     if pieces? and pieces.length > 0
       return pieces.join("|")
-    return null
+    null
 
   @traverse_object : (obj, path) ->
     value = obj

@@ -2,8 +2,10 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("SegmentationParser", function() {
+  TwitterCldr.set_data(data);
   var tokenizer = new TwitterCldr.SegmentationTokenizer();
   var parser = new TwitterCldr.SegmentationParser();
   var tokenize = function (text) {

@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.BreakIterator
-  constructor : (locale = TwitterCldr.locale, options = {}) ->
+  constructor : (locale = TwitterCldr.Settings.locale, options = {}) ->
     @locale = locale
     @use_uli_exceptions = (if options["use_uli_exceptions"]? then options["use_uli_exceptions"] else true)
     @exceptions_cache = {}

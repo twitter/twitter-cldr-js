@@ -1,4 +1,8 @@
-# Copyright 2012 Twitter, Inc
-# http://www.apache.org/licenses/LICENSE-2.0
+  # Copyright 2012 Twitter, Inc
+  # http://www.apache.org/licenses/LICENSE-2.0
 
-TwitterCldr.DateTimeFormatter.tokens = `{{{tokens}}}`
+  # TwitterCldr.DateTimeFormatter.tokens = `{{{tokens}}}`
+
+
+  DateTimeFormatter :
+    tokens : `{{{tokens}}}`

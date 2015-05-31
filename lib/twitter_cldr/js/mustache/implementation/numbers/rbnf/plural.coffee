@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.RBNFPlural
-  @from_string : (string, locale = TwitterCldr.locale) ->
+  @from_string : (string, locale = TwitterCldr.Settings.locale) ->
     # $(cardinal,one{ tysiąc}few{ tysiące}other{ tysięcy})$
     [plural_type, cases_map] = string.match(/\$\((.*)\)\$/)[1].split(',')
     cases = {}

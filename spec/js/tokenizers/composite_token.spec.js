@@ -2,6 +2,8 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
 
 describe("Token", function() {
   describe("#constructor", function() {

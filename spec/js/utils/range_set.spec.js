@@ -2,6 +2,9 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
+
 beforeEach(function() {
   var arrayEqual = function(a, b) {
     if (a.length !== b.length)

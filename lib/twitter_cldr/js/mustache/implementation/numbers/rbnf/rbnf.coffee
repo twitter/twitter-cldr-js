@@ -13,7 +13,7 @@ class TwitterCldr.RBNF
   @resource = {}
 
   get_resource : ->
-    TwitterCldr.RBNF.resource[@locale]
+    TwitterCldr.RBNF.resource
 
   get_resource_for_locale : (locale = @locale)->
     @get_resource()[locale]

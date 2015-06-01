@@ -9,7 +9,7 @@ module TwitterCldr
       module ImplementationRenderers
         module Tokenizers
 
-        	class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base
+          class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/implementation/tokenizers/numbers/number_tokenizer.coffee"
           end
 

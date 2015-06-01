@@ -9,7 +9,7 @@ module TwitterCldr
       module ImplementationRenderers
         module Numbers
 
-        	class NumbersRenderer < TwitterCldr::Js::Renderers::Base
+          class NumbersRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/implementation/numbers/numbers.coffee"
           end
 

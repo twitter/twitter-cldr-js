@@ -56,8 +56,8 @@ describe("ShortDecimalFormatter", function() {
       expect(formatter.format(500)).toEqual("500");
     });
 
-		it("respects the :precision option", function() {
-			expect(formatter.format(12345, {precision: 3})).toEqual("12.345K");
-		});
+    it("respects the :precision option", function() {
+      expect(formatter.format(12345, {precision: 3})).toEqual("12.345K");
+    });
   });
 });

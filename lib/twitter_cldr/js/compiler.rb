@@ -70,7 +70,7 @@ module TwitterCldr
 
       def compile_implementation(options = {})
         bundle = TwitterCldr::Js::Renderers::Bundle.new
-        bundle[:locale] = :en # setting a default locale.
+        bundle[:locale] = TwitterCldr::DEFAULT_LOCALE
         file = compile_bundle(bundle, @features, implementation_renderers, options)
 
         file.source

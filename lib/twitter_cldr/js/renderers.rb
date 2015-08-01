@@ -40,7 +40,7 @@ module TwitterCldr
 
       module DataRenderers
 
-       autoload :Settings,                     'twitter_cldr/js/renderers/data/settings'
+       autoload :Settings,                                'twitter_cldr/js/renderers/data/settings'
 
         module Calendars
           autoload :DateTimeRenderer,                     'twitter_cldr/js/renderers/data/calendars/datetime_renderer'

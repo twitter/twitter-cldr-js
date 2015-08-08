@@ -216,16 +216,16 @@ class TwitterCldr.NumberFormatter.IntegerHelper extends TwitterCldr.NumberFormat
     return string if @groups.length == 0
     tokens = []
 
-    cur_token = this.chop_group(string, @groups[0])
-    tokens.push(cur_token)
-    string = string[0...(string.length - cur_token.length)] if cur_token
+    primary_group = @groups[@groups.length - 1]
+    secondary_group = @groups[0]
 
-    while string.length > @groups[@groups.length - 1]
-      cur_token = this.chop_group(string, @groups[@groups.length - 1])
-      tokens.push(cur_token)
-      string = string[0...(string.length - cur_token.length)] if cur_token
+    [string, token] = @chop_group(string, secondary_group)
+    tokens.push(token)
 
-    tokens.push(string)
+    while string.length
+      [string, token] = @chop_group(string, primary_group)
+      tokens.push(token)
+
     (token for token in tokens when token != null).reverse().join(@separator)
 
   parse_groups: (format) ->
@@ -239,10 +239,15 @@ class TwitterCldr.NumberFormatter.IntegerHelper extends TwitterCldr.NumberFormat
     (widths[index] for index in [0...widths.length] when widths.indexOf(widths[index], index + 1) == -1).reverse()
 
   chop_group: (string, size) ->
-    if string.length > size then string[-size..-1] else null
+    start = Math.max(string.length - size, 0)
+    [string.slice(0, start), string.slice(start)]
 
   prepare_format: (format, symbols) ->
-    format.replace(",", "").replace("+", symbols.plus_sign).replace("-", symbols.minus_sign)
+    format.replace /[,+-]/g, (match) ->
+      switch match
+        when ',' then ''
+        when '+' then symbols.plus_sign
+        when '-' then symbols.minus_sign
 
 class TwitterCldr.NumberFormatter.FractionHelper extends TwitterCldr.NumberFormatter.BaseHelper
   constructor: (token, symbols = {}) ->

@@ -13,11 +13,20 @@ module TwitterCldr
             set_template "mustache/data/parsers/number_parser.coffee"
 
             def group_separator
-              Regexp.escape(parser.send(:group_separator))
+              parser.send(:group_separator)
             end
 
             def decimal_separator
-              Regexp.escape(parser.send(:decimal_separator))
+              parser.send(:decimal_separator)
+            end
+
+            def get_data
+              {
+                :NumberParser => {
+                  :group_separator => group_separator(),
+                  :decimal_separator => decimal_separator()
+                }
+              }
             end
 
             private

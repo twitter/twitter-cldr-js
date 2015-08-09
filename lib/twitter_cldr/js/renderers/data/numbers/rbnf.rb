@@ -16,8 +16,17 @@ module TwitterCldr
               def resource
                 {
                   locale.to_sym => TwitterCldr.resources.get_locale_resource(locale, "rbnf")[locale][:rbnf][:grouping]
-                }.to_json
+                }
               end
+
+              def get_data
+                {
+                  :RBNF => {
+                    :resource => resource()
+                  }
+                }
+              end
+
             end
 
             autoload :NumberDataReaderRenderer, 'twitter_cldr/js/renderers/data/numbers/rbnf/number_data_reader_renderer'

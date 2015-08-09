@@ -41,7 +41,16 @@ module TwitterCldr
                   ret
                 end
                 tokens
-              end.to_json
+              end
+            end
+
+            def get_data
+              {
+                :DateTimeFormatter =>
+                {
+                  :tokens => tokens()
+                }
+              }
             end
           end
 

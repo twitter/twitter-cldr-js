@@ -16,7 +16,7 @@ module TwitterCldr
               block_data.inject({}) do |ret, (k, range)|
                 ret[k] = [range.first, range.last] #{ :first => v.first, :last => v.last }
                 ret
-              end.to_json
+              end
             end
 
             def composition_exclusions
@@ -24,7 +24,7 @@ module TwitterCldr
               composition_exclusions_data.inject([]) do |ret, range|
                 ret << [range.first, range.last] #{ :first => range.first, :last => range.last }
                 ret
-              end.to_json
+              end
             end
 
             def hangul_blocks
@@ -35,7 +35,7 @@ module TwitterCldr
                   ret[k] << [range.first, range.last] # { :first => range.first, :last => range.last }
                 }
                 ret
-              end.to_json
+              end
             end
 
             def canonical_compositions
@@ -43,7 +43,7 @@ module TwitterCldr
               canonical_compositions_data.inject({}) do |ret, (k, v)|
                 ret [k.join("|")] = v
                 ret
-              end.to_json
+              end
             end
 
             def index_keys
@@ -51,7 +51,7 @@ module TwitterCldr
               keys_data.inject({}) do |ret, (k, v)|
                 ret[k] = v
                 ret
-              end.to_json
+              end
             end
 
             def index_data
@@ -66,7 +66,7 @@ module TwitterCldr
                   ret
                 end
               end
-              index_data.to_json
+              index_data
             end
 
             def property_data
@@ -81,7 +81,7 @@ module TwitterCldr
                   ret
                 end
               end
-              property_data.to_json
+              property_data
             end
 
             def block_data
@@ -94,7 +94,17 @@ module TwitterCldr
                   ret
                 end
               end
-              block_data.to_json
+              block_data
+            end
+
+            def get_data
+              {
+                :CodePoint => {
+                  :index_keys => index_keys(),
+                  :index_data => index_data(),
+                  :property_data => property_data()
+                }
+              }
             end
 
           end

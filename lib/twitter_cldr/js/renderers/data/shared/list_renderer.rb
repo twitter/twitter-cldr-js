@@ -13,8 +13,17 @@ module TwitterCldr
             set_template "mustache/data/shared/lists.coffee"
 
             def formats
-              TwitterCldr.get_locale_resource(@locale, :lists)[@locale][:lists][:default].to_json
+              TwitterCldr.get_locale_resource(@locale, :lists)[@locale][:lists][:default]
             end
+
+            def get_data
+              {
+                :ListFormatter => {
+                  :formats => formats()
+                }
+              }
+            end
+
           end
 
         end

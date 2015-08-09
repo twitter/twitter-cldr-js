@@ -14,7 +14,7 @@ module TwitterCldr
 
             def root_resource_data
               resource = TwitterCldr.get_resource("shared", "segments", "segments_root")
-              resource.to_json
+              resource
             end
 
             def tailoring_resource_data
@@ -28,7 +28,7 @@ module TwitterCldr
                 ret[locale] = TwitterCldr.get_resource("shared", "segments", "tailorings", locale)
                 ret
               }
-              resource.to_json
+              resource
             end
 
             def exceptions_resource_data
@@ -41,7 +41,17 @@ module TwitterCldr
               available_locales.inject({}) { |ret, locale|
                 ret[locale] = TwitterCldr.get_resource("uli", "segments", locale)
                 ret
-              }.to_json
+              }
+            end
+
+            def get_data
+              {
+                :BreakIterator => {
+                  :tailoring_resource_data => tailoring_resource_data(),
+                  :exceptions_resource_data => exceptions_resource_data(),
+                  :root_resource => root_resource_data()
+                }
+              }
             end
 
           end

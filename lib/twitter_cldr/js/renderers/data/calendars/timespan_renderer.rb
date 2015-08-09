@@ -35,8 +35,17 @@ module TwitterCldr
                   unit_hash
                 end
                 final
-              end.to_json
+              end
             end
+
+            def get_data
+              {
+                :TimespanFormatter => {
+                  :patterns => patterns()
+                }
+              }
+            end
+
 
           end
 

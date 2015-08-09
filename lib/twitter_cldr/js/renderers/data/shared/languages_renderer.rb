@@ -12,15 +12,25 @@ module TwitterCldr
             set_template "mustache/data/shared/languages.coffee"
 
             def language_data
-              TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages].to_json
+              TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages]
             end
 
             def rtl_data
               TwitterCldr.supported_locales.inject({}) do |ret, locale|
                 ret[locale] = TwitterCldr.get_locale_resource(locale, :layout)[locale][:layout][:orientation][:character_order] == "right-to-left"
                 ret
-              end.to_json
+              end
             end
+
+            def get_data
+              {
+                :Languages => {
+                  :all => language_data(),
+                  :rtl_data => rtl_data()
+                }
+              }
+            end
+
           end
         end
       end

@@ -55,12 +55,7 @@ module TwitterCldr
             options[:files].each_pair do |file_pattern, minify|
               compiler.compile_each(:minify => minify) do |bundle, locale|
                 out_file_path = [output_dir, file_pattern % locale]
-                write_file(out_file_path, bundle.source)
-
-                if bundle.source_map
-                  ext = File.extname(out_file)
-                  write_file("#{out_file.chomp(ext)}.map", bundle.source_map)
-                end
+                write_file(out_file_path, bundle)
               end
             end
 

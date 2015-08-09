@@ -19,6 +19,16 @@ module TwitterCldr
             def current_locale
               self[:locale]
             end
+
+            def get_data
+              {
+                :Settings => {
+                  :is_rtl => is_rtl(),
+                  :locale => current_locale()
+                }
+              }
+            end
+
           end
 
         end

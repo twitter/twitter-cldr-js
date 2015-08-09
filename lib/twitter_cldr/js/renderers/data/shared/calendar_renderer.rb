@@ -12,8 +12,17 @@ module TwitterCldr
             set_template "mustache/data/shared/calendar.coffee"
 
             def calendar
-              TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data.to_json
+              TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data
             end
+
+            def get_data
+              {
+                :Calendar => {
+                  :calendar => calendar()
+                }
+              }
+            end
+
           end
         end
       end

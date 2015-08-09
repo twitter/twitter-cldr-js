@@ -11,6 +11,6 @@ class TwitterCldr.PluralRules
 
   @rule_for: (number, type = 'cardinal') ->
     try
-      return @rules[type](number.toString(), @runtime)
+      return eval(@rules[type])(number.toString(), @runtime)
     catch error
       return "other"

@@ -17,7 +17,15 @@ module TwitterCldr
                 TwitterCldr.supported_locales.inject({}) do |result, locale|
                   result[locale] = TwitterCldr.get_locale_resource(locale, :numbers)
                   result
-                end.to_json
+                end
+              end
+
+              def get_data
+                {
+                  :NumberDataReader => {
+                    :resource => resource()
+                  }
+                }
               end
 
             end

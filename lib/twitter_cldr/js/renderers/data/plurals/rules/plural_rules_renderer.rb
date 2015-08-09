@@ -31,13 +31,34 @@ module TwitterCldr
               "{#{plurals.join(', ')}}"
             end
 
-            def names
-              names = resource.map do |plural_type, plural_data|
-                sub_names = plural_data.keys.map(&:to_s).inspect
-                "#{plural_type}: #{sub_names}"
-              end
+            def rules
+              resource.inject({}) do |ret, (plural_type, plural_data)|
+                rule_list = CldrPlurals::Compiler::RuleList.new(locale)
+                plural_data.each_pair do |name, rule_text|
+                  unless name == :other
+                    rule_list.add_rule(name, rule_text)
+                  end
+                end
 
-              "{#{names.join(', ')}}"
+                ret[plural_type] = rule_list.to_code(:javascript)
+                ret
+              end
+            end
+
+            def names
+              resource.inject({}) do |ret, (plural_type, plural_data)|
+                ret[plural_type] = plural_data.keys
+                ret
+              end
+            end
+
+            def get_data
+              {
+                :PluralRules => {
+                  :rules => rules(),
+                  :names => names()
+                }
+              }
             end
 
             private

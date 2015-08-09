@@ -51,16 +51,29 @@ module TwitterCldr
             end
 
             def tokens
-              tokens_for_locale(@locale).to_json
+              tokens_for_locale(@locale)
             end
 
             def symbols
-              DataReaders::NumberDataReader.new(@locale).symbols.to_json
+              DataReaders::NumberDataReader.new(@locale).symbols
             end
 
             def currencies_data
-              TwitterCldr.get_resource(:shared, :currency_digits_and_rounding).to_json
+              TwitterCldr.get_resource(:shared, :currency_digits_and_rounding)
             end
+
+            def get_data
+              {
+                :NumberFormatter => {
+                  :all_tokens => tokens(),
+                  :symbols => symbols()
+                },
+                :CurrencyFormatter => {
+                  :currencies_data => currencies_data()
+                }
+              }
+            end
+
           end
         end
       end

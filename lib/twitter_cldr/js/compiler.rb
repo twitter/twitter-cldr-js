@@ -24,8 +24,6 @@ module TwitterCldr
       end
 
       def compile_bundle(bundle, bundle_elements, bundle_hash, options = {})
-        options[:minify] = true unless options.include?(:minify)
-
         contents = ""
         bundle_elements.each do |bundle_element|
           if renderer_const = bundle_hash[bundle_element]
@@ -51,18 +49,38 @@ module TwitterCldr
           CompiledFile.new(result)
         end
 
-        # required alias definition that adds twitter_cldr to Twitter's static build process
-        file.source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
-        file.source = Uglifier.compile(file.source) if options[:minify]
-
+        file.source = post_process_file(file.source, options)
         file
+      end
+
+      def post_process_file(file_source, options)
+        options[:minify] = true unless options.include?(:minify)
+        # required alias definition that adds twitter_cldr to Twitter's static build process
+        file_source.gsub!(/\/\*<<module_def>>\s+\*\//, %Q(/*-module-*/\n/*_lib/twitter_cldr_*/))
+
+        if options[:minify]
+          file_source = Uglifier.compile(file_source)
+        end
+
+        file_source
       end
 
       def compile_each(options = {})
         @locales.each do |locale|
           bundle = TwitterCldr::Js::Renderers::DataBundle.new
           bundle[:locale] = locale
-          file = compile_bundle(bundle, @data, data_renderers, options)
+
+          bundle[:contents] = data_renderers.inject({}) do |ret, (data_renderer_name, data_renderer_class)|
+            data_renderer = data_renderer_class.new(:locale => locale)
+            data = data_renderer.get_data
+            data.each_pair do |name, value|
+              ret[name] = value
+            end
+
+            ret
+          end.to_json
+
+          file = post_process_file(CoffeeScript.compile(bundle.render), options)
 
           yield file, TwitterCldr.twitter_locale(locale)
         end

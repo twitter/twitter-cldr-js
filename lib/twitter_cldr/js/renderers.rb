@@ -11,7 +11,7 @@ module TwitterCldr
       autoload :DataBundle,                               'twitter_cldr/js/renderers/data_bundle'
       autoload :TestBundle,                               'twitter_cldr/js/renderers/test_bundle'
 
-      module ImplementationRenderers
+      module Implementation
         autoload :Settings,                               'twitter_cldr/js/renderers/implementation/settings'
         autoload :Calendars,                              'twitter_cldr/js/renderers/implementation/calendars'
         autoload :PluralRules,                            'twitter_cldr/js/renderers/implementation/plurals'
@@ -23,7 +23,7 @@ module TwitterCldr
       module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'
           autoload :BreakIteratorRenderer,                'twitter_cldr/js/renderers/implementation/shared'
-          autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/data/shared/code_point_renderer'
+          autoload :CodePointRenderer,                    'twitter_cldr/js/renderers/implementation/shared'
           autoload :CalendarRenderer,                     'twitter_cldr/js/renderers/implementation/shared'
           autoload :CurrenciesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/currencies_renderer'
           autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/implementation/shared/languages_renderer'
@@ -31,14 +31,14 @@ module TwitterCldr
           autoload :NumberingSystemsRenderer,             'twitter_cldr/js/renderers/implementation/shared/numbering_systems_renderer'
           autoload :PhoneCodesRenderer,                   'twitter_cldr/js/renderers/implementation/shared/phone_codes_renderer'
           autoload :PostalCodesRenderer,                  'twitter_cldr/js/renderers/implementation/shared/postal_codes_renderer'
-          autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/data/shared/languages_renderer'
+          autoload :LanguagesRenderer,                    'twitter_cldr/js/renderers/implementation/shared'
           autoload :UnicodeRegexRenderer,                 'twitter_cldr/js/renderers/implementation/shared'
           autoload :TerritoriesContainmentRenderer,       'twitter_cldr/js/renderers/implementation/shared/territories_containment_renderer'
         end
 
       end
 
-      module DataRenderers
+      module Data
 
        autoload :Settings,                                'twitter_cldr/js/renderers/data/settings'
 

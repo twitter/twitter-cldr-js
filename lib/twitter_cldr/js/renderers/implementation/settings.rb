@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Settings
 
           class SettingsRenderer < TwitterCldr::Js::Renderers::Base

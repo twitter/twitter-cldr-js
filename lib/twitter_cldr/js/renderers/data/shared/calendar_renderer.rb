@@ -6,10 +6,9 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Shared
           class CalendarRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/shared/calendar.coffee"
 
             def calendar
               TwitterCldr::DataReaders::CalendarDataReader.new(@locale).calendar.calendar_data

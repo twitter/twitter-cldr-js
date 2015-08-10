@@ -6,11 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Settings
 
           class SettingsRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/settings.coffee"
 
             def is_rtl
               TwitterCldr::Shared::Languages.is_rtl?(self[:locale])

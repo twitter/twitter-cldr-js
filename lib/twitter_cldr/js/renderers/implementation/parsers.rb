@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Parsers
 
           class ParserRenderer < TwitterCldr::Js::Renderers::Base

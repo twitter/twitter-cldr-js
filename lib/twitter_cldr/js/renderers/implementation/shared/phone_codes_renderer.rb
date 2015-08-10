@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Shared
           class PhoneCodesRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/implementation/shared/phone_codes.coffee"

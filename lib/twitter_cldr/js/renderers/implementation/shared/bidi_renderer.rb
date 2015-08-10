@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Shared
 
           class BidiRenderer < TwitterCldr::Js::Renderers::Base

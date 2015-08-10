@@ -6,12 +6,11 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Numbers
           module RBNF
 
             class RBNFRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/data/numbers/rbnf/rbnf.coffee"
 
               def resource
                 {

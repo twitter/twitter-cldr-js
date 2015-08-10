@@ -9,7 +9,7 @@ require 'cldr-plurals/javascript_runtime'
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module PluralRules
 
           class PluralRulesRenderer < TwitterCldr::Js::Renderers::Base

@@ -6,10 +6,9 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Shared
           class LanguagesRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/shared/languages.coffee"
 
             def language_data
               TwitterCldr.get_locale_resource(@locale, :languages)[@locale][:languages]

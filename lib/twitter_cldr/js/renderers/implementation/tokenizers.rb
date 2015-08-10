@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Tokenizers
 
           class NumberTokenizerRenderer < TwitterCldr::Js::Renderers::Base

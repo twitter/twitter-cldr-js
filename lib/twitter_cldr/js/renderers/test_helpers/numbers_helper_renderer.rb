@@ -14,7 +14,7 @@ module TwitterCldr
 
             def global_tokens
               TwitterCldr.supported_locales.inject({}) do |result, locale|
-                numbers_renderer = TwitterCldr::Js::Renderers::DataRenderers::Numbers::NumbersRenderer.new
+                numbers_renderer = TwitterCldr::Js::Renderers::Data::Numbers::NumbersRenderer.new
                 result[locale] = numbers_renderer.tokens_for_locale(locale)
                 result
               end.to_json

@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Shared
           class TerritoriesContainmentRenderer < TwitterCldr::Js::Renderers::Base
             set_template 'mustache/implementation/shared/territories_containment.coffee'

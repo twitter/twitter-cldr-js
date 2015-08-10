@@ -6,11 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Parsers
 
           class NumberParser < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/parsers/number_parser.coffee"
 
             def group_separator
               parser.send(:group_separator)

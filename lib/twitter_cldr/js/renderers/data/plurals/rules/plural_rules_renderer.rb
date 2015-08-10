@@ -9,11 +9,10 @@ require 'cldr-plurals/javascript_runtime'
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module PluralRules
 
           class PluralRulesRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/plurals/rules.coffee"
 
             def rules
               plurals = resource.map do |plural_type, plural_data|

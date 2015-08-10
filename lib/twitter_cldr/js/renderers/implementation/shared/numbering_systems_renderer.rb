@@ -6,7 +6,7 @@
 module TwitterCldr
   module Js
     module Renderers
-      module ImplementationRenderers
+      module Implementation
         module Shared
           class NumberingSystemsRenderer < TwitterCldr::Js::Renderers::Base
             set_template "mustache/implementation/shared/numbering_systems.coffee"

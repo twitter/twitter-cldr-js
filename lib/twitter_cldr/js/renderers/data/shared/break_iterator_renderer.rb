@@ -6,11 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Shared
 
           class BreakIteratorRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/shared/break_iterator.coffee"
 
             def root_resource_data
               resource = TwitterCldr.get_resource("shared", "segments", "segments_root")

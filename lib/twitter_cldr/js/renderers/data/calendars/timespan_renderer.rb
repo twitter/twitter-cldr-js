@@ -6,11 +6,10 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Calendars
 
           class TimespanRenderer < TwitterCldr::Js::Renderers::Base
-            set_template "mustache/data/calendars/timespan.coffee"
 
             def patterns
               [:ago, :until, :none].inject({}) do |final, direction|

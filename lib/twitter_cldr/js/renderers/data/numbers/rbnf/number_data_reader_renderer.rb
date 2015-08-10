@@ -6,12 +6,11 @@
 module TwitterCldr
   module Js
     module Renderers
-      module DataRenderers
+      module Data
         module Numbers
           module RBNF
 
             class NumberDataReaderRenderer < TwitterCldr::Js::Renderers::Base
-              set_template "mustache/data/numbers/rbnf/number_data_reader.coffee"
 
               def resource
                 TwitterCldr.supported_locales.inject({}) do |result, locale|

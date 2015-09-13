@@ -29,3 +29,10 @@ else
   this.TwitterCldrDataBundle
 
 root[key] = obj for key, obj of TwitterCldrDataBundle
+
+if this.TwitterCldr?
+  try
+    this.TwitterCldr.get_data()
+  catch
+    this.TwitterCldr.set_data(TwitterCldrDataBundle)
+

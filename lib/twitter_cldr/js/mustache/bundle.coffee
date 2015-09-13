@@ -35,7 +35,10 @@ TwitterCldr.set_data = (bundle) ->
   null
 
 TwitterCldr.get_data = ->
-  TwitterCldr.data || {}
+  if (TwitterCldr.data)?
+  	TwitterCldr.data
+  else
+  	throw 'Data not set'
 
 root = if exports?
   exports
@@ -44,3 +47,8 @@ else
   this.TwitterCldr
 
 root[key] = obj for key, obj of TwitterCldr
+
+if this.TwitterCldrDataBundle?
+  TwitterCldr.set_data(this.TwitterCldrDataBundle)
+
+

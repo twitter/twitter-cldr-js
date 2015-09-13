@@ -33,10 +33,11 @@ class TwitterCldr.DateTimeFormatter
       'v': 'timezone_generic_non_location'
       'V': 'timezone_metazone'
 
-  @tokens = {}
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
   tokens: ->
-    TwitterCldr.DateTimeFormatter.tokens
+    @constructor.data().tokens
 
   format: (obj, options) ->
     format_token = (token) =>
@@ -44,11 +45,11 @@ class TwitterCldr.DateTimeFormatter
 
       switch token.type
         when "pattern"
-          this.result_for_token(token, obj)
+          @result_for_token(token, obj)
         else
           token.value.replace(/'([^']+)'/g, '$1')
 
-    tokens = this.get_tokens(obj, options)
+    tokens = @get_tokens(obj, options)
     (format_token(token) for token in tokens).join("")
 
   get_tokens: (obj, options) ->
@@ -56,7 +57,7 @@ class TwitterCldr.DateTimeFormatter
     type = options.type || "default"
 
     if format == "additional"
-      @tokens()["date_time"][format][this.additional_format_selector().find_closest(options.type)]
+      @tokens()["date_time"][format][@additional_format_selector().find_closest(options.type)]
     else
       @tokens()[format][type]
 
@@ -74,14 +75,14 @@ class TwitterCldr.DateTimeFormatter
       when 0
         choices = ["", ""]
       when 1, 2, 3
-        choices = TwitterCldr.Calendar.calendar["eras"]["abbr"]
+        choices = TwitterCldr.Calendar.calendar()["eras"]["abbr"]
       else
-        choices = TwitterCldr.Calendar.calendar["eras"]["name"]
+        choices = TwitterCldr.Calendar.calendar()["eras"]["name"]
 
     index = if (date.getFullYear() < 0) then 0 else 1
     result = choices[index]
 
-    if result? then result else this.era(date, pattern[0..-2], length - 1)
+    if result? then result else @era(date, pattern[0..-2], length - 1)
 
   year: (date, pattern, length) ->
     year = date.getFullYear().toString()
@@ -192,14 +193,14 @@ class TwitterCldr.DateTimeFormatter
         day = date.getDay()
         if day == 0 then "7" else day.toString()
       else
-        this.weekday(date, pattern, length)
+        @weekday(date, pattern, length)
 
   weekday_local_stand_alone: (date, pattern, length) ->
     switch length
       when 1
-        this.weekday_local(date, pattern, length)
+        @weekday_local(date, pattern, length)
       else
-        this.weekday(date, pattern, length)
+        @weekday(date, pattern, length)
 
   period: (time, pattern, length) ->
     if time.getHours() > 11

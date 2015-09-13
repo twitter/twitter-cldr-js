@@ -6,21 +6,22 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("NumberParser", function() {
+  var separators, parser;
   beforeEach(function() {
     TwitterCldr.set_data(data);
-    separators = [",", "\\."]
+    separators = [",", "\\."];
     parser = new TwitterCldr.NumberParser();
   });
 
-  describe("#get_group_separator()", function() {
+  describe("#group_separator()", function() {
     it("returns the correct group separator", function() {
-      expect(parser.get_group_separator()).toEqual(",");
+      expect(parser.group_separator()).toEqual(",");
     });
   });
 
-  describe("#get_decimal_separator()", function() {
+  describe("#decimal_separator()", function() {
     it("returns the correct decimal separator", function() {
-      expect(parser.get_decimal_separator()).toEqual("\\\.");
+      expect(parser.decimal_separator()).toEqual("\\\.");
     });
   });
 

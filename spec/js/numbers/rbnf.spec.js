@@ -5,37 +5,42 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 TwitterCldr.set_data(data);
 
+var en_rbnf_data_backup = TwitterCldr.Utilities.clone(data.RBNF);
+var en_plural_rules_data_backup = TwitterCldr.Utilities.clone(data.PluralRules);
+var en_number_formatter_data_backup = TwitterCldr.Utilities.clone(data.NumberFormatter);
+
 eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/test_resources.js', 'utf8'));
 
-formatter = new TwitterCldr.RBNF();
-TwitterCldr.RBNF.resource = TwitterCldr.RBNF.global_resource;
+var formatter = new TwitterCldr.RBNF();
 
 describe("RBNF", function() {
 
-  for (locale in TwitterCldr.RBNF.test_resource) {
+  for (var locale in TwitterCldr.RBNF.test_resource) {
     if (["ar", "ja", "ko", "zh", "ja", "zh-Hant", "ja", "hi", "ta"].indexOf(locale) !== -1)
       continue;
 
-    TwitterCldr.PluralRules.rules = TwitterCldr.PluralRules.global_rules[locale];
-    TwitterCldr.PluralRules.names = TwitterCldr.PluralRules.global_names[locale];
-    TwitterCldr.NumberFormatter.all_tokens = TwitterCldr.NumberFormatter.global_tokens[locale];
-    TwitterCldr.NumberFormatter.symbols = TwitterCldr.NumberFormatter.global_symbols[locale];
+    data.RBNF.resource = TwitterCldr.RBNF.global_resource;
+    data.PluralRules.rules = TwitterCldr.PluralRules.global_rules[locale];
+    data.PluralRules.names = TwitterCldr.PluralRules.global_names[locale];
+    data.NumberFormatter.all_tokens = TwitterCldr.NumberFormatter.global_tokens[locale];
+    data.NumberFormatter.symbols = TwitterCldr.NumberFormatter.global_symbols[locale];
+    TwitterCldr.set_data(data);
 
     formatter.locale = locale;
 
     describe("for locale: " + locale, function() {
-      for (rule_group in TwitterCldr.RBNF.test_resource[locale]) {
+      for (var rule_group in TwitterCldr.RBNF.test_resource[locale]) {
         if (formatter.group_names().indexOf(rule_group) === -1)
           continue;
 
         describe("for Group: " + rule_group, function() {
-          for (rule_set in TwitterCldr.RBNF.test_resource[locale][rule_group]) {
+          for (var rule_set in TwitterCldr.RBNF.test_resource[locale][rule_group]) {
             if (formatter.rule_set_names_for_group(rule_group).indexOf(rule_set) === -1)
               continue;
 
             describe("for Set: " + rule_set, function() {
               it("formats " + "test_case" + " correctly", function() {
-                for (test_case in TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set]) {
+                for (var test_case in TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set]) {
                   try {
                     var got = formatter.format(TwitterCldr.PluralRules.runtime.toNum(test_case), rule_group, rule_set);
                     var expected = TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set][test_case];
@@ -46,7 +51,7 @@ describe("RBNF", function() {
                     // Ignore `Not implemented` errors.
                   }
                 }
-              }());
+              });
             });
           }
         });
@@ -55,4 +60,8 @@ describe("RBNF", function() {
   }
 });
 
+data.PluralRules = en_plural_rules_data_backup;
+data.NumberFormatter = en_number_formatter_data_backup;
+data.RBNF = en_rbnf_data_backup;
 TwitterCldr.set_data(data);
+

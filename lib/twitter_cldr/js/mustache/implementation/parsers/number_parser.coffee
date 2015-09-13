@@ -5,13 +5,14 @@ class TwitterCldr.NumberParser
   constructor: ->
     @separator_chars = ['\\.', ',', '\\s'].join("")
 
-  @group_separator = {}
-  @decimal_separator = {}
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
-  get_group_separator: ->
-    TwitterCldr.NumberParser.group_separator
-  get_decimal_separator: ->
-    TwitterCldr.NumberParser.decimal_separator
+  group_separator: ->
+    @constructor.data().group_separator
+
+  decimal_separator: ->
+    @constructor.data().decimal_separator
 
   parse: (number_text, options = {}) ->
     options.strict = true if options.strict is undefined
@@ -80,8 +81,8 @@ class TwitterCldr.NumberParser
     valid
 
   get_separators: (strict = false) ->
-    group = if strict then @get_group_separator() else @separator_chars
-    decimal = if strict then @get_decimal_separator() else @separator_chars
+    group = if strict then @group_separator() else @separator_chars
+    decimal = if strict then @decimal_separator() else @separator_chars
     { group: group, decimal: decimal }
 
   tokenize: (number_text, group, decimal) ->

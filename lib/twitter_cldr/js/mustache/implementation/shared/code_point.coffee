@@ -25,6 +25,9 @@ class TwitterCldr.CodePoint
   @indices = ["category", "bidi_class", "bidi_mirrored"]
   @properties = ["sentence_break", "line_break", "word_break"]
 
+  @data :->
+    TwitterCldr.get_data()[@name]
+
   constructor : (@fields) ->
     for i in [0...TwitterCldr.CodePoint.code_point_fields.length] by 1
       field = TwitterCldr.CodePoint.code_point_fields[i]
@@ -69,7 +72,7 @@ class TwitterCldr.CodePoint
       return @index_key_cache[prop_value]
 
     result = []
-    for index_key, index_names of @index_keys
+    for index_key, index_names of @data().index_keys
       if index_key.indexOf(prop_value) > -1
         for index_name in index_names
           result = result.concat(@get_index(index_name)[index_key])
@@ -78,13 +81,9 @@ class TwitterCldr.CodePoint
 
   @index_key_cache = {}
 
-  @index_keys = {}
-
-  @index_data = {}
-
   @get_index : (index_name) ->
     return @index_cache[index_name] if @index_cache[index_name]?
-    index_data = @index_data[index_name]
+    index_data = @data().index_data[index_name]
     index_data_formatted = {}
     for k, v of index_data
       index_data_formatted[k] = []
@@ -102,11 +101,9 @@ class TwitterCldr.CodePoint
 
     regex.slice(1) # get rid of the initial '|'
 
-  @property_data = {}
-
   @get_property_data : (property_name) ->
     return @property_data_cache[property_name] if @property_data_cache[property_name]?
-    property_data = @property_data[property_name]
+    property_data = @data().property_data[property_name]
     property_data_formatted = {}
     for k, v of property_data
       property_data_formatted[k] = []
@@ -114,7 +111,6 @@ class TwitterCldr.CodePoint
         property_data_formatted[k].push(new TwitterCldr.Range(range[0], range[1]))
 
     @property_data_cache[property_name] = property_data_formatted
-
 
   @index_cache = {}
 

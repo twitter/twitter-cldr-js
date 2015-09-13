@@ -2,16 +2,15 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.BreakIterator
-  constructor : (locale = TwitterCldr.Settings.locale, options = {}) ->
+  constructor : (locale = TwitterCldr.Settings.locale(), options = {}) ->
     @locale = locale
     @use_uli_exceptions = (if options["use_uli_exceptions"]? then options["use_uli_exceptions"] else true)
     @exceptions_cache = {}
     @segmentation_tokenizer = new TwitterCldr.SegmentationTokenizer()
     @segmentation_parser = new TwitterCldr.SegmentationParser()
 
-  @tailoring_resource_data = {}
-  @exceptions_resource_data = {}
-  @root_resource = {}
+  @data :->
+    TwitterCldr.get_data()[@name]
 
   each_sentence : (str, block) ->
     @each_boundary(str, "sentence", block)
@@ -137,13 +136,13 @@ class TwitterCldr.BreakIterator
 
     results
 
-
   resource_for : (boundary_name) ->
-    TwitterCldr.BreakIterator.root_resource["segments"][boundary_name]
+    @constructor.data().root_resource["segments"][boundary_name]
 
   tailoring_resource_for : (locale, boundary_name) ->
-    TwitterCldr.BreakIterator.tailoring_resource_data[locale][locale]["segments"][boundary_name]
+    @constructor.data().tailoring_resource_data[locale][locale]["segments"][boundary_name]
+    # TwitterCldr.BreakIterator.tailoring_resource_data[locale][locale]["segments"][boundary_name]
 
   exceptions_for : (locale, boundary_name) ->
-    result = TwitterCldr.BreakIterator.exceptions_resource_data[locale][locale]["exceptions"]
+    result = @constructor.data().exceptions_resource_data[locale][locale]["exceptions"]
     if result? then result else []

@@ -1,11 +1,12 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("PluralRules", function() {
-
+  var formatter;
   beforeEach(function() {
-    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.TimespanFormatter();
   });
 
@@ -20,7 +21,7 @@ describe("PluralRules", function() {
 
       expect(actual_rules.length).toEqual(expected_rules.length);
 
-      for (actual_rule_idx in actual_rules) {
+      for (var actual_rule_idx in actual_rules) {
         expect(expected_rules).toContain(actual_rules[actual_rule_idx]);
       }
     });

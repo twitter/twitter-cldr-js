@@ -5,11 +5,11 @@
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-TwitterCldr.set_data(data);
 var formatter;
 
 describe("ListFormatter", function() {
   beforeEach(function() {
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.ListFormatter();
   });
 
@@ -21,8 +21,6 @@ describe("ListFormatter", function() {
         TwitterCldr.set_data(data);
         formatter = new TwitterCldr.ListFormatter();
         expect(formatter.compose("{0} \u0648 {1}", list)).toEqual("curly \u0648 larry");
-        data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-        TwitterCldr.set_data(data);
       });
 
       it("should format a variable number of elements correctly", function() {
@@ -43,19 +41,23 @@ describe("ListFormatter", function() {
     });
 
     describe("with a standard resource", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        data = {
-          ListFormatter: {
+        TwitterCldr.ListFormatter.data = function() {
+          return {
             formats : {
               2        : "{0} $ {1}",
               "middle" : "{0}; {1}",
               "start"  : "{0}< {1}",
               "end"    : "{0}> {1}"
             }
-          }
+          };
         };
-        TwitterCldr.set_data(data);
         formatter = new TwitterCldr.ListFormatter();
+      });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
       });
 
       describe("#compose_list", function() {
@@ -90,7 +92,7 @@ describe("ListFormatter", function() {
         });
 
         it("should format a list with a single element correctly", function() {
-          expect(formatter.format(["larry"])).toEqual("larry")
+          expect(formatter.format(["larry"])).toEqual("larry");
         });
       });
     });
@@ -115,21 +117,26 @@ describe("ListFormatter", function() {
         });
 
         it("should format a list with a single element correctly", function() {
-          expect(formatter.format(["larry"])).toEqual("larry")
+          expect(formatter.format(["larry"])).toEqual("larry");
         });
       });
     });
 
     describe("with a resource that doesn't contain a start or end", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        data = {
-          ListFormatter: {
+        TwitterCldr.ListFormatter.data = function() {
+          return {
             formats : { "middle": "{0}; {1}" }
-          }
+          };
         };
-        TwitterCldr.set_data(data);
         formatter = new TwitterCldr.ListFormatter();
       });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
+      });
+
 
       describe("#compose_list", function() {
         it("should correctly compose a list with four elements, falling back to 'middle' for the beginning and end", function() {
@@ -139,14 +146,18 @@ describe("ListFormatter", function() {
     });
 
     describe("with an empty resource", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        data = {
-          ListFormatter: {
+        TwitterCldr.ListFormatter.data = function() {
+          return {
             formats : {}
-          }
+          };
         };
-        TwitterCldr.set_data(data);
         formatter = new TwitterCldr.ListFormatter();
+      });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
       });
 
       describe("#compose_list", function() {

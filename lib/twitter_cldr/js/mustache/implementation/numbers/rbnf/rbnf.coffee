@@ -2,7 +2,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.RBNF
-  constructor : (@locale = TwitterCldr.Settings.locale) ->
+  constructor : (@locale = TwitterCldr.Settings.locale()) ->
     @default_spellout_options = {
       'rule_group' : "SpelloutRules",
       'rule_set' : "spellout-numbering"
@@ -10,13 +10,14 @@ class TwitterCldr.RBNF
     @rule_group_cache = {}
     @rule_set_name_cache = {}
 
-  @resource = {}
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
-  get_resource : ->
-    TwitterCldr.RBNF.resource
+  resource : ->
+    @constructor.data().resource
 
   get_resource_for_locale : (locale = @locale)->
-    @get_resource()[locale]
+    @resource()[locale]
 
   format : (number, rule_group_name, rule_set_name) ->
     if !rule_group_name? and !rule_set_name?

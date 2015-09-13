@@ -2,15 +2,16 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.PluralRules
-  @rules = {}
   @runtime = `{{{runtime}}}`
-  @names = {}
+
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
   @all: (type = 'cardinal') ->
-    return @names[type]
+    return @data().names[type]
 
   @rule_for: (number, type = 'cardinal') ->
     try
-      return eval(@rules[type])(number.toString(), @runtime)
+      return eval(@data().rules[type])(number.toString(), @runtime)
     catch error
       return "other"

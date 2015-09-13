@@ -9,7 +9,7 @@ class TwitterCldr.AdditionalDateFormatSelector
     if !goal_pattern? || goal_pattern.replace(/^\s+|\s+$/g, "").length == 0
       null
     else
-      ranks = this.rank(goal_pattern)
+      ranks = @rank(goal_pattern)
       min_rank = 100
       min_key = null
 
@@ -38,13 +38,13 @@ class TwitterCldr.AdditionalDateFormatSelector
     result
 
   all_separated_patterns: ->
-    this.separate(key) for key of @pattern_hash
+    @separate(key) for key of @pattern_hash
 
   score: (entities, goal_entities) ->
     # weight existence a little more heavily than the others
-    score = this.exist_score(entities, goal_entities) * 2
-    score += this.position_score(entities, goal_entities)
-    score + this.count_score(entities, goal_entities)
+    score = @exist_score(entities, goal_entities) * 2
+    score += @position_score(entities, goal_entities)
+    score + @count_score(entities, goal_entities)
 
   position_score: (entities, goal_entities) ->
     sum = 0
@@ -76,10 +76,10 @@ class TwitterCldr.AdditionalDateFormatSelector
     sum
 
   rank: (goal_pattern) ->
-    separated_goal_pattern = this.separate(goal_pattern)
+    separated_goal_pattern = @separate(goal_pattern)
     result = {}
 
-    for separated_pattern in this.all_separated_patterns()
-      result[separated_pattern.join("")] = this.score(separated_pattern, separated_goal_pattern)
+    for separated_pattern in @all_separated_patterns()
+      result[separated_pattern.join("")] = @score(separated_pattern, separated_goal_pattern)
 
     result

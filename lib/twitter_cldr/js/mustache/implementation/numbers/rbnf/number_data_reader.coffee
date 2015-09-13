@@ -52,10 +52,11 @@ class TwitterCldr.NumberDataReader
 
     @number_data = {}
 
-  @resource = {}
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
   resource : ->
-    TwitterCldr.NumberDataReader.resource
+    @constructor.data().resource
 
   traverse : (path, obj = @resource()) ->
     TwitterCldr.Utilities.traverse_object(obj, path)

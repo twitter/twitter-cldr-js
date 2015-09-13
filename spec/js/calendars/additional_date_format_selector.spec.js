@@ -5,11 +5,12 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("AdditionalDateFormatSelector", function() {
+  var selector;
   beforeEach(function() {
     TwitterCldr.set_data(data);
     selector = new TwitterCldr.AdditionalDateFormatSelector(
-      TwitterCldr.Calendar.calendar.additional_formats
-    )
+      TwitterCldr.Calendar.calendar().additional_formats
+    );
   });
 
   describe("#position_score", function() {
@@ -117,7 +118,7 @@ describe("AdditionalDateFormatSelector", function() {
   describe("#patterns", function() {
     it("returns a list of all available patterns", function() {
       var patterns = selector.patterns();
-      expect(patterns.constructor.name).toEqual("Array")
+      expect(patterns.constructor.name).toEqual("Array");
       expect(patterns.indexOf("MMMd")).toBeGreaterThan(-1);
       expect(patterns.indexOf("yQQQ")).toBeGreaterThan(-1);
       expect(patterns.indexOf("yQQQQ")).toBeGreaterThan(-1);

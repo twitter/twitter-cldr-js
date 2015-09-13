@@ -1,11 +1,13 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-describe("Calendar", function() {
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
+describe("Calendar", function() {
+  var formatter;
   beforeEach(function() {
-    TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
-    eval(require('fs').readFileSync('lib/assets/javascripts/twitter_cldr/en.js', 'utf8'));
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.TimespanFormatter();
   });
 

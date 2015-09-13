@@ -11,14 +11,14 @@ class TwitterCldr.NumberFormatter
       'plus_sign': '+'
       'minus_sign': '-'
 
-  @all_tokens = {}
-  @symbols = {}
+  @data: ->
+    TwitterCldr.get_data().NumberFormatter
 
   all_tokens : ->
-    TwitterCldr.NumberFormatter.all_tokens
+    @constructor.data().all_tokens
 
   symbols : ->
-    TwitterCldr.NumberFormatter.symbols
+    @constructor.data().symbols
 
   format: (number, options = {}) ->
     opts = this.default_format_options_for(number)
@@ -118,13 +118,11 @@ class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
 class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
   constructor: (options = {}) ->
     @default_currency_symbol = "$"
-    @default_precision = @get_currencies_data().DEFAULT.digits
+    @default_precision = @currencies_data().DEFAULT.digits
     super
 
-  @currencies_data = {}
-
-  get_currencies_data: ->
-    TwitterCldr.CurrencyFormatter.currencies_data
+  currencies_data: ->
+    TwitterCldr.get_data().CurrencyFormatter.currencies_data
 
   format: (number, options = {}) ->
     if options.currency
@@ -152,7 +150,7 @@ class TwitterCldr.CurrencyFormatter extends TwitterCldr.NumberFormatter
     if number < 0 then @all_tokens().currency.negative else @all_tokens().currency.positive
 
   defaults_for_currency: (currency) ->
-    @get_currencies_data()[currency] || @get_currencies_data().DEFAULT
+    @currencies_data()[currency] || @currencies_data().DEFAULT
 
 class TwitterCldr.AbbreviatedNumberFormatter extends TwitterCldr.NumberFormatter
   NUMBER_MAX: Math.pow(10, 15)

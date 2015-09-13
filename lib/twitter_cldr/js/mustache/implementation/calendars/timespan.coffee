@@ -15,20 +15,20 @@ class TwitterCldr.TimespanFormatter
       "year":   31556926
     }
 
-  @patterns = {}
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
   patterns: ->
-    TwitterCldr.TimespanFormatter.patterns
-
+    @constructor.data().patterns
 
   format: (seconds, fmt_options = {}) ->
     options = {}
     options[key] = obj for key, obj of fmt_options
     options["direction"] ||= (if seconds < 0 then "ago" else "until")
-    options["unit"] = this.calculate_unit(Math.abs(seconds), options) if options["unit"] is null or options["unit"] is undefined
+    options["unit"] = @calculate_unit(Math.abs(seconds), options) if options["unit"] is null or options["unit"] is undefined
     options["type"] ||= @default_type
-    options["number"] = this.calculate_time(Math.abs(seconds), options["unit"])
-    number = this.calculate_time(Math.abs(seconds), options["unit"])
+    options["number"] = @calculate_time(Math.abs(seconds), options["unit"])
+    number = @calculate_time(Math.abs(seconds), options["unit"])
     options["rule"] = TwitterCldr.PluralRules.rule_for(number)
 
     @patterns()[options["direction"]][options["unit"]][options["type"]][options["rule"]].replace(/\{[0-9]\}/, number.toString())

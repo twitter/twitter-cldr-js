@@ -4,7 +4,8 @@
 class TwitterCldr.Calendar
   REDIRECT_PREFIX = "calendars.gregorian."
 
-  @calendar: {}
+  @calendar: ->
+    TwitterCldr.get_data()[@name].calendar
 
   @months: (options = {}) ->
     root = @get_root("months", options)
@@ -22,7 +23,7 @@ class TwitterCldr.Calendar
     @get_root("periods", options)
 
   @get_root: (key, options = {}) ->
-    root = @calendar[key]
+    root = @calendar()[key]
     names_form = options["names_form"] || "wide"
 
     format = options.format || if root?["stand-alone"]?[names_form]?
@@ -35,6 +36,6 @@ class TwitterCldr.Calendar
     # handle redirects, e.g., { "days": { "stand-alone": { "wide": "calendars.gregorian.days.format.wide" } } }
     if typeof data is "string" and data.indexOf(REDIRECT_PREFIX) == 0
       [key, format, names_form] = data.slice(REDIRECT_PREFIX.length).split(".")
-      @calendar[key]?[format]?[names_form] || throw "invalid redirect #{data}"
+      @calendar()[key]?[format]?[names_form] || throw "invalid redirect #{data}"
     else
       data

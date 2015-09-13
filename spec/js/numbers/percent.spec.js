@@ -5,6 +5,8 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("PercentFormatter", function() {
+  var formatter;
+
   beforeEach(function() {
     TwitterCldr.set_data(data);
     formatter = new TwitterCldr.PercentFormatter();

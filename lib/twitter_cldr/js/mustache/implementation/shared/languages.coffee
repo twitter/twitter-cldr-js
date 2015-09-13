@@ -3,13 +3,15 @@
 
 class TwitterCldr.Languages
 
-  @all = {};
+  @data: ->
+    TwitterCldr.get_data()[@name]
 
-  @rtl_data = {};
+  @all: ->
+  	@data().all
 
   @from_code: (code) ->
-    @all[code] or null
+    @data().all[code] or null
 
   @is_rtl: (locale) ->
-    result = @rtl_data[locale]
+    result = @data().rtl_data[locale]
     if result? then result else null

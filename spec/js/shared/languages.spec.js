@@ -8,10 +8,10 @@ TwitterCldr.set_data(data);
 describe("Languages", function() {
   describe("#all", function() {
     it("checks if some locales are supported in the current locale", function() {
-      expect(TwitterCldr.Languages.all.ja).not.toBe(null);
-      expect(TwitterCldr.Languages.all.es).not.toBe(null);
-      expect(TwitterCldr.Languages.all.gl).not.toBe(null);
-      expect(TwitterCldr.Languages.all.ur).not.toBe(null);
+      expect(TwitterCldr.Languages.all().ja).not.toBe(null);
+      expect(TwitterCldr.Languages.all().es).not.toBe(null);
+      expect(TwitterCldr.Languages.all().gl).not.toBe(null);
+      expect(TwitterCldr.Languages.all().ur).not.toBe(null);
     });
   });
   describe("#from_code", function() {
@@ -22,7 +22,7 @@ describe("Languages", function() {
     it("returns null for an invalid language code", function() {
       expect(TwitterCldr.Languages.from_code("xx")).toBe(null);
     });
-  })
+  });
   describe("#is_rtl", function() {
     it("should return true for certain locales", function() {
       expect(TwitterCldr.Languages.is_rtl("ar")).toBe(true);

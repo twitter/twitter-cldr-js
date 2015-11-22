@@ -40,6 +40,9 @@ TwitterCldr.get_data = ->
   else
   	throw 'Data not set'
 
+TwitterCldr.is_data_set = ->
+  return (TwitterCldr.data)?
+
 root = if exports?
   exports
 else

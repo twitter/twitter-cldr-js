@@ -31,8 +31,7 @@ else
 root[key] = obj for key, obj of TwitterCldrDataBundle
 
 if this.TwitterCldr?
-  try
+  if this.TwitterCldr.is_data_set()
     this.TwitterCldr.get_data()
-  catch
+  else
     this.TwitterCldr.set_data(TwitterCldrDataBundle)
-

@@ -20,13 +20,6 @@
 ###<<module_def>>###
 
 TwitterCldr = {}
-{{#is_rtl?}}
-TwitterCldr.is_rtl = true;
-{{/is_rtl?}}
-{{^is_rtl?}}
-TwitterCldr.is_rtl = false;
-{{/is_rtl?}}
-TwitterCldr.locale = "{{current_locale}}";
 {{> utilities}}
 {{{contents}}}
 

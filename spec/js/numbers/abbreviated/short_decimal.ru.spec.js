@@ -2,7 +2,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 
-var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.js');
 var data = require('../../../../lib/assets/javascripts/twitter_cldr/ru.js');
 
 describe("ShortDecimalFormatter", function() {

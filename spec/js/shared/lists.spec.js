@@ -3,7 +3,7 @@
 
 // var TwitterCldr, formatter;
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 var formatter;
 

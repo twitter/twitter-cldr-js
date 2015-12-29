@@ -33,11 +33,11 @@ Check out [twitter/twitter-cldr-npm](https://github.com/twitter/twitter-cldr-npm
 
 ## Usage with Rails
 
-To use twitter-cldr-js, you need to make use of two files: the core file with the libraries, `twitter_cldr.js` and one of the various locale data files, `es.js`, `en.js` etc. You can include them in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:
+To use twitter-cldr-js, you need to make use of two files: the core file with the libraries, `core.js` and one of the various locale data files, `es.js`, `en.js` etc. You can include them in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:
 
 ```ruby
 //= require twitter_cldr/es
-//= require twitter_cldr/twitter_cldr
+//= require twitter_cldr/core
 ```
 
 This will make the core library twitter-cldr-js available to the JavaScript in your app along with the data bundle for the Spanish locale. If your app supports multiple languages however, this single-locale approach won't be much use.  Instead, require the right file with `javascript_include_tag` for example in a view or a layout:
@@ -52,7 +52,7 @@ You need to load the core library along with a language bundle for optimal use. 
 
 ```ruby
 //= require twitter_cldr/es
-//= require twitter_cldr/twitter_cldr
+//= require twitter_cldr/core
 ```
 
 You can verify that by trying this:
@@ -64,7 +64,7 @@ TwitterCldr.Settings.locale(); // "es"
 If you only load the core library, without the data set, the same command will result in an error.
 
 ```javascript
-// (only loaded `twitter_cldr/twitter_cldr`)
+// (only loaded `twitter_cldr/core`)
 TwitterCldr.Settings.locale(); // Error: "Data not set"
 ```
 

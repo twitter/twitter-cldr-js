@@ -8,6 +8,10 @@ module TwitterCldr
     module Tasks
 
       class << self
+
+        CORE_LIBRARY_NAME = 'core'
+        TEST_RESOURCES_FILENAME = 'test_resources.js'
+
         def update()
           build(
             :begin_msg  => "Updating build... ",
@@ -49,23 +53,25 @@ module TwitterCldr
           output_dir = File.expand_path(options[:output_dir] || get_output_dir)
 
           build_duration = time_operation do
-            implementation_file_contents = compiler.compile_implementation(:minify => false) # TODO - figure out the minification logic
-            write_file([output_dir, 'twitter_cldr.js'], implementation_file_contents)
-
             options[:files].each_pair do |file_pattern, minify|
+
+              # Core library
+              implementation_file_contents = compiler.compile_implementation(:minify => minify)
+              write_file([output_dir, file_pattern % CORE_LIBRARY_NAME], implementation_file_contents)
+
+              # Data bundles for each locale
               compiler.compile_each(:minify => minify) do |bundle, locale|
-                out_file_path = [output_dir, file_pattern % locale]
-                write_file(out_file_path, bundle)
+                write_file([output_dir, file_pattern % locale], bundle)
               end
             end
 
             if options[:render_test_files]
-              file_contents = compiler.compile_test()
-              write_file([output_dir, 'test_resources.js'], file_contents)
+              file_contents = compiler.compile_test(:minify => true)
+              write_file([output_dir, TEST_RESOURCES_FILENAME], file_contents)
             end
 
           end
-          puts "done"
+          puts "Done"
           puts build_summary(
             :locale_count => compiler.locales.size,
             :build_duration => build_duration,

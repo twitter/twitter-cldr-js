@@ -1,7 +1,7 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/twitter_cldr.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
 
 describe("PhoneCodes", function() {
   describe("#all", function() {

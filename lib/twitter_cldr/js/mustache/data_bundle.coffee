@@ -1,6 +1,7 @@
 ###
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
+
 // TwitterCLDR (JavaScript) v{{version}}
 // Authors:     Cameron Dutro [@camertron]
                 Kirill Lashuk [@KL_7]
@@ -30,8 +31,5 @@ else
 
 root[key] = obj for key, obj of TwitterCldrDataBundle
 
-if this.TwitterCldr?
-  if this.TwitterCldr.is_data_set()
-    this.TwitterCldr.get_data()
-  else
-    this.TwitterCldr.set_data(TwitterCldrDataBundle)
+if this.TwitterCldr? and !this.TwitterCldr.is_data_set()
+  this.TwitterCldr.set_data(TwitterCldrDataBundle)

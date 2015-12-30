@@ -1,3 +1,10 @@
+== 3.0.0
+
+* Separated data from the implementation.
+    - Now, usage requires two files:
+        - `core.js` (the implementation file)
+        - `<locale>.js` (data bundle for the required locale, like `en.js`, `es.js`, etc)
+
 == 2.5.0
 
 * Added rule based number formatting.

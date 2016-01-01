@@ -27,14 +27,16 @@ function rbnf_test_case (locale, rule_group, rule_set, test_case) {
       TwitterCldr.set_data(data_backup);
     });
 
-    it('formats test_case correctly', function() {
+    it('formats ' + test_case + ' correctly', function() {
       try {
         var got = formatter.format(TwitterCldr.PluralRules.runtime.toNum(test_case), rule_group, rule_set);
         var expected = TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set][test_case];
         expect(got).toEqual(expected);
       }
       catch (error) {
-        // Ignore `Not implemented` errors.
+        if (!(error instanceof TwitterCldr.NotImplementedException)) {
+            throw error;
+        }
       }
     });
   });

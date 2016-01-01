@@ -3,22 +3,6 @@
 
 class TwitterCldr.RBNFTokenizer
   constructor : ->
-    word_regex_components = [
-      TwitterCldr.CodePoint.code_points_for_property("category", "Ll") # Lower case letter
-      TwitterCldr.CodePoint.code_points_for_property("category", "Lm") # Modifier letter
-      TwitterCldr.CodePoint.code_points_for_property("category", "Lo") # Other letter
-      TwitterCldr.CodePoint.code_points_for_property("category", "Lt") # Title case letter
-      TwitterCldr.CodePoint.code_points_for_property("category", "Lu") # Upper case letter
-      TwitterCldr.CodePoint.code_points_for_property("category", "Mc") # Spacing mark
-      TwitterCldr.CodePoint.code_points_for_property("category", "Me") # Enclosing mark
-      TwitterCldr.CodePoint.code_points_for_property("category", "Mu") # Non-spacing mark
-      TwitterCldr.CodePoint.code_points_for_property("category", "Nd") # Decimal number
-      TwitterCldr.CodePoint.code_points_for_property("category", "Nl") # Letter number
-      TwitterCldr.CodePoint.code_points_for_property("category", "No") # Other number
-      TwitterCldr.CodePoint.code_points_for_property("category", "Pc") # Connector punctuation
-      TwitterCldr.CodePoint.code_points_for_property("category", "Pd") # Dash punctuation
-    ]
-    word_regex = "(" + ((component for component in word_regex_components).join("|")) + ")+"
     recognizers = [
       # special rule descriptors
       new TwitterCldr.TokenRecognizer("negative", new RegExp(/-x/)),
@@ -28,7 +12,7 @@ class TwitterCldr.RBNFTokenizer
 
       # normal rule descriptors
       new TwitterCldr.TokenRecognizer("equals", new RegExp(/\=/)),
-      new TwitterCldr.TokenRecognizer("rule", new RegExp("%%?" + word_regex)),
+      new TwitterCldr.TokenRecognizer("rule", TwitterCldr.RBNFTokenizer.get_rule_regexp()),
 
       new TwitterCldr.TokenRecognizer("right_arrow", new RegExp(/>/)),
       new TwitterCldr.TokenRecognizer("left_arrow", new RegExp(/</)),
@@ -41,12 +25,6 @@ class TwitterCldr.RBNFTokenizer
       new TwitterCldr.TokenRecognizer("semicolon", new RegExp(/;/))
     ]
 
-    #  Special note about the "rule" token recognizer.
-    #  It needs to match the ruby equivalent of %%?[[:word:]\-]+, i.e., %%? followed by
-    #  any number of '-'s  or characters in one of the following Unicode general categories Letter,
-    #  Mark, Number, Connector_Punctuation. The Javascript version of that has been derived using
-    #  an existing tool available here: http://apps.timwhitlock.info/js/regex
-
     splitter_source = "(" + ((r.regex.source for r in recognizers).join("|")) + ")"
     splitter = new RegExp(splitter_source)
 
@@ -58,3 +36,32 @@ class TwitterCldr.RBNFTokenizer
   tokenize : (pattern) ->
     tokenizer = new TwitterCldr.PatternTokenizer(null, @tokenizer)
     tokenizer.tokenize(pattern)
+
+  @get_rule_regexp : ->
+    #  Special note about the "rule" token recognizer.
+    #  It needs to match the ruby equivalent of %%?[[:word:]\-]+, i.e., %%? followed by
+    #  any number of '-'s  or characters in one of the following Unicode general categories Letter,
+    #  Mark, Number, Connector_Punctuation. The Javascript version of that has been derived using
+    #  an existing tool available here: http://apps.timwhitlock.info/js/regex
+
+    if @rule_regexp?
+      return @rule_regexp
+
+    word_regexp_components = [
+      "Ll" # Lower case letter
+      "Lm" # Modifier letter
+      "Lo" # Other letter
+      "Lt" # Title case letter
+      "Lu" # Upper case letter
+      "Mc" # Spacing mark
+      "Me" # Enclosing mark
+      "Mu" # Non-spacing mark
+      "Nd" # Decimal number
+      "Nl" # Letter number
+      "No" # Other number
+      "Pc" # Connector punctuation
+      "Pd" # Dash punctuation
+    ]
+    @rule_regexp = TwitterCldr.UnicodeRegex.compile(
+      "%%?[" + ("[:" + component + ":]" for component in word_regexp_components).join("") + "]*",
+    ).to_regexp()

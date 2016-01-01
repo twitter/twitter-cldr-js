@@ -35,7 +35,7 @@ function rbnf_test_case (locale, rule_group, rule_set, test_case) {
       }
       catch (error) {
         if (!(error instanceof TwitterCldr.NotImplementedException)) {
-            throw error;
+          throw error;
         }
       }
     });
@@ -43,13 +43,15 @@ function rbnf_test_case (locale, rule_group, rule_set, test_case) {
 }
 
 for (var locale in TwitterCldr.RBNF.test_resource) {
-
   if (["ar", "ja", "ko", "zh", "ja", "zh-Hant", "ja", "hi", "ta"].indexOf(locale) !== -1)
     continue;
   for (var rule_group in TwitterCldr.RBNF.test_resource[locale]) {
     if (formatter.group_names().indexOf(rule_group) === -1)
       continue;
     for (var rule_set in TwitterCldr.RBNF.test_resource[locale][rule_group]) {
+      if (!process.env.FULL_TEST_SUITE && rule_set !== 'spellout-numbering') {
+        continue;
+      }
       if (formatter.rule_set_names_for_group(rule_group).indexOf(rule_set) === -1)
         continue;
       for (var test_case in TwitterCldr.RBNF.test_resource[locale][rule_group][rule_set]) {

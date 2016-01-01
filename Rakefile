@@ -30,7 +30,17 @@ RSpec::Core::RakeTask.new("spec:ruby") do |t|
 end
 
 desc 'Run JavaScript specs'
+
 task "spec:js" do
+  run_tests()
+end
+
+task "spec:js:full" do
+  ENV["FULL_TEST_SUITE"] = "True"
+  run_tests()
+end
+
+def run_tests
   ENV["LOCALES"] = "en,ar,ko,ru,hi"
   Rake::Task["twitter_cldr:js:update_for_test"].invoke
 

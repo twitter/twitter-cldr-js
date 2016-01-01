@@ -6,4 +6,4 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.2.0
-script: 'bundle exec rake'
+script: 'bundle exec rake spec:js:full'

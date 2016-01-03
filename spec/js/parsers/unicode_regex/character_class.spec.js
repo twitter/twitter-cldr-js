@@ -10,13 +10,16 @@ describe("Character Class", function() {
   var parser = new TwitterCldr.UnicodeRegexParser();
   var tokenize = function (text) {
     return tokenizer.tokenize(text);
-  }
+  };
+
   var parse = function (text, options) {
     return parser.parse(text, options);
-  }
+  };
+
   var char_class_from = function (elements) {
     return elements[0];
-  }
+  };
+
   describe("#to_set", function() {
     it("unions together char classes with no explicit operator", function() {
       var char_class = char_class_from(parse(tokenize("[[a][b]]")));

@@ -8,7 +8,7 @@ TwitterCldr.set_data(data);
 describe("Token", function() {
   describe("#constructor", function() {
     it("should set instance variables passed in the options hash", function() {
-      token = new TwitterCldr.Token({"type":"my_type", "value":"my_value"});
+      var token = new TwitterCldr.Token({"type":"my_type", "value":"my_value"});
       expect(token.type).toEqual("my_type");
       expect(token.value).toEqual("my_value");
     });
@@ -20,7 +20,7 @@ describe("Token", function() {
   });
   describe("#to_hash", function() {
     it("should return the token's attributes as a hash", function() {
-      properties = {"type":"my_type", "value":"my_value"};
+      var properties = {"type":"my_type", "value":"my_value"};
       expect(new TwitterCldr.Token(properties).to_hash()).toEqual(properties);
     });
   });

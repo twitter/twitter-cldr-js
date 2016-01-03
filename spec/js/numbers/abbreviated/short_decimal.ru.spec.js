@@ -6,6 +6,7 @@ var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.
 var data = require('../../../../lib/assets/javascripts/twitter_cldr/ru.js');
 
 describe("ShortDecimalFormatter", function() {
+  var formatter;
   beforeEach(function() {
     TwitterCldr.set_data(data);
     formatter = new TwitterCldr.ShortDecimalFormatter();

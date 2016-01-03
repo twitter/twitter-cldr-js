@@ -10,10 +10,12 @@ describe("SegmentationParser", function() {
   var parser = new TwitterCldr.SegmentationParser();
   var tokenize = function (text) {
     return tokenizer.tokenize(text);
-  }
+  };
+
   var parse = function (text, options) {
     return parser.parse(text, options);
-  }
+  };
+
   var symbol_table = new TwitterCldr.SymbolTable({"$FOO" : tokenize("[abc]")});
   describe("#parse", function() {
     it("should parse a rule with a break", function() {
@@ -36,7 +38,7 @@ describe("SegmentationParser", function() {
   describe("SegmentationParser.BreakRule", function() {
     var rule = parse(tokenize("[a-z] ÷ [0-9]"));
     it("rule should be the right type", function() {
-      expect(rule instanceof TwitterCldr.SegmentationParser.BreakRule)
+      expect(rule instanceof TwitterCldr.SegmentationParser.BreakRule);
     });
     it("should match and return the right offset and text", function() {
       var match = rule.match("c7");
@@ -52,13 +54,13 @@ describe("SegmentationParser", function() {
   describe("SegmentationParser.NoBreakRule", function() {
     var rule = parse(tokenize("[a-z] × [0-9]"));
     it("rule should be the right type", function() {
-      expect(rule instanceof TwitterCldr.SegmentationParser.NoBreakRule)
+      expect(rule instanceof TwitterCldr.SegmentationParser.NoBreakRule);
     });
     it("should match and returh the right offset and text", function() {
       var match = rule.match("c7");
       //non-break rules send you to the end of the match (maybe that's wrong?)
-      expect(match.boundary_offset).toEqual(2)
-      expect(match.text).toEqual("c7")
+      expect(match.boundary_offset).toEqual(2);
+      expect(match.text).toEqual("c7");
     });
     it("should not match if the input string doesn't contain matching text", function() {
       expect(rule.match("C7")).toBe(null);

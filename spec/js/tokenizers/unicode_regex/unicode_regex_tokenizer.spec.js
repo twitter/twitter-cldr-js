@@ -13,14 +13,14 @@ beforeEach(function() {
       return false;
     for (var i = 0; i < this.actual.length; i++) {
       var hash = expected[i];
-      for (key in expected[i])
+      for (var key in hash)
       {
         if (expected[i][key] !== this.actual[i][key])
           return false;
       }
     }
     return true;
-  }
+  };
   this.addMatchers({
     toEqualTokenList : toEqualTokenList
   });

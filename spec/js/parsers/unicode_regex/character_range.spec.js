@@ -11,7 +11,7 @@ describe("Character Range", function() {
 
   describe("#to_set", function() {
     it("should return a range between the initial and the final values", function() {
-      range = new TwitterCldr.CharacterRange (
+      var range = new TwitterCldr.CharacterRange (
         new TwitterCldr.UnicodeString([97]),
         new TwitterCldr.UnicodeString([98])
       );

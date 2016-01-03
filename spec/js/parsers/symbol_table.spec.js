@@ -5,6 +5,7 @@ var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js'
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("SymbolTable", function() {
+  var table;
   beforeEach(function() {
     TwitterCldr.set_data(data);
     table = new TwitterCldr.SymbolTable ({"a":"b", "c":"d"});

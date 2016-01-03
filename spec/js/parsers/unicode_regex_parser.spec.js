@@ -10,10 +10,10 @@ describe("UnicodeRegexParser", function() {
   var parser = new TwitterCldr.UnicodeRegexParser();
   var tokenize = function (text) {
     return tokenizer.tokenize(text);
-  }
+  };
   var parse = function (text, options) {
     return parser.parse(text, options);
-  }
+  };
 
   describe("#parse", function() {
     it("identifies ranges", function() {

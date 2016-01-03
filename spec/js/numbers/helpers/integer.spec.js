@@ -5,6 +5,7 @@ var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.
 
 describe("IntegerHelper", function() {
   describe("#apply", function() {
+    var token;
     describe("with the ### format", function() {
       beforeEach(function() {
         token = "###";

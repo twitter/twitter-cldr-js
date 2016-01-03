@@ -5,6 +5,7 @@ var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.
 var data = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("AbbreviatedNumberFormatter", function() {
+  var formatter, number;
   beforeEach(function() {
     TwitterCldr.set_data(data);
     formatter = new TwitterCldr.AbbreviatedNumberFormatter();

@@ -5,9 +5,9 @@
 
 var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
 var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-var formatter;
 
 describe("ListFormatter", function() {
+  var formatter;
   beforeEach(function() {
     TwitterCldr.set_data(data);
     formatter = new TwitterCldr.ListFormatter();

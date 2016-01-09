@@ -33,22 +33,58 @@ Check out [twitter/twitter-cldr-npm](https://github.com/twitter/twitter-cldr-npm
 
 ## Usage with Rails
 
-twitter-cldr-js provides a single `.js` file per locale.  You can include a locale-specific version (eg. Spanish) in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:
+To use twitter-cldr-js, you need to make use of two files: the core file with the libraries, `core.js` and one of the various locale data files, `es.js`, `en.js` etc. You can include them in your JavaScript manifest (`app/assets/javascripts/application.js`) like this:
 
 ```ruby
 //= require twitter_cldr/es
+//= require twitter_cldr/core
 ```
 
-This will make the Spanish version of twitter-cldr-js available to the JavaScript in your app.  If your app supports multiple languages however, this single-locale approach won't be much use.  Instead, require the right file with `javascript_include_tag` for example in a view or a layout:
+This will make the core library twitter-cldr-js available to the JavaScript in your app along with the data bundle for the Spanish locale. If your app supports multiple languages however, this single-locale approach won't be much use.  Instead, require the right file with `javascript_include_tag` for example in a view or a layout:
 
 ```ruby
 <%= javascript_include_tag "twitter_cldr/#{I18n.locale}.js" %>
 ```
 
+## Initialization
+
+You need to load the core library along with a language bundle for optimal use. If you load the data bundle before the core library, the core library sets the data bundle as its data source.
+
+```ruby
+//= require twitter_cldr/es
+//= require twitter_cldr/core
+```
+
+You can verify that by trying this:
+
+```javascript
+TwitterCldr.Settings.locale(); // "es"
+```
+
+If you only load the core library, without the data set, the same command will result in an error.
+
+```javascript
+// (only loaded `twitter_cldr/core`)
+TwitterCldr.Settings.locale(); // Error: "Data not set"
+```
+
+You can change the data bundle the library is using as its source by invoking the `set_data` method on the TwitterCldr object.
+
+```javascript
+
+es_data = ...; // The es locale data bundle
+ar_data = ...; // The ar locale data bundle
+
+TwitterCldr.set_data(es_data);
+TwitterCldr.Settings.locale(); // "es"
+
+TwitterCldr.set_data(ar_data);
+TwitterCldr.Settings.locale(); // "ar"
+
 ### Dates and Times
 
 ```javascript
-// include twitter_cldr/es.js for the Spanish DateTimeFormatter
+// include the es data bundle for the Spanish DateTimeFormatter
 var fmt = new TwitterCldr.DateTimeFormatter();
 
 fmt.format(new Date(), {"type": "full"});                     // "lunes, 12 de diciembre de 2011 21:44:57 UTC -0800"
@@ -128,7 +164,7 @@ It's important to know that, even though a format may not be available across lo
 In addition to formatting full dates and times, TwitterCLDR supports relative time spans.  It tries to guess the best time unit (eg. days, hours, minutes, etc) based on the length of time given.  Indicate past or future by using negative or positive numbers respectively:
 
 ```javascript
-// include twitter_cldr/en.js for the English TimespanFormatter
+// include the en data bundle for the English TimespanFormatter
 var fmt = new TwitterCldr.TimespanFormatter();
 var then = Math.round(new Date(2012, 1, 1, 12, 0, 0).getTime() / 1000);
 var now = Math.round(Date.now() / 1000);
@@ -163,7 +199,7 @@ twitter-cldr-js number formatting supports decimals, currencies, and percentages
 #### Decimals
 
 ```javascript
-// include twitter_cldr/es.js for the Spanish NumberFormatter
+// include the es data bundle for the Spanish NumberFormatter
 var fmt = new TwitterCldr.DecimalFormatter();
 fmt.format(1337);                      // "1.337"
 fmt.format(-1337);                     // "-1.337"
@@ -206,7 +242,7 @@ Some languages, like English, have "countable" nouns.  You probably know this co
 TwitterCLDR makes it easy to find the plural rules for any numeric value:
 
 ```javascript
-// include twitter_cldr/ru.js for access to Russian Plural rules
+// include the ru data bundle for access to Russian Plural rules
 TwitterCldr.PluralRules.rule_for(1);      // "one"
 TwitterCldr.PluralRules.rule_for(2);      // "few"
 TwitterCldr.PluralRules.rule_for(8);      // "many"
@@ -227,7 +263,7 @@ Rule-based number formats are categorized by groups, and within groups by rulese
 To get a list of supported groups for the current locale, use the `group_names` method:
 
 ```javascript
-// include twitter_cldr/en.js for the English RBNF Formatter
+// include the en data bundle for the English RBNF Formatter
 var formatter = new TwitterCldr.RBNF()
 formatter.group_names()
 ```
@@ -250,7 +286,7 @@ formatter.format(123, 'OrdinalRules', 'digits-ordinal')
 
 In comparision, here is what the Spanish formatting looks like
 ```javascript
-// include twitter_cldr/es.js for the Spanish RBNF Formatter
+// include the es data bundle for the Spanish RBNF Formatter
 var formatter = new TwitterCldr.RBNF()
 format.format(123, 'OrdinalRules', 'digits-ordinal-masculine') // '123º'
 format.format(123, 'OrdinalRules', 'digits-ordinal-feminine')  // '123ª'

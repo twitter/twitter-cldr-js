@@ -1,9 +1,16 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Calendar", function() {
+  var formatter;
+  beforeEach(function() {
+    TwitterCldr.set_data(data);
+    formatter = new TwitterCldr.TimespanFormatter();
+  });
+
   describe("#months", function() {
     it("should return wide day names by default", function() {
       expect(TwitterCldr.Calendar.months()).toEqual([

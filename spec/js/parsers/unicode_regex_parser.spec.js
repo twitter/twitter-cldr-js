@@ -1,17 +1,19 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("UnicodeRegexParser", function() {
+  TwitterCldr.set_data(data);
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
   var parser = new TwitterCldr.UnicodeRegexParser();
   var tokenize = function (text) {
     return tokenizer.tokenize(text);
-  }
+  };
   var parse = function (text, options) {
     return parser.parse(text, options);
-  }
+  };
 
   describe("#parse", function() {
     it("identifies ranges", function() {
@@ -42,7 +44,7 @@ describe("UnicodeRegexParser", function() {
 
       element = elements[2];
       expect(element instanceof TwitterCldr.CharacterClass).toBe(true);
-      expect(element.root.child.property_value).toEqual("L");      
+      expect(element.root.child.property_value).toEqual("L");
 
       element = elements[3];
       expect(element instanceof TwitterCldr.CharacterSet).toBe(true);

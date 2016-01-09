@@ -1,20 +1,25 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Character Class", function() {
+  TwitterCldr.set_data(data);
   var tokenizer = new TwitterCldr.UnicodeRegexTokenizer();
   var parser = new TwitterCldr.UnicodeRegexParser();
   var tokenize = function (text) {
     return tokenizer.tokenize(text);
-  }
+  };
+
   var parse = function (text, options) {
     return parser.parse(text, options);
-  }
+  };
+
   var char_class_from = function (elements) {
     return elements[0];
-  }
+  };
+
   describe("#to_set", function() {
     it("unions together char classes with no explicit operator", function() {
       var char_class = char_class_from(parse(tokenize("[[a][b]]")));
@@ -30,7 +35,7 @@ describe("Character Class", function() {
     });
     it("finds symmetric differences correctly", function() {
       var char_class = char_class_from(parse(tokenize("[[a-m]-[g-z]]")));
-      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 102), new TwitterCldr.Range(110, 122)]));      
+      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 102), new TwitterCldr.Range(110, 122)]));
     });
     it("computes sets for nested expressions", function() {
       // (97..109) U (104..106)
@@ -83,7 +88,7 @@ describe("Character Class", function() {
     });
     it("supports literal and excaped characters", function() {
       var char_class = char_class_from(parse(tokenize("[abc\\edf\\g]")));
-      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 103)]));      
+      expect(char_class.to_set()).toEqualRangeSet(new TwitterCldr.RangeSet([new TwitterCldr.Range(97, 103)]));
     });
     it("supports special switch characters", function() {
       var char_class = char_class_from(parse(tokenize("[\\w]"))); // a-z, A-Z, 0-9, _

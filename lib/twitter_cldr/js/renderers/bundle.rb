@@ -15,13 +15,6 @@ module TwitterCldr
           TwitterCldr::Js::VERSION
         end
 
-        def is_rtl?
-          TwitterCldr::Shared::Languages.is_rtl?(self[:locale])
-        end
-
-        def current_locale
-          self[:locale]
-        end
       end
     end
   end

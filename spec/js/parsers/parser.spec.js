@@ -1,9 +1,11 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("Parser", function() {
+  TwitterCldr.set_data(data);
   var FakeParser,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -50,7 +52,7 @@ describe("Parser", function() {
       expect(parser.current_token().type).toEqual("a");
     });
   });
-  
+
   describe("next_token", function() {
     it("should advance to the next token", function() {
       parser.parse(tokens);

@@ -1,20 +1,26 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr    = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
-var TwitterCldrRTL = require('../../../lib/assets/javascripts/twitter_cldr/ar.js');
+// var TwitterCldr, formatter;
+
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("ListFormatter", function() {
+  var formatter;
   beforeEach(function() {
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.ListFormatter();
-    formatter_rtl = new TwitterCldrRTL.ListFormatter();
   });
 
   describe("with an initialized list formatter", function() {
     describe("#compose", function() {
       it("should reorder rtl lists", function() {
         var list = ["larry", "curly"];
-        expect(formatter_rtl.compose("{0} \u0648 {1}", list)).toEqual("curly \u0648 larry");
+        var data = require('../../../lib/assets/javascripts/twitter_cldr/ar.js');
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
+        expect(formatter.compose("{0} \u0648 {1}", list)).toEqual("curly \u0648 larry");
       });
 
       it("should format a variable number of elements correctly", function() {
@@ -35,13 +41,23 @@ describe("ListFormatter", function() {
     });
 
     describe("with a standard resource", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        formatter.formats = {
-          2        : "{0} $ {1}",
-          "middle" : "{0}; {1}",
-          "start"  : "{0}< {1}",
-          "end"    : "{0}> {1}"
-        }
+        TwitterCldr.ListFormatter.data = function() {
+          return {
+            formats : {
+              2        : "{0} $ {1}",
+              "middle" : "{0}; {1}",
+              "start"  : "{0}< {1}",
+              "end"    : "{0}> {1}"
+            }
+          };
+        };
+        formatter = new TwitterCldr.ListFormatter();
+      });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
       });
 
       describe("#compose_list", function() {
@@ -76,12 +92,17 @@ describe("ListFormatter", function() {
         });
 
         it("should format a list with a single element correctly", function() {
-          expect(formatter.format(["larry"])).toEqual("larry")
+          expect(formatter.format(["larry"])).toEqual("larry");
         });
       });
     });
 
     describe("with standard English resource", function() {
+      beforeEach(function() {
+        data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+        TwitterCldr.set_data(data);
+        formatter = new TwitterCldr.ListFormatter();
+      });
       describe("#format", function() {
         it("should format correctly using the integer index if it exists", function() {
           expect(formatter.format(["larry", "curly"])).toEqual("larry and curly");
@@ -96,15 +117,26 @@ describe("ListFormatter", function() {
         });
 
         it("should format a list with a single element correctly", function() {
-          expect(formatter.format(["larry"])).toEqual("larry")
+          expect(formatter.format(["larry"])).toEqual("larry");
         });
       });
     });
 
     describe("with a resource that doesn't contain a start or end", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        formatter.formats = { "middle": "{0}; {1}" };
+        TwitterCldr.ListFormatter.data = function() {
+          return {
+            formats : { "middle": "{0}; {1}" }
+          };
+        };
+        formatter = new TwitterCldr.ListFormatter();
       });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
+      });
+
 
       describe("#compose_list", function() {
         it("should correctly compose a list with four elements, falling back to 'middle' for the beginning and end", function() {
@@ -114,8 +146,18 @@ describe("ListFormatter", function() {
     });
 
     describe("with an empty resource", function() {
+      var old_data = TwitterCldr.ListFormatter.data;
       beforeEach(function() {
-        formatter.formats = {}
+        TwitterCldr.ListFormatter.data = function() {
+          return {
+            formats : {}
+          };
+        };
+        formatter = new TwitterCldr.ListFormatter();
+      });
+
+      afterEach(function() {
+        TwitterCldr.ListFormatter.data = old_data;
       });
 
       describe("#compose_list", function() {

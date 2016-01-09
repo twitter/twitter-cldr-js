@@ -1,7 +1,9 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
 
 beforeEach(function() {
   var toEqualTokenList = function (expected) {
@@ -11,14 +13,14 @@ beforeEach(function() {
       return false;
     for (var i = 0; i < this.actual.length; i++) {
       var hash = expected[i];
-      for (key in expected[i])
+      for (var key in hash)
       {
         if (expected[i][key] !== this.actual[i][key])
           return false;
       }
     }
     return true;
-  }
+  };
   this.addMatchers({
     toEqualTokenList : toEqualTokenList
   });

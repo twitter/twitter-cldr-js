@@ -1,10 +1,13 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
 
 describe("DateTimeFormatter", function() {
+  var formatter;
   beforeEach(function() {
+    TwitterCldr.set_data(data);
     formatter = new TwitterCldr.DateTimeFormatter();
   });
 
@@ -352,19 +355,20 @@ describe("DateTimeFormatter", function() {
     });
 
     it("test: SSSSS", function() {
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 1), 'SSSSS', 5)).toEqual('00001')
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 8), 'SSSSS', 5)).toEqual('00008')
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 21), 'SSSSS', 5)).toEqual('00021')
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 1), 'SSSSS', 5)).toEqual('00001');
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 8), 'SSSSS', 5)).toEqual('00008');
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 21), 'SSSSS', 5)).toEqual('00021');
     });
 
     it("test: SSSSSS", function() {
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 1), 'SSSSSS', 6)).toEqual('000001')
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 8), 'SSSSSS', 6)).toEqual('000008')
-      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 21), 'SSSSSS', 6)).toEqual('000021')
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 1), 'SSSSSS', 6)).toEqual('000001');
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 8), 'SSSSSS', 6)).toEqual('000008');
+      expect(formatter.second(new Date(2000, 0, 1, 1, 1, 21), 'SSSSSS', 6)).toEqual('000021');
     });
   });
 
   describe("#timezone", function() {
+    var date;
     beforeEach(function() {
       date = new Date(2000, 0, 1, 1, 1, 1);
     });
@@ -443,34 +447,39 @@ describe("DateTimeFormatter", function() {
     });
 
     it("should fall back if the calendar doesn't contain the appropriate era data", function() {
-      old_era_data = TwitterCldr.Calendar.calendar.eras;
-      TwitterCldr.Calendar.calendar.eras = {
-        abbr: {
-          0: "abbr0",
-          1: "abbr1"
-        },
-        name: {
-          0: "name0"
+      TwitterCldr.set_data({
+        Calendar : {
+          calendar : {
+            eras: {
+              abbr: {
+                0: "abbr0",
+                1: "abbr1"
+              },
+              name: {
+                0: "name0"
+              }
+            }
+          }
         }
-      };
+      });
 
-      date = new Date(2012, 1, 1);
+      var date = new Date(2012, 1, 1);
       expect(formatter.era(date, 'GGGG', 4)).toEqual("abbr1");
-      TwitterCldr.Calendar.calendar.eras = old_era_data;
+      TwitterCldr.set_data(data);
     });
   });
 
   describe("#format", function() {
     it("don't raise errors for additional date formats", function() {
       var patterns = formatter.additional_format_selector().patterns();
-      for (key in patterns) {
+      for (var key in patterns) {
         // these shouldn't raise errors
         formatter.format(new Date(), {format: "additional", type: patterns[key]});
       }
     });
 
     it("correctly formats a few English additional formats", function() {
-      date = new Date(2012, 1, 1);
+      var date = new Date(2012, 1, 1);
       expect(formatter.format(date, {format: "additional", type: "EHm"})).toEqual("Wed 00:00");
       expect(formatter.format(date, {format: "additional", type: "MMMEd"})).toEqual("Wed, Feb 1");
       expect(formatter.format(date, {format: "additional", type: "yMMMEd"})).toEqual("Wed, Feb 1, 2012");

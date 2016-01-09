@@ -1,7 +1,9 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../lib/assets/javascripts/twitter_cldr/core.js');
+var data = require('../../../lib/assets/javascripts/twitter_cldr/en.js');
+TwitterCldr.set_data(data);
 
 describe("CodePoint", function() {
   var clear_cache = function () {
@@ -11,7 +13,6 @@ describe("CodePoint", function() {
 
   beforeEach(function () {
     clear_cache();
-
   });
 
   afterEach(function() {
@@ -72,8 +73,8 @@ describe("CodePoint", function() {
     });
   });
   describe("#code_points_for_property", function() {
-    it("reutrns code points for the given unicode property and value", function() {
-      cps = TwitterCldr.CodePoint.code_points_for_property("line_break", "CM");
+    it("returns code points for the given unicode property and value", function() {
+      var cps = TwitterCldr.CodePoint.code_points_for_property("line_break", "CM");
       expect(cps instanceof Array).toBe(true);
       expect(cps[0]).toEqualRange(new TwitterCldr.Range(0, 8));
 

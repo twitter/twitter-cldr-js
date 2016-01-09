@@ -20,15 +20,21 @@
 ###<<module_def>>###
 
 TwitterCldr = {}
-{{#is_rtl?}}
-TwitterCldr.is_rtl = true;
-{{/is_rtl?}}
-{{^is_rtl?}}
-TwitterCldr.is_rtl = false;
-{{/is_rtl?}}
-TwitterCldr.locale = "{{current_locale}}";
 {{> utilities}}
 {{{contents}}}
+
+TwitterCldr.set_data = (bundle) ->
+  TwitterCldr.data = bundle
+  null
+
+TwitterCldr.get_data = ->
+  if (TwitterCldr.data)?
+  	TwitterCldr.data
+  else
+  	throw 'Data not set'
+
+TwitterCldr.is_data_set = ->
+  return (TwitterCldr.data)?
 
 root = if exports?
   exports
@@ -37,3 +43,8 @@ else
   this.TwitterCldr
 
 root[key] = obj for key, obj of TwitterCldr
+
+if this.TwitterCldrDataBundle?
+  TwitterCldr.set_data(this.TwitterCldrDataBundle)
+
+

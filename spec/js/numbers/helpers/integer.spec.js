@@ -1,10 +1,11 @@
 // Copyright 2012 Twitter, Inc
 // http://www.apache.org/licenses/LICENSE-2.0
 
-var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/en.js');
+var TwitterCldr = require('../../../../lib/assets/javascripts/twitter_cldr/core.js');
 
 describe("IntegerHelper", function() {
   describe("#apply", function() {
+    var token;
     describe("with the ### format", function() {
       beforeEach(function() {
         token = "###";

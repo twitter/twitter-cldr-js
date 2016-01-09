@@ -142,3 +142,7 @@ class TwitterCldr.Utilities
       else
         return null
     value
+
+class TwitterCldr.NotImplementedException extends Error
+  constructor: (@message = "") ->
+    super

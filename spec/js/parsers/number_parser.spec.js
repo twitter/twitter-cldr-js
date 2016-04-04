@@ -209,7 +209,7 @@ describe("NumberParser", function() {
     it("re-raises any unexpected errors", function() {
       expect(function() {
         parser.try_parse({});
-      }).toThrow(new Error("Object #<Object> has no method 'split'"));
+      }).toThrow(new Error("number_text.split is not a function"));
     });
 
     it("parses zero correctly", function() {

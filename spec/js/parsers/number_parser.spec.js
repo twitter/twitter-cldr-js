@@ -207,9 +207,7 @@ describe("NumberParser", function() {
     });
 
     it("re-raises any unexpected errors", function() {
-      expect(function() {
-        parser.try_parse({});
-      }).toThrow(new Error("number_text.split is not a function"));
+      expect(function() { parser.try_parse({}) }).toThrow();
     });
 
     it("parses zero correctly", function() {

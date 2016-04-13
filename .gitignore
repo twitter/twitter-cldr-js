@@ -2,3 +2,5 @@
 pkg/
 reports/
 Gemfile.lock
+.ruby-version
+

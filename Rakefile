@@ -51,20 +51,8 @@ def run_tests
     puts "  `npm install jasmine-node -g`"
     exit 1
   else
-    puts `jasmine-node #{File.dirname(__FILE__)} --junitreport`
-    doc_files = Dir.glob(File.join(File.dirname(__FILE__), "reports/**"))
-    failures = 0
-
-    doc_files.each do |doc_file|
-      doc = REXML::Document.new(File.read(doc_file))
-      failures = doc.elements.to_a("testsuites/testsuite").inject(0) do |sum, element|
-        sum + element.attributes["failures"].to_i
-      end
-    end
-
-    if failures > 0
-      exit 1
-    end
+    system "jasmine-node #{File.dirname(__FILE__)}"
+    exit $?.exitstatus
   end
 end
 

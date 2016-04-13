@@ -1,11 +1,11 @@
-# Copyright 2012 Twitter, Inc
+  # Copyright 2012 Twitter, Inc
 # http://www.apache.org/licenses/LICENSE-2.0
 
 class TwitterCldr.Currencies
   @currencies = `{{{currencies}}}`
 
   @currency_codes: ->
-    @codes ||= (data.code for _, data of @currencies)
+    @codes ||= (code for code, _ of @currencies)
 
   @for_code: (currency_code) ->
     result = null
@@ -16,6 +16,8 @@ class TwitterCldr.Currencies
           cldr_symbol: data.cldr_symbol
           symbol: data.symbol
           currency: data.currency
+          name: data.name
+          code_points: data.code_points
         break
 
     result

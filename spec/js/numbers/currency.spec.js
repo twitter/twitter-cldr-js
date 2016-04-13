@@ -43,10 +43,12 @@ describe("CurrencyFormatter", function() {
     });
 
     it("should use the cldr_symbol for the corresponding currency code if use_cldr_code is specified", function() {
+      var old_currencies = TwitterCldr.Currencies.currencies;
       TwitterCldr.Currencies.currencies = {
         "JPY": {symbol: "¥", cldr_symbol: "YEN", currency: "JPY", "name": "Japanese yen"}
       };
       expect(formatter.format(12, {currency: "JPY", use_cldr_symbol: true})).toEqual("YEN12");
+      TwitterCldr.Currencies.currencies = old_currencies;
     });
 
     it("overrides the default precision", function() {

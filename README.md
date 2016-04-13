@@ -235,6 +235,18 @@ fmt.format(1337);                      // 1.337%
 fmt.format(1337, {precision: 2});      // 1.337,00%
 ```
 
+#### More on Currencies
+
+If you're looking for a list of supported currencies, use the `Currencies` function:
+
+```javascript
+# all supported currency codes
+TwitterCldr.Currencies.currency_codes()             # ["ADP", "AED", "AFA", "AFN", ... ]
+
+# data for a specific currency code
+TwitterCldr.Currencies.for_code("CAD")            # {currency: "CAD", name: "Canadian dollar", cldr_symbol: "CA$", symbol: "$", code_points: [36]}
+```
+
 ### Plural Rules
 
 Some languages, like English, have "countable" nouns.  You probably know this concept better as "plural" and "singular", i.e. the difference between "strawberry" and "strawberries".  Other languages, like Russian, have three plural forms: one (numbers ending in 1), few (numbers ending in 2, 3, or 4), and many (everything else).  Still other languages like Japanese don't use countable nouns at all.

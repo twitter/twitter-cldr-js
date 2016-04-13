@@ -1,3 +1,7 @@
+== 3.1.0
+
+* Exposed currency display names.
+
 == 3.0.0
 
 * Separated data from the implementation.

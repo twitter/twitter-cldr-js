@@ -26,7 +26,7 @@ class TwitterCldr.CodePoint
   @properties = ["sentence_break", "line_break", "word_break"]
 
   @data :->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().CodePoint
 
   constructor : (@fields) ->
     for i in [0...TwitterCldr.CodePoint.code_point_fields.length] by 1

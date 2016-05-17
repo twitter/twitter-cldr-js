@@ -5,7 +5,7 @@ class TwitterCldr.Calendar
   REDIRECT_PREFIX = "calendars.gregorian."
 
   @calendar: ->
-    TwitterCldr.get_data()[@name].calendar
+    TwitterCldr.get_data().Calendar.calendar
 
   @months: (options = {}) ->
     root = @get_root("months", options)

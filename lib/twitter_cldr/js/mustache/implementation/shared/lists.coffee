@@ -3,7 +3,7 @@
 
 class TwitterCldr.ListFormatter
   @data :->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().ListFormatter
 
   formats: ->
     @constructor.data().formats

@@ -34,7 +34,7 @@ class TwitterCldr.DateTimeFormatter
       'V': 'timezone_metazone'
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().DateTimeFormatter
 
   tokens: ->
     @constructor.data().tokens

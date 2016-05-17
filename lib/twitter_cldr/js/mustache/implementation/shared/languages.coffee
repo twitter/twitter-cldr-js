@@ -4,7 +4,7 @@
 class TwitterCldr.Languages
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().Languages
 
   @all: ->
   	@data().all

@@ -1,3 +1,7 @@
+== 3.1.1
+
+* Hardcode @name to function name. Fixes IE issues with features like NumberFormatter.
+
 == 3.1.0
 
 * Exposed currency display names.

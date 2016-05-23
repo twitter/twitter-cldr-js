@@ -11,7 +11,7 @@ class TwitterCldr.RBNF
     @rule_set_name_cache = {}
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().RBNF
 
   resource : ->
     @constructor.data().resource

@@ -10,7 +10,7 @@ class TwitterCldr.BreakIterator
     @segmentation_parser = new TwitterCldr.SegmentationParser()
 
   @data :->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().BreakIterator
 
   each_sentence : (str, block) ->
     @each_boundary(str, "sentence", block)

@@ -16,7 +16,7 @@ class TwitterCldr.TimespanFormatter
     }
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().TimespanFormatter
 
   patterns: ->
     @constructor.data().patterns

@@ -3,7 +3,7 @@
 
 class TwitterCldr.Settings
   @is_rtl: ->
-    TwitterCldr.get_data()[@name].is_rtl
+    TwitterCldr.get_data().Settings.is_rtl
 
   @locale: ->
-  	TwitterCldr.get_data()[@name].locale
+  	TwitterCldr.get_data().Settings.locale

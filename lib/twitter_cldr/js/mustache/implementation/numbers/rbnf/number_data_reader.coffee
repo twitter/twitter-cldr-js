@@ -53,7 +53,7 @@ class TwitterCldr.NumberDataReader
     @number_data = {}
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().NumberDataReader
 
   resource : ->
     @constructor.data().resource

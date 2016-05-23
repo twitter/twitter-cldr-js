@@ -5,7 +5,7 @@ class TwitterCldr.PluralRules
   @runtime = `{{{runtime}}}`
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().PluralRules
 
   @all: (type = 'cardinal') ->
     return @data().names[type]

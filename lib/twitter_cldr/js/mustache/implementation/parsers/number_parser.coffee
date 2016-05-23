@@ -6,7 +6,7 @@ class TwitterCldr.NumberParser
     @separator_chars = ['\\.', ',', '\\s'].join("")
 
   @data: ->
-    TwitterCldr.get_data()[@name]
+    TwitterCldr.get_data().NumberParser
 
   group_separator: ->
     @constructor.data().group_separator

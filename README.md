@@ -80,6 +80,7 @@ TwitterCldr.Settings.locale(); // "es"
 
 TwitterCldr.set_data(ar_data);
 TwitterCldr.Settings.locale(); // "ar"
+```
 
 ### Dates and Times
 

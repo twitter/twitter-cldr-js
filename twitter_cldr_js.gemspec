@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version  = ::TwitterCldr::Js::VERSION
   s.authors  = ["Cameron Dutro"]
   s.email    = ["cdutro@twitter.com"]
-  s.homepage = "http://twitter.com"
+  s.homepage = "https://twitter.com"
 
   s.description = s.summary = "Provides date, time, number, and list formatting functionality for various Twitter-supported locales in Javascript."
 

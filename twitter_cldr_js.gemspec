@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.description = s.summary = "Provides date, time, number, and list formatting functionality for various Twitter-supported locales in Javascript."
 
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
   s.summary  = "Text formatting using data from Unicode's Common Locale Data Repository (CLDR)."
 
   s.add_dependency 'json'

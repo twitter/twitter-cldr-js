@@ -13,7 +13,7 @@ module TwitterCldr
 
             def postal_codes
               TwitterCldr::Shared::PostalCodes.territories.inject({}) do |ret, country_code|
-                ret[country_code] = TwitterCldr::Shared::PostalCodes.for_territory(country_code).regexp.source
+                ret[country_code] = "^#{TwitterCldr::Shared::PostalCodes.for_territory(country_code).regexp.source}$"
                 ret
               end.to_json
             end

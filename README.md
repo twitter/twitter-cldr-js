@@ -297,7 +297,7 @@ formatter.format(123, 'OrdinalRules', 'digits-ordinal')
 // '123rd'
 ```
 
-In comparision, here is what the Spanish formatting looks like
+In comparison, here is what the Spanish formatting looks like
 ```javascript
 // include the es data bundle for the Spanish RBNF Formatter
 var formatter = new TwitterCldr.RBNF()

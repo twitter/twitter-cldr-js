@@ -3,7 +3,7 @@ sudo: false
 before_install:
   - npm install jasmine-node
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.2.0
+  - 2.5
+  - 2.6
+  - 2.7
 script: 'bundle exec rake spec:js:full'

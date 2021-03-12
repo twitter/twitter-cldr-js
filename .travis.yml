@@ -1,7 +1,7 @@
 language: ruby
 sudo: false
 before_install:
-  - npm install jasmine-node
+  - npm install -g jasmine-node
 rvm:
   - 2.5
   - 2.6

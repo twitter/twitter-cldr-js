@@ -397,7 +397,7 @@ TwitterCldr.TerritoriesContainment.contains('419', 'FR') // false
 
 ### Unicode Regular Expressions
 
-Unicode regular expressions are an implmentaion of regular expressions that support all Unicode characters in the [BMP](http://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane). They provide support for multi-character strings, Unicode character escapes, set operations (unions, intersections, and differences), and character sets.
+Unicode regular expressions are an implementaion of regular expressions that support all Unicode characters in the [BMP](http://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane). They provide support for multi-character strings, Unicode character escapes, set operations (unions, intersections, and differences), and character sets.
 
 #### Changes to Character Classes
 

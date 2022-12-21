@@ -429,13 +429,22 @@ regex3 = TwitterCldr.UnicodeRegex.compile("[[a-z]-[d-g]]+", "g");
 							//supports the JavaScript RegExp modifiers
 ```
 
-Once compiled, instances of `UnicodeRegex` behave just like normal javascript regexes and support the `match` method:
+Once compiled, instances of `UnicodeRegex` can be directly used to match against a string:
 
 ```javascript
 
 regex.match("ABC");  // ["ABC"]
 regex2.match("ABCDfooABC");  // ["ABCD", "ABC"]
 regex3.match("dog"); // ["o"]
+```
+
+Alternatively, you can convert a `UnicodeRegex` into a native JavaScript regex by calling its `to_regexp` method:
+
+```javascript
+
+regex3.to_regexp(); // /(?:[\u0061-\u0063]|[\u0068-\u007a])+/g
+regex3.to_regexp().test("a"); // true
+regex3.to_regexp().test("d"); // false
 ```
 
 Protip: Try to avoid negation in character classes (eg. [^abc] and \P{Lu}) as it tends to negatively affect both performance when constructing regexes as well as matching.

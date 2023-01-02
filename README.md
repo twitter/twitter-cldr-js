@@ -496,16 +496,16 @@ twitter-cldr-js requires Rails 3.1 or later.  To run the JavaScript test suite, 
 
 ## Authors
 
-* Cameron C. Dutro: https://github.com/camertron
-* Portions taken from the ruby-cldr gem by Sven Fuchs: https://github.com/svenfuchs/ruby-cldr
+* Connect With [Cameron C. Dutro](https://github.com/camertron)
+* Portions taken from the ruby-cldr gem by [Sven Fuchs](https://github.com/svenfuchs/ruby-cldr)
 
 ## Links
-* twitter-cldr-rb [https://github.com/twitter/twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb)
-* ruby-cldr gem: [https://github.com/svenfuchs/ruby-cldr](https://github.com/svenfuchs/ruby-cldr)
-* CLDR homepage: [http://cldr.unicode.org/](http://cldr.unicode.org/)
+* [twitter-cldr-rb](https://github.com/twitter/twitter-cldr-rb)
+* [ruby-cldr gem](https://github.com/svenfuchs/ruby-cldr)
+* [CLDR homepage](http://cldr.unicode.org/)
 
 ## License
 
 Copyright 2015 Twitter, Inc.
 
-Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, [Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)

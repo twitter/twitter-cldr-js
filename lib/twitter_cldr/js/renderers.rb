@@ -19,6 +19,7 @@ module TwitterCldr
         autoload :Numbers,                                'twitter_cldr/js/renderers/implementation/numbers'
         autoload :Parsers,                                'twitter_cldr/js/renderers/implementation/parsers'
         autoload :Tokenizers,                             'twitter_cldr/js/renderers/implementation/tokenizers'
+        autoload :Clone,                                  'twitter_cldr/js/renderers/implementation/clone'
 
       module Shared
           autoload :BidiRenderer,                         'twitter_cldr/js/renderers/implementation/shared/bidi_renderer'

@@ -152,7 +152,8 @@ module TwitterCldr
           :plural                          => TwitterCldr::Js::Renderers::Implementation::Numbers::RBNF::PluralRenderer,
           :range                           => TwitterCldr::Js::Renderers::Implementation::Utils::RangeRenderer,
           :range_set                       => TwitterCldr::Js::Renderers::Implementation::Utils::RangeSetRenderer,
-          :code_points                     => TwitterCldr::Js::Renderers::Implementation::Utils::CodePointsRenderer
+          :code_points                     => TwitterCldr::Js::Renderers::Implementation::Utils::CodePointsRenderer,
+          :clone                           => TwitterCldr::Js::Renderers::Implementation::Clone::CloneRenderer,
         }
       end
 

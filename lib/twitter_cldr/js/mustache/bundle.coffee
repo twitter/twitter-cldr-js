@@ -23,6 +23,8 @@ TwitterCldr = {}
 {{> utilities}}
 {{{contents}}}
 
+TwitterCldr.get_available_locales = -> {{{available_locales}}}
+
 TwitterCldr.set_data = (bundle) ->
   TwitterCldr.data = bundle
   null

@@ -89,6 +89,16 @@ module TwitterCldr
       def compile_implementation(options = {})
         bundle = TwitterCldr::Js::Renderers::Bundle.new
         bundle[:locale] = TwitterCldr::DEFAULT_LOCALE
+
+        available_locales = @locales.map do |locale|
+          {
+            locale: locale,
+            file_name: TwitterCldr.twitter_locale(locale),
+          }
+        end
+
+        bundle[:available_locales] = available_locales.sort_by { |x| x[:locale] }.to_json
+
         file = compile_bundle(bundle, @features, implementation_renderers, options)
 
         file.source

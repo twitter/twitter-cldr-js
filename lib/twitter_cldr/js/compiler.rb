@@ -97,7 +97,7 @@ module TwitterCldr
           }
         end
 
-        bundle[:available_locales] = available_locales.sort_by{ |x| x[:locale] }.to_json
+        bundle[:available_locales] = available_locales.sort_by { |x| x[:locale] }.to_json
 
         file = compile_bundle(bundle, @features, implementation_renderers, options)
 

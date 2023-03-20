@@ -1,5 +1,12 @@
 # TwitterCldr.js Changelog
 
+### 3.3.0 (Mar 19, 2023)
+* Remove dependency on therubyracer.
+    - Both the CoffeeScript and Uglify gems use execjs which means they can evaluate JavaScript with node and don't require a gemified runtime anymore.
+* Fix edge cases for long and short decimal formatters (#93, @lionel-rowe)
+* Expose available locales and file names (#94, @lionel-rowe)
+* Implement data isolation with `TwitterCldr.clone()` (#96, @lionel-rowe)
+
 ### 3.2.0 (August 26, 2019)
 * Fix postal codes bug causing false positive postal code validation.
 * Rebuild data bundles using twitter-cldr-rb 3.1.2.

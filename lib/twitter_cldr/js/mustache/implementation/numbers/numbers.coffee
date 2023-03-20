@@ -21,30 +21,47 @@ class TwitterCldr.NumberFormatter
     @constructor.data().symbols
 
   format: (number, options = {}) ->
-    opts = this.default_format_options_for(number)
+    opts = @default_format_options_for(number)
 
     for key, val of options
       opts[key] = if options[key]? then options[key] else opts[key]
 
-    tokens = this.get_tokens(number, opts)
+    number = @round_to(number, opts.precision || 0)
+
+    tokens = @get_tokens(number, opts)
 
     if tokens?
       if tokens not instanceof Array
         tokens_sample = tokens[Object.keys(tokens)[0]]
         truncated_number = @truncate_number(number, tokens_sample[1].length)
+
+        rounded_num = Number(@parse_number(truncated_number, opts)[0]) * Number(@get_key(number)) / (10 ** (tokens_sample[1].length - 1))
+
+        # Checking _stack_depth should be a redundant condition, as
+        # @get_key(rounded_num) should always equal @get_key(number) the second
+        # time around. We only check it to prevent infinite loops in case of
+        # bugs
+        if !opts._stack_depth && @get_key(rounded_num) != @get_key(number)
+          return @format(rounded_num, Object.assign(opts, { _stack_depth: 1 }))
+
         truncated_number = Math.floor(truncated_number) if opts.precision == 0
         tokens = tokens[TwitterCldr.PluralRules.rule_for(truncated_number)]
 
-      [prefix, suffix, integer_format, fraction_format] = this.partition_tokens(tokens)
-      number = this.truncate_number(number, integer_format.format.length)
-      [intg, fraction] = this.parse_number(number, opts)
+      [prefix, suffix, integer_format, fraction_format] = @partition_tokens(tokens)
+      number_part = @truncate_number(number, integer_format.format.length)
+      [intg, fraction] = @parse_number(number_part, opts)
       result = integer_format.apply(parseFloat(intg), opts)
       result += fraction_format.apply(fraction, opts) if fraction
-      sign = if number < 0 && prefix != "-" then @symbols().minus_sign || @default_symbols.minus_sign else ""
+      sign = if number_part < 0 && prefix != "-" then @symbols().minus_sign || @default_symbols.minus_sign else ""
       "#{prefix}#{result}#{suffix}"
     else
-      # there's no specific formatting pattern for this number in current locale
-      number.toString()
+      unless @ instanceof TwitterCldr.DecimalFormatter
+        # No specific formatting pattern for this number in current locale, so
+        # we fall back to DecimalFormatter
+        new TwitterCldr.DecimalFormatter().format(number, opts)
+      else
+        # Use default toString if current instance is already a DecimalFormatter
+        number.toString()
 
   truncate_number: (number, decimal_digits) ->
     number  # noop for base class
@@ -75,7 +92,7 @@ class TwitterCldr.NumberFormatter
     Math.round(number * factor) / factor
 
   get_tokens: ->
-    throw "get_tokens() not implemented - use a derived class like PercentFormatter."
+    throw new Error("get_tokens() not implemented - use a derived class like PercentFormatter.")
 
 class TwitterCldr.PercentFormatter extends TwitterCldr.NumberFormatter
   constructor: (options = {}) ->
@@ -106,7 +123,7 @@ class TwitterCldr.DecimalFormatter extends TwitterCldr.NumberFormatter
           result = transliterator.transliterate(result)
       result
     catch error
-      number
+      number.toString()
 
   default_format_options_for: (number) ->
     precision: this.precision_from(number)
